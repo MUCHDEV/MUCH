@@ -191,6 +191,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = lanjr;
 				TargetAttributes = {
+					D30DDB281994B897007A8A9C = {
+						DevelopmentTeam = 4ZYUXBS9ZB;
+					};
 					D30DDB431994B897007A8A9C = {
 						TestTargetID = D30DDB281994B897007A8A9C;
 					};
@@ -357,10 +360,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hua Ye (87BWFFQURA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hua Ye (87BWFFQURA)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MUCH/MUCH-Prefix.pch";
 				INFOPLIST_FILE = "MUCH/MUCH-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -370,10 +376,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Hua Ye (87BWFFQURA)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hua Ye (87BWFFQURA)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MUCH/MUCH-Prefix.pch";
 				INFOPLIST_FILE = "MUCH/MUCH-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -437,6 +446,7 @@
 				D30DDB571994B897007A8A9C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D30DDB581994B897007A8A9C /* Build configuration list for PBXNativeTarget "MUCHTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +455,7 @@
 				D30DDB5A1994B897007A8A9C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
