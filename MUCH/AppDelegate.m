@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "HomePageViewController.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -15,6 +15,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    HomePageViewController *homepage = [[HomePageViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homepage];
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     return YES;
 }
