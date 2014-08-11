@@ -69,7 +69,6 @@
     _priceTextField.textAlignment=NSTextAlignmentLeft;
     _priceTextField.placeholder=@"请标记价格";
     _priceTextField.returnKeyType=UIReturnKeyDone;
-    _priceTextField.secureTextEntry = YES;
     _priceTextField.keyboardType = UIKeyboardTypeDecimalPad;
     _priceTextField.font =  [UIFont systemFontOfSize:15];
     [_priceTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
