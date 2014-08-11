@@ -76,6 +76,7 @@
 		D361D5241998898B004B86AF /* 03-2_07.png in Resources */ = {isa = PBXBuildFile; fileRef = D361D5211998898B004B86AF /* 03-2_07.png */; };
 		D361D5251998898B004B86AF /* 03-2_11.png in Resources */ = {isa = PBXBuildFile; fileRef = D361D5221998898B004B86AF /* 03-2_11.png */; };
 		D361D52719988FDD004B86AF /* _03.png in Resources */ = {isa = PBXBuildFile; fileRef = D361D52619988FDD004B86AF /* _03.png */; };
+		D361D52A1998980D004B86AF /* HomePageDefaultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D5291998980D004B86AF /* HomePageDefaultTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +169,8 @@
 		D361D5211998898B004B86AF /* 03-2_07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "03-2_07.png"; sourceTree = "<group>"; };
 		D361D5221998898B004B86AF /* 03-2_11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "03-2_11.png"; sourceTree = "<group>"; };
 		D361D52619988FDD004B86AF /* _03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = _03.png; sourceTree = "<group>"; };
+		D361D5281998980D004B86AF /* HomePageDefaultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageDefaultTableViewCell.h; sourceTree = "<group>"; };
+		D361D5291998980D004B86AF /* HomePageDefaultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageDefaultTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -280,6 +283,8 @@
 				D361D50E19984F1C004B86AF /* HomePageTopView.m */,
 				D361D51019985A72004B86AF /* HomePageTopContentView.h */,
 				D361D51119985A72004B86AF /* HomePageTopContentView.m */,
+				D361D5281998980D004B86AF /* HomePageDefaultTableViewCell.h */,
+				D361D5291998980D004B86AF /* HomePageDefaultTableViewCell.m */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -506,6 +511,7 @@
 				D361D51D19987D2C004B86AF /* ReleasePageViewController.m in Sources */,
 				D361D51219985A72004B86AF /* HomePageTopContentView.m in Sources */,
 				D361D50F19984F1C004B86AF /* HomePageTopView.m in Sources */,
+				D361D52A1998980D004B86AF /* HomePageDefaultTableViewCell.m in Sources */,
 				D30DDB5E1994CCED007A8A9C /* HomePageViewController.m in Sources */,
 				D30DDBBA1996230C007A8A9C /* HomePageTableViewCell.m in Sources */,
 			);

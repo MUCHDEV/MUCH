@@ -11,7 +11,9 @@
 #import "HomePageTopContentView.h"
 #import "Camera.h"
 #import "ReleasePageViewController.h"
-@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate>{
+#import "HomePageTableViewCell.h"
+#import "HomePageDefaultTableViewCell.h"
+@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate>{
     HomePageTopView *topview;
     HomePageTopContentView *topcontentview;
     UITableView *_tableView;

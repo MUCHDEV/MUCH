@@ -16,6 +16,7 @@
     NSString *type;
     id<CameraDelegate>delegate;
     NSString *projectID;
+    int cameraFlag;
 }
 @property(nonatomic ,strong) id <CameraDelegate> delegate;
 -(void)getCameraView:(UIViewController *)viewController flag:(int)flag;

@@ -10,6 +10,7 @@
 @implementation Camera
 @synthesize delegate;
 -(void)getCameraView:(UIViewController *)viewController flag:(int)flag{
+    cameraFlag = flag;
     if(flag == 0){
         UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
         if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
@@ -45,7 +46,9 @@
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     if ([mediaType isEqualToString:@"public.image"]) {
         UIImage *photo = [info objectForKey:UIImagePickerControllerEditedImage];
-        UIImageWriteToSavedPhotosAlbum(photo, self, nil, nil);
+        if(cameraFlag ==0){
+            UIImageWriteToSavedPhotosAlbum(photo, self, nil, nil);
+        }
         [self setBigImage:photo];
     }
 }

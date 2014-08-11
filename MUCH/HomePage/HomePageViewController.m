@@ -7,7 +7,6 @@
 //
 
 #import "HomePageViewController.h"
-#import "HomePageTableViewCell.h"
 @interface HomePageViewController ()
 
 @end
@@ -66,6 +65,9 @@
     [_tableView setBackgroundColor:RGBCOLOR(217, 217, 217)];
     [self.view addSubview:_tableView];
     
+    if(showArr.count == 0){
+        [showArr addObject:@"0"];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,18 +124,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *stringcell = @"HomePageTableViewCell";
-    HomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
-    if(!cell){
-        cell = [[HomePageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
+    if([[showArr objectAtIndex:0] isEqualToString:@"0"]){
+        NSString *stringcell = @"HomePageDefaultTableViewCell";
+        HomePageDefaultTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
+        if(!cell){
+            cell = [[HomePageDefaultTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
+        }
+        cell.delegate = self;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else{
+        NSString *stringcell = @"HomePageTableViewCell";
+        HomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
+        if(!cell){
+            cell = [[HomePageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return [showArr count];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -142,6 +155,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if([[showArr objectAtIndex:0] isEqualToString:@"0"]){
+        return _tableView.frame.size.height;
+    }else{
+        return 120;
+    }
     return 120;
 }
 
@@ -175,5 +193,9 @@
     releasepageview = [[ReleasePageViewController alloc] init];
     releasepageview.image = img;
     [self.navigationController pushViewController:releasepageview animated:YES];
+}
+
+-(void)addImage{
+    [self rightBtnClick];
 }
 @end

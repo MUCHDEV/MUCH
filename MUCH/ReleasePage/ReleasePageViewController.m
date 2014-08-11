@@ -101,12 +101,4 @@
 -(void)rightBtnClick{
     
 }
-
-- (UIImage *)convertViewAsImage:(UIView *)aview {
-    UIGraphicsBeginImageContext(aview.bounds.size);
-    [aview.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *aimage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return aimage;
-}
 @end
