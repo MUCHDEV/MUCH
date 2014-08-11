@@ -89,6 +89,7 @@
 
 -(void)rightBtnClick{
     NSLog(@"rightBtnClick");
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
