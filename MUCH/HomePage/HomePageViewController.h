@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>{
-    UIView *topview;
+#import "HomePageTopView.h"
+#import "HomePageTopContentView.h"
+@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate>{
+    HomePageTopView *topview;
+    HomePageTopContentView *topcontentview;
     UITableView *_tableView;
     NSMutableArray *showArr;
 }

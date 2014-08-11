@@ -42,7 +42,7 @@
     
     //RightButton设置属性
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(0, 0, 15.5, 21)];
+    [rightButton setFrame:CGRectMake(0, 0, 21.5, 19.5)];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"03-1_09"] forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
@@ -52,8 +52,8 @@
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,[UIFont fontWithName:@"GurmukhiMN-Bold" size:19], NSFontAttributeName,
                                                                      nil]];
     
-    topview = [[UIView alloc] initWithFrame:CGRectMake(0, 65, 320, 50)];
-    [topview setBackgroundColor:[UIColor redColor]];
+    topview = [[HomePageTopView alloc] initWithFrame:CGRectMake(0, 65, 320, 50)];
+    topview.delegate = self;
     [self.view addSubview:topview];
     
     showArr = [[NSMutableArray alloc] init];
@@ -115,5 +115,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 120;
+}
+
+//homepagetop的delegate
+-(void)openView:(BOOL)isSelect{
+    if(!isSelect){
+        if(topcontentview == nil){
+            topcontentview = [[HomePageTopContentView alloc] initWithFrame:CGRectMake(0,104, 320, 85)];
+            [topcontentview setBackgroundColor:[UIColor whiteColor]];
+            [self.view addSubview:topcontentview];
+            topcontentview.alpha = 0.9;
+        }
+    }else{
+        [topcontentview removeFromSuperview];
+        topcontentview = nil;
+    }
 }
 @end

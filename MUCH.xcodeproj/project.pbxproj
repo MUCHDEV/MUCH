@@ -65,6 +65,8 @@
 		D30DDBB61995ED39007A8A9C /* 12_03.png in Resources */ = {isa = PBXBuildFile; fileRef = D30DDB8A1995ED39007A8A9C /* 12_03.png */; };
 		D30DDBB71995ED39007A8A9C /* 12_06.png in Resources */ = {isa = PBXBuildFile; fileRef = D30DDB8B1995ED39007A8A9C /* 12_06.png */; };
 		D30DDBBA1996230C007A8A9C /* HomePageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D30DDBB91996230C007A8A9C /* HomePageTableViewCell.m */; };
+		D361D50F19984F1C004B86AF /* HomePageTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D50E19984F1C004B86AF /* HomePageTopView.m */; };
+		D361D51219985A72004B86AF /* HomePageTopContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D51119985A72004B86AF /* HomePageTopContentView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +144,10 @@
 		D30DDB8B1995ED39007A8A9C /* 12_06.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 12_06.png; sourceTree = "<group>"; };
 		D30DDBB81996230C007A8A9C /* HomePageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTableViewCell.h; sourceTree = "<group>"; };
 		D30DDBB91996230C007A8A9C /* HomePageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageTableViewCell.m; sourceTree = "<group>"; };
+		D361D50D19984F1C004B86AF /* HomePageTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTopView.h; sourceTree = "<group>"; };
+		D361D50E19984F1C004B86AF /* HomePageTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageTopView.m; sourceTree = "<group>"; };
+		D361D51019985A72004B86AF /* HomePageTopContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTopContentView.h; sourceTree = "<group>"; };
+		D361D51119985A72004B86AF /* HomePageTopContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageTopContentView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +253,10 @@
 				D30DDB5D1994CCED007A8A9C /* HomePageViewController.m */,
 				D30DDBB81996230C007A8A9C /* HomePageTableViewCell.h */,
 				D30DDBB91996230C007A8A9C /* HomePageTableViewCell.m */,
+				D361D50D19984F1C004B86AF /* HomePageTopView.h */,
+				D361D50E19984F1C004B86AF /* HomePageTopView.m */,
+				D361D51019985A72004B86AF /* HomePageTopContentView.h */,
+				D361D51119985A72004B86AF /* HomePageTopContentView.m */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -446,6 +456,8 @@
 			files = (
 				D30DDB3D1994B897007A8A9C /* AppDelegate.m in Sources */,
 				D30DDB391994B897007A8A9C /* main.m in Sources */,
+				D361D51219985A72004B86AF /* HomePageTopContentView.m in Sources */,
+				D361D50F19984F1C004B86AF /* HomePageTopView.m in Sources */,
 				D30DDB5E1994CCED007A8A9C /* HomePageViewController.m in Sources */,
 				D30DDBBA1996230C007A8A9C /* HomePageTableViewCell.m in Sources */,
 			);
