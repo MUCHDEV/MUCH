@@ -9,12 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "HomePageTopView.h"
 #import "HomePageTopContentView.h"
-@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate>{
+#import "Camera.h"
+#import "ReleasePageViewController.h"
+@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate>{
     HomePageTopView *topview;
     HomePageTopContentView *topcontentview;
     UITableView *_tableView;
     NSMutableArray *showArr;
     int btnIndex;
+    UIActionSheet *_myActionSheet;
+    Camera *camera;
+    ReleasePageViewController *releasepageview;
 }
 
 @end

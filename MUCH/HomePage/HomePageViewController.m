@@ -89,9 +89,36 @@
 }
 
 -(void)rightBtnClick{
-    NSLog(@"rightBtnClick");
-    
+    _myActionSheet = [[UIActionSheet alloc]
+                      initWithTitle:nil
+                      delegate:self
+                      cancelButtonTitle:@"取消"
+                      destructiveButtonTitle:nil
+                      otherButtonTitles: @"打开照相机", @"从手机相册获取",nil];
+    [_myActionSheet showInView:self.view];
 }
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    //呼出的菜单按钮点击后的响应
+    if (buttonIndex == _myActionSheet.cancelButtonIndex)
+    {
+        NSLog(@"取消");
+    }
+    switch (buttonIndex)
+    {
+        case 0:  //打开照相机拍照
+            camera = [[Camera alloc] init];
+            camera.delegate = self;
+            [camera getCameraView:self flag:0];
+            break;
+        case 1:  //打开本地相册
+            camera = [[Camera alloc] init];
+            camera.delegate = self;
+            [camera getCameraView:self flag:1];
+            break;
+    }
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -141,5 +168,12 @@
         [self.view addSubview:topview];
     }
     btnIndex = (int)index;
+}
+
+//caera的delegate
+-(void)setBigImage:(UIImage *)img{
+    releasepageview = [[ReleasePageViewController alloc] init];
+    releasepageview.image = img;
+    [self.navigationController pushViewController:releasepageview animated:YES];
 }
 @end
