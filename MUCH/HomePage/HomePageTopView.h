@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 @protocol homePageTopDelegate <NSObject>
 
--(void)openView:(BOOL)isSelect;
+-(void)openView;
 
 @end
 @interface HomePageTopView : UIView{
     UIImageView *arrowImage;
     UIImageView *lineImage;
     id<homePageTopDelegate>delegate;
-    BOOL _isSelect;
 }
 @property(nonatomic,strong)id<homePageTopDelegate>delegate;
 @end

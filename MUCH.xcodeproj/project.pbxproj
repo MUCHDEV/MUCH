@@ -67,6 +67,8 @@
 		D30DDBBA1996230C007A8A9C /* HomePageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D30DDBB91996230C007A8A9C /* HomePageTableViewCell.m */; };
 		D361D50F19984F1C004B86AF /* HomePageTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D50E19984F1C004B86AF /* HomePageTopView.m */; };
 		D361D51219985A72004B86AF /* HomePageTopContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D51119985A72004B86AF /* HomePageTopContentView.m */; };
+		D361D51519986C9A004B86AF /* 字_03.png in Resources */ = {isa = PBXBuildFile; fileRef = D361D51319986C9A004B86AF /* 字_03.png */; };
+		D361D51619986C9A004B86AF /* 字2_03.png in Resources */ = {isa = PBXBuildFile; fileRef = D361D51419986C9A004B86AF /* 字2_03.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,6 +150,8 @@
 		D361D50E19984F1C004B86AF /* HomePageTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageTopView.m; sourceTree = "<group>"; };
 		D361D51019985A72004B86AF /* HomePageTopContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTopContentView.h; sourceTree = "<group>"; };
 		D361D51119985A72004B86AF /* HomePageTopContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageTopContentView.m; sourceTree = "<group>"; };
+		D361D51319986C9A004B86AF /* 字_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "字_03.png"; sourceTree = "<group>"; };
+		D361D51419986C9A004B86AF /* 字2_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "字2_03.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +268,8 @@
 		D30DDB5F1995ED39007A8A9C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				D361D51319986C9A004B86AF /* 字_03.png */,
+				D361D51419986C9A004B86AF /* 字2_03.png */,
 				D30DDB601995ED39007A8A9C /* 03-1_03.png */,
 				D30DDB611995ED39007A8A9C /* 03-1_06.png */,
 				D30DDB621995ED39007A8A9C /* 03-1_09.png */,
@@ -400,6 +406,7 @@
 				D30DDBB41995ED39007A8A9C /* 09_06.png in Resources */,
 				D30DDB941995ED39007A8A9C /* 03-1_34.png in Resources */,
 				D30DDB8D1995ED39007A8A9C /* 03-1_06.png in Resources */,
+				D361D51519986C9A004B86AF /* 字_03.png in Resources */,
 				D30DDBA01995ED39007A8A9C /* 06_03.png in Resources */,
 				D30DDBAC1995ED39007A8A9C /* 09-1_07.png in Resources */,
 				D30DDB991995ED39007A8A9C /* 04_14.png in Resources */,
@@ -412,6 +419,7 @@
 				D30DDBA71995ED39007A8A9C /* 07_11.png in Resources */,
 				D30DDBB71995ED39007A8A9C /* 12_06.png in Resources */,
 				D30DDB8C1995ED39007A8A9C /* 03-1_03.png in Resources */,
+				D361D51619986C9A004B86AF /* 字2_03.png in Resources */,
 				D30DDBB01995ED39007A8A9C /* 09-2_11.png in Resources */,
 				D30DDBAA1995ED39007A8A9C /* 07_17.png in Resources */,
 				D30DDBA81995ED39007A8A9C /* 07_13.png in Resources */,

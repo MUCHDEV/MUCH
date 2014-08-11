@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "HomePageTopView.h"
 #import "HomePageTopContentView.h"
-@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate>{
+@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate>{
     HomePageTopView *topview;
     HomePageTopContentView *topcontentview;
     UITableView *_tableView;
     NSMutableArray *showArr;
+    int btnIndex;
 }
 
 @end

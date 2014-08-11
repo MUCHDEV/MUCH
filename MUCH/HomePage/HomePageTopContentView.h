@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomePageTopContentView : UIView
+@protocol homePageTopContentDelegate <NSObject>
 
+-(void)choseView:(NSInteger)index;
+
+@end
+@interface HomePageTopContentView : UIView{
+    id<homePageTopContentDelegate>delegate;
+}
+@property(nonatomic,strong)id<homePageTopContentDelegate>delegate;
+- (id)initWithFrame:(CGRect)frame index:(int)index;
 @end

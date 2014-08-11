@@ -15,7 +15,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        _isSelect = NO;
         lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 38, 320, 1)];
         [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
         [self addSubview:lineImage];
@@ -48,22 +47,8 @@
 }
 */
 -(void)openView{
-    if(!_isSelect){
-        [arrowImage setFrame:CGRectMake(290, 12, 15, 17.5)];
-        [arrowImage setImage:[UIImage imageNamed:@"03-1_03.png"]];
-        if([delegate respondsToSelector:@selector(openView:)]){
-            [delegate openView:_isSelect];
-        }
-        lineImage.hidden = YES;
-        _isSelect = YES;
-    }else{
-        [arrowImage setFrame:CGRectMake(290, 12, 10, 16.5)];
-        [arrowImage setImage:[UIImage imageNamed:@"03_03.png"]];
-        if([delegate respondsToSelector:@selector(openView:)]){
-            [delegate openView:_isSelect];
-        }
-        lineImage.hidden = NO;
-        _isSelect = NO;
+    if([delegate respondsToSelector:@selector(openView)]){
+        [delegate openView];
     }
 }
 @end

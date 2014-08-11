@@ -28,7 +28,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title = @"MUCH";
-    
+    btnIndex = 0;
     //NavigationBar设置背景图
     self.navigationController.navigationBar.barTintColor = RGBCOLOR(255,228,19);
     
@@ -49,8 +49,9 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     //NavigationItem设置属性
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,[UIFont fontWithName:@"GurmukhiMN-Bold" size:19], NSFontAttributeName,
-                                                                     nil]];
+    UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 71.5, 23)];
+    [titleview setImage:[UIImage imageNamed:@"字2_03.png"]];
+    self.navigationItem.titleView = titleview;
     
     topview = [[HomePageTopView alloc] initWithFrame:CGRectMake(0, 65, 320, 50)];
     topview.delegate = self;
@@ -118,17 +119,27 @@
 }
 
 //homepagetop的delegate
--(void)openView:(BOOL)isSelect{
-    if(!isSelect){
-        if(topcontentview == nil){
-            topcontentview = [[HomePageTopContentView alloc] initWithFrame:CGRectMake(0,104, 320, 85)];
-            [topcontentview setBackgroundColor:[UIColor whiteColor]];
-            [self.view addSubview:topcontentview];
-            topcontentview.alpha = 0.9;
-        }
-    }else{
-        [topcontentview removeFromSuperview];
-        topcontentview = nil;
+-(void)openView{
+    [topview removeFromSuperview];
+    topview = nil;
+    if(topcontentview == nil){
+        topcontentview = [[HomePageTopContentView alloc] initWithFrame:CGRectMake(0,65, 320, 110) index:btnIndex];
+        [topcontentview setBackgroundColor:[UIColor whiteColor]];
+        topcontentview.delegate = self;
+        [self.view addSubview:topcontentview];
+        topcontentview.alpha = 0.9;
     }
+}
+
+//homepagetopcontent的delegate
+-(void)choseView:(NSInteger)index{
+    [topcontentview removeFromSuperview];
+    topcontentview = nil;
+    if(topview == nil){
+        topview = [[HomePageTopView alloc] initWithFrame:CGRectMake(0, 65, 320, 50)];
+        topview.delegate = self;
+        [self.view addSubview:topview];
+    }
+    btnIndex = (int)index;
 }
 @end
