@@ -47,13 +47,13 @@
     smallImageView.image = [UIImage imageWithCGImage:cgimg];
     CGImageRelease(cgimg);//用完一定要释放，否则内存泄露
     [imageView addSubview:smallImageView];
-    [self addSubview:imageView];
+    [self.contentView addSubview:imageView];
     
     UIButton *zanButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [zanButton setFrame:CGRectMake(270, 200, 67/2, 67/2)];
     [zanButton setBackgroundImage:[UIImage imageNamed:@"04_07.png"] forState:UIControlStateNormal];
     [zanButton addTarget:self action:@selector(zanBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:zanButton];
+    [self.contentView addSubview:zanButton];
 }
 
 -(void)zanBtnClick{

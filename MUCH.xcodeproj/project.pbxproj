@@ -77,6 +77,9 @@
 		D348EE621999D8F500066239 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE5D1999D8F500066239 /* EGOImageLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D348EE631999D8F600066239 /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE5F1999D8F500066239 /* EGOImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D348EE651999F09A00066239 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D348EE641999F09A00066239 /* QuartzCore.framework */; };
+		D348EE6D1999F57800066239 /* CenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE6C1999F57800066239 /* CenterTableViewController.m */; };
+		D348EE701999F71400066239 /* CenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE6F1999F71400066239 /* CenterTableViewCell.m */; };
+		D348EE76199A065300066239 /* CenterContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE75199A065300066239 /* CenterContentView.m */; };
 		D361D50F19984F1C004B86AF /* HomePageTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D50E19984F1C004B86AF /* HomePageTopView.m */; };
 		D361D51219985A72004B86AF /* HomePageTopContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D51119985A72004B86AF /* HomePageTopContentView.m */; };
 		D361D51519986C9A004B86AF /* 字_03.png in Resources */ = {isa = PBXBuildFile; fileRef = D361D51319986C9A004B86AF /* 字_03.png */; };
@@ -222,6 +225,12 @@
 		D348EE5E1999D8F500066239 /* EGOImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOImageView.h; sourceTree = "<group>"; };
 		D348EE5F1999D8F500066239 /* EGOImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageView.m; sourceTree = "<group>"; };
 		D348EE641999F09A00066239 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D348EE6B1999F57800066239 /* CenterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterTableViewController.h; sourceTree = "<group>"; };
+		D348EE6C1999F57800066239 /* CenterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterTableViewController.m; sourceTree = "<group>"; };
+		D348EE6E1999F71400066239 /* CenterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterTableViewCell.h; sourceTree = "<group>"; };
+		D348EE6F1999F71400066239 /* CenterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterTableViewCell.m; sourceTree = "<group>"; };
+		D348EE74199A065300066239 /* CenterContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterContentView.h; sourceTree = "<group>"; };
+		D348EE75199A065300066239 /* CenterContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterContentView.m; sourceTree = "<group>"; };
 		D361D50D19984F1C004B86AF /* HomePageTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTopView.h; sourceTree = "<group>"; };
 		D361D50E19984F1C004B86AF /* HomePageTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageTopView.m; sourceTree = "<group>"; };
 		D361D51019985A72004B86AF /* HomePageTopContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTopContentView.h; sourceTree = "<group>"; };
@@ -360,6 +369,7 @@
 		D30DDB321994B897007A8A9C /* MUCH */ = {
 			isa = PBXGroup;
 			children = (
+				D348EE6A1999F56E00066239 /* CenterPage */,
 				D3B149B21999B03700F83FA7 /* DetailPage */,
 				D3B149721998A66300F83FA7 /* Tools */,
 				D3B1495119989F7500F83FA7 /* Login */,
@@ -518,6 +528,19 @@
 				D348EE5D1999D8F500066239 /* EGOImageLoader.m */,
 			);
 			path = EGOImageLoader;
+			sourceTree = "<group>";
+		};
+		D348EE6A1999F56E00066239 /* CenterPage */ = {
+			isa = PBXGroup;
+			children = (
+				D348EE6B1999F57800066239 /* CenterTableViewController.h */,
+				D348EE6C1999F57800066239 /* CenterTableViewController.m */,
+				D348EE6E1999F71400066239 /* CenterTableViewCell.h */,
+				D348EE6F1999F71400066239 /* CenterTableViewCell.m */,
+				D348EE74199A065300066239 /* CenterContentView.h */,
+				D348EE75199A065300066239 /* CenterContentView.m */,
+			);
+			path = CenterPage;
 			sourceTree = "<group>";
 		};
 		D361D51A19987D1D004B86AF /* ReleasePage */ = {
@@ -829,10 +852,12 @@
 				D348EE601999D8F500066239 /* EGOCache.m in Sources */,
 				D348EE4B1999CCBB00066239 /* DetailContentTableViewCell.m in Sources */,
 				D3B1495419989F8B00F83FA7 /* LoginViewController.m in Sources */,
+				D348EE701999F71400066239 /* CenterTableViewCell.m in Sources */,
 				D361D51219985A72004B86AF /* HomePageTopContentView.m in Sources */,
 				D348EE631999D8F600066239 /* EGOImageView.m in Sources */,
 				D3B149981998DA4800F83FA7 /* UIImage+BoxBlur.m in Sources */,
 				D3B149B81999B4F700F83FA7 /* DetailHeadTableViewCell.m in Sources */,
+				D348EE76199A065300066239 /* CenterContentView.m in Sources */,
 				D348EE541999D2CF00066239 /* Message.m in Sources */,
 				D348EE611999D8F500066239 /* EGOImageLoadConnection.m in Sources */,
 				D361D50F19984F1C004B86AF /* HomePageTopView.m in Sources */,
@@ -843,6 +868,7 @@
 				D3B149A71999A3DA00F83FA7 /* CSqlite.m in Sources */,
 				D30DDB5E1994CCED007A8A9C /* HomePageViewController.m in Sources */,
 				D30DDBBA1996230C007A8A9C /* HomePageTableViewCell.m in Sources */,
+				D348EE6D1999F57800066239 /* CenterTableViewController.m in Sources */,
 				D3B149B51999B04A00F83FA7 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -115,7 +115,6 @@
     msg.name = @"wywyw";
     msg.type = MessageTypeMe;
     [_allMessages insertObject:msg atIndex:0];
-    // 2、刷新表格
     [_tableView reloadData];
     // 3、滚动至当前行
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessages.count - 1 inSection:0];

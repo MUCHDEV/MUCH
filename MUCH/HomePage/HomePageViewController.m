@@ -99,7 +99,8 @@
 }
 */
 -(void)leftBtnClick{
-    NSLog(@"leftBtnClick");
+    centerview = [[CenterTableViewController alloc] init];
+    [self.navigationController pushViewController:centerview animated:YES];
 }
 
 -(void)rightBtnClick{

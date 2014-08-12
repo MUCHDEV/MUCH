@@ -53,20 +53,20 @@
         [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
         [headView addSubview:lineImage];
     }
-    [self addSubview:headView];
+    [self.contentView addSubview:headView];
     
     headimage = [[EGOImageView alloc] initWithFrame:CGRectMake(20, 20, 52/2, 51/2)];
     headimage.placeholderImage=[UIImage imageNamed:@"04_20.png"];
     headimage.layer.cornerRadius = 3;
     headimage.layer.masksToBounds = YES;
-    [self addSubview:headimage];
+    [self.contentView addSubview:headimage];
     
     content =  [[UILabel alloc] initWithFrame:CGRectMake(60,10,240,40)];
     [content setNumberOfLines:2];
     content.textColor = [UIColor blackColor];
     content.textAlignment=NSTextAlignmentLeft;
     content.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
-    [self addSubview:content];
+    [self.contentView addSubview:content];
 }
 
 - (void)setMessageModel:(Message *)messageModel{

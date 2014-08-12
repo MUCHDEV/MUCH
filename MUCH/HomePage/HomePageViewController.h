@@ -16,6 +16,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CSqlite.h"
 #import "DetailViewController.h"
+#import "CenterTableViewController.h"
 @interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate,CLLocationManagerDelegate>{
     HomePageTopView *topview;
     HomePageTopContentView *topcontentview;
@@ -30,6 +31,7 @@
     float longitude;
     CSqlite *m_sqlite;
     DetailViewController *detailview;
+    CenterTableViewController *centerview;
 }
 
 @end

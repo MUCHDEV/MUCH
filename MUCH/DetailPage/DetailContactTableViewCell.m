@@ -36,24 +36,24 @@
 -(void)setContent{
     UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 47.5, 47.5)];
     [headView setImage:[UIImage imageNamed:@"06_11.png"]];
-    [self addSubview:headView];
+    [self.contentView addSubview:headView];
     
     UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 140, 20)];
     name.text = @"Natalia Vodianova";
     name.textColor = [UIColor blackColor];
     name.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
-    [self addSubview:name];
+    [self.contentView addSubview:name];
     
     UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(70, 25, 140, 20)];
     price.text = @"￥10.24";
     price.textColor = [UIColor blackColor];
     price.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
-    [self addSubview:price];
+    [self.contentView addSubview:price];
     
     UILabel *distance = [[UILabel alloc] initWithFrame:CGRectMake(240, 0, 140, 20)];
     distance.text = @"距您120m";
     distance.textColor = [UIColor grayColor];
     distance.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
-    [self addSubview:distance];
+    [self.contentView addSubview:distance];
 }
 @end
