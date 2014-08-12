@@ -66,14 +66,26 @@
     [self.view addSubview:_tableView];
     
     if(showArr.count == 0){
-        [showArr addObject:@"0"];
+        [showArr addObject:@"1"];
     }
+    
+    m_sqlite = [[CSqlite alloc]init];
+    [m_sqlite openSqlite];
+    locationManager = [[CLLocationManager alloc] init];//创建位置管理器
+    locationManager.delegate=self;
+    locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+    locationManager.distanceFilter=1000.0f;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    //启动位置更新
+    //[locationManager startUpdatingLocation];
 }
 
 /*
@@ -163,6 +175,11 @@
     return 120;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    detailview = [[DetailViewController alloc] init];
+    [self.navigationController pushViewController:detailview animated:YES];
+}
+
 //homepagetop的delegate
 -(void)openView{
     [topview removeFromSuperview];
@@ -197,5 +214,43 @@
 
 -(void)addImage{
     [self rightBtnClick];
+}
+
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    //此处locations存储了持续更新的位置坐标值，取最后一个值为最新位置，如果不想让其持续更新位置，则在此方法中获取到一个值之后让locationManager stopUpdatingLocation
+    CLLocation *currentLocation = [locations lastObject];
+    CLLocationCoordinate2D coor = currentLocation.coordinate;
+    coor = [self zzTransGPS:coor];
+    latitude =  coor.latitude;
+    longitude = coor.longitude;
+    [locationManager stopUpdatingLocation];
+    NSLog(@"%f",latitude);
+    NSLog(@"%f",longitude);
+}
+
+-(CLLocationCoordinate2D)zzTransGPS:(CLLocationCoordinate2D)yGps
+{
+    int TenLat=0;
+    int TenLog=0;
+    TenLat = (int)(yGps.latitude*10);
+    TenLog = (int)(yGps.longitude*10);
+    NSString *sql = [[NSString alloc]initWithFormat:@"select offLat,offLog from gpsT where lat=%d and log = %d",TenLat,TenLog];
+    sqlite3_stmt* stmtL = [m_sqlite NSRunSql:sql];
+    int offLat=0;
+    int offLog=0;
+    while (sqlite3_step(stmtL)==SQLITE_ROW)
+    {
+        offLat = sqlite3_column_int(stmtL, 0);
+        offLog = sqlite3_column_int(stmtL, 1);
+        
+    }
+    
+    yGps.latitude = yGps.latitude+offLat*0.0001;
+    yGps.longitude = yGps.longitude + offLog*0.0001;
+    return yGps;
+    
+    
 }
 @end

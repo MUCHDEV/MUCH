@@ -13,7 +13,10 @@
 #import "ReleasePageViewController.h"
 #import "HomePageTableViewCell.h"
 #import "HomePageDefaultTableViewCell.h"
-@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate>{
+#import <CoreLocation/CoreLocation.h>
+#import "CSqlite.h"
+#import "DetailViewController.h"
+@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate,CLLocationManagerDelegate>{
     HomePageTopView *topview;
     HomePageTopContentView *topcontentview;
     UITableView *_tableView;
@@ -22,6 +25,11 @@
     UIActionSheet *_myActionSheet;
     Camera *camera;
     ReleasePageViewController *releasepageview;
+    CLLocationManager *locationManager;
+    float latitude;
+    float longitude;
+    CSqlite *m_sqlite;
+    DetailViewController *detailview;
 }
 
 @end

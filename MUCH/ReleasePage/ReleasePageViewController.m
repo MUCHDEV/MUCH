@@ -47,12 +47,12 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 70, 616/2, 478/2)];
-    [imageView setBackgroundColor:[UIColor whiteColor]];
+    [imageView setImage:[UIImage imageNamed:@"04-1_03.png"]];
     
     //图片裁剪
     UIImage *srcimg = image;
     UIImageView *smallImageView = [[UIImageView alloc] init];
-    smallImageView.frame = CGRectMake(4, 4, 601/2, 461/2);
+    smallImageView.frame = CGRectMake(4, 2, 601/2, 461/2);
     CGRect rect =  CGRectMake(19.5, 89.5, 601, 461);//要裁剪的图片区域，按照原图的像素大小来，超过原图大小的边自动适配
     CGImageRef cgimg = CGImageCreateWithImageInRect([srcimg CGImage], rect);
     smallImageView.image = [UIImage imageWithCGImage:cgimg];

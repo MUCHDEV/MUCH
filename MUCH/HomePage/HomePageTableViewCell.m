@@ -103,7 +103,7 @@
     lineImage.alpha = 0.2;
     
     pricelabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 87, 100, 30)];
-    pricelabel.text = @"$ 12.00";
+    pricelabel.text = @"￥ 12.00";
     pricelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
     pricelabel.textColor = RGBCOLOR(237, 100, 162);
     [self addSubview:pricelabel];
@@ -119,7 +119,7 @@
     [self addSubview:goodlabel];
     
     bigImage = [[UIImageView alloc] initWithFrame:CGRectMake(210, 12, 100, 100)];
-    [bigImage setBackgroundColor:[UIColor redColor]];
+    [bigImage setImage:[UIImage imageNamed:@"nature.jpg"]];
     [self addSubview:bigImage];
 }
 @end

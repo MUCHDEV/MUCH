@@ -14,5 +14,11 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+//sina
+#import "WeiboSDK.h"
+#define kAppKey         @"2045436852"
+#define kRedirectURI    @"https://api.weibo.com/oauth2/default.html"
+
 //RGB的宏
 #define RGBCOLOR(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0] 

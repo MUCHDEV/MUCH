@@ -8,16 +8,32 @@
 
 #import "AppDelegate.h"
 #import "HomePageViewController.h"
+#import "LoginViewController.h"
+@interface WBBaseRequest ()
+- (void)debugPrint;
+@end
+
+@interface WBBaseResponse ()
+- (void)debugPrint;
+@end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:kAppKey];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     HomePageViewController *homepage = [[HomePageViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homepage];
     self.window.rootViewController = nav;
+    
+    //LoginViewController *login = [[LoginViewController alloc] init];
+    //self.window.rootViewController = login;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -49,4 +65,12 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    
+    return [TencentOAuth HandleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return [TencentOAuth HandleOpenURL:url];
+}
 @end
