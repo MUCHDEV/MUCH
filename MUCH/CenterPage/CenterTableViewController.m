@@ -147,7 +147,26 @@
         
         UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(1, 15, 30, 30)];
         [imageview setImage:[UIImage imageNamed:@"06_18.png"]];
-        [cell addSubview:imageview];
+        [cell.contentView addSubview:imageview];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+        NSString *time = [dateFormatter stringFromDate:[NSDate date]];
+        NSArray *arr = [time componentsSeparatedByString:@"-"];
+        
+        UILabel *day = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 30, 10)];
+        day.text = [NSString stringWithFormat:@"%@",[arr objectAtIndex:2]];
+        day.font = [UIFont fontWithName:@"GurmukhiMN-Bold" size:13];
+        day.textColor = [UIColor whiteColor];
+        day.textAlignment = NSTextAlignmentCenter;
+        [cell.contentView addSubview:day];
+        
+        UILabel *month = [[UILabel alloc] initWithFrame:CGRectMake(1, 32, 30, 10)];
+        month.text = [NSString stringWithFormat:@"%d月",[[arr objectAtIndex:1] integerValue]];
+        month.font = [UIFont fontWithName:@"GurmukhiMN-Bold" size:9];
+        month.textColor = [UIColor whiteColor];
+        month.textAlignment = NSTextAlignmentCenter;
+        [cell.contentView addSubview:month];
         return cell;
     }
 }
@@ -164,5 +183,10 @@
     return 44;
 }
 
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row == 0){
+        detailview = [[CenterDetailTableViewController alloc] init];
+        [self.navigationController pushViewController:detailview animated:YES];
+    }
+}
 @end

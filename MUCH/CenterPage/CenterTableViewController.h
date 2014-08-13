@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "CenterContentView.h"
+#import "CenterDetailTableViewController.h"
 @interface CenterTableViewController : UITableViewController{
     NSMutableArray *viewArr;
     NSMutableArray *imageArr;
     CenterContentView *centercontentview;
+    CenterDetailTableViewController *detailview;
 }
 
 @end
