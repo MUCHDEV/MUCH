@@ -144,10 +144,104 @@
 }
 
 -(void)registerbtnClick{
-    NSLog(@"registerbtnClick");
+    flag = 1;
+    [self setBackGroundView];
 }
 
 -(void)loginbtnClick{
+    flag = 0;
+    [self setBackGroundView];
+}
+
+-(void)gotologinClick{
+    [UIView animateWithDuration:0.3 animations:^{
+        contentview2.frame=CGRectMake(320, 347/2-91/2, 549/2, 215);
+    }];
+    if(contentview == nil){
+        NSLog(@"asdfasdf");
+        contentview = [[UIView alloc] initWithFrame:CGRectMake(-(549/2), 347/2-91/2, 549/2, 170)];
+        [self setLoginView];
+        [UIView animateWithDuration:0.3 animations:^{
+            contentview.frame=CGRectMake(22.75, 347/2-91/2, 549/2, 170);
+        }];
+        
+        [bgview addSubview:contentview];
+    }else{
+        [UIView animateWithDuration:0.3 animations:^{
+            contentview.frame=CGRectMake(22.75, 347/2-91/2, 549/2, 170);
+        }];
+    }
+}
+
+-(void)registerClick{
+    [UIView animateWithDuration:0.3 animations:^{
+        contentview.frame=CGRectMake(-(549/2), 347/2-91/2, 549/2, 170);
+    }];
+    
+    if(contentview2 == nil){
+        contentview2 = [[UIView alloc] initWithFrame:CGRectMake(320, 347/2-91/2, 549/2, 215)];
+        [self setRegisterView];
+        [UIView animateWithDuration:0.3 animations:^{
+            contentview2.frame=CGRectMake(22.75, 347/2-91/2, 549/2, 215);
+        }];
+        
+        [bgview addSubview:contentview2];
+    }else{
+        [UIView animateWithDuration:0.3 animations:^{
+            contentview2.frame=CGRectMake(22.75, 347/2-91/2, 549/2, 215);
+        }];
+    }
+}
+
+-(void)removebtnClick{
+    [bgview removeFromSuperview];
+    bgview = nil;
+    [contentview removeFromSuperview];
+    contentview = nil;
+    [contentview2 removeFromSuperview];
+    contentview2 = nil;
+}
+
+-(void)beginRecoginzer{
+    [bgImageView blurInAnimationWithDuration:0.25f];
+    [_userNameTextField becomeFirstResponder];
+    contentview = [[UIView alloc] initWithFrame:CGRectMake(22.75, -100, 549/2, 170)];
+    
+    [self setLoginView];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        contentview.frame=CGRectMake(22.75, 347/2-91/2, 549/2, 170);
+    }];
+    
+    [bgview addSubview:contentview];
+}
+
+-(void)beginRecoginzer2{
+    [bgImageView blurInAnimationWithDuration:0.25f];
+    contentview2 = [[UIView alloc] initWithFrame:CGRectMake(22.75, -100, 549/2, 215)];
+    [self setRegisterView];
+    [UIView animateWithDuration:0.3 animations:^{
+        contentview2.frame=CGRectMake(22.75, 347/2-91/2, 549/2, 215);
+    }];
+    
+    [bgview addSubview:contentview2];
+}
+
+-(void)restPassWordClick{
+    NSLog(@"restPassWordClick");
+}
+
+-(void)loginClick{
+    NSLog(@"loginClick");
+}
+
+-(void)registeredClick{
+    NSLog(@"registeredClick");
+}
+
+
+
+-(void)setBackGroundView{
     UIGraphicsBeginImageContext(self.view.frame.size); //currentView 当前的view
     [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -164,25 +258,21 @@
     blackimage.alpha = 0.5;
     [bgview addSubview:blackimage];
     [self.view addSubview:bgview];
-    [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector: @selector(beginRecoginzer)  userInfo:nil repeats:NO];
     
     UIButton *removebtn =  [UIButton buttonWithType:UIButtonTypeCustom];
-    removebtn.frame = CGRectMake(280, 40, 31/2, 29/2);
+    removebtn.frame = CGRectMake(280, 40, 20, 20);
     [removebtn setBackgroundImage:[UIImage imageNamed:@"09-2_03.png"] forState:UIControlStateNormal];
     [removebtn addTarget:self action:@selector(removebtnClick) forControlEvents:UIControlEventTouchUpInside];
     [bgview addSubview:removebtn];
-}
-
--(void)removebtnClick{
-    [bgview removeFromSuperview];
-    bgview = nil;
-}
-
--(void)beginRecoginzer{
-    [bgImageView blurInAnimationWithDuration:0.25f];
-    [_userNameTextField becomeFirstResponder];
-    UIView *contentview = [[UIView alloc] initWithFrame:CGRectMake(22.75, -100, 549/2, 170)];
     
+    if(flag ==0){
+        [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector: @selector(beginRecoginzer)  userInfo:nil repeats:NO];
+    }else{
+        [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector: @selector(beginRecoginzer2)  userInfo:nil repeats:NO];
+    }
+}
+
+-(void)setLoginView{
     UIButton *restPassWord =  [UIButton buttonWithType:UIButtonTypeCustom];
     restPassWord.frame = CGRectMake(0, 0, 100, 30);
     [restPassWord setTitle:@"忘记密码？" forState:UIControlStateNormal];
@@ -196,7 +286,7 @@
     [regist setTitle:@"注册" forState:UIControlStateNormal];
     regist.titleLabel.font = [UIFont fontWithName:@"GurmukhiMN-Bold" size:17];
     regist.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    [regist addTarget:self action:@selector(registerbtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [regist addTarget:self action:@selector(registerClick) forControlEvents:UIControlEventTouchUpInside];
     [contentview addSubview:regist];
     
     UIImageView *bgimage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 35, 549/2, 171/2)];
@@ -225,24 +315,67 @@
     [_userNameTextField becomeFirstResponder];
     
     UIButton *login =  [UIButton buttonWithType:UIButtonTypeCustom];
-    login.frame = CGRectMake(0, 125, 545/2, 40);
+    login.frame = CGRectMake(0, 125, 549/2, 40);
     [login setBackgroundImage:[UIImage imageNamed:@"登陆_03.png"] forState:UIControlStateNormal];
     [login addTarget:self action:@selector(loginClick) forControlEvents:UIControlEventTouchUpInside];
     [contentview addSubview:login];
-    
-    [UIView animateWithDuration:1 animations:^{
-        contentview.frame=CGRectMake(22.75, 347/2, 549/2, 170);
-    }];
-    
-    [bgview addSubview:contentview];
 }
 
--(void)restPassWordClick{
-    NSLog(@"restPassWordClick");
-}
-
--(void)loginClick{
-    NSLog(@"loginClick");
+-(void)setRegisterView{
+    UIImageView *bgimage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 35, 552/2, 262/2)];
+    [bgimage setImage:[UIImage imageNamed:@"09-2_032.png"]];
+    [contentview2 addSubview:bgimage];
+    
+    UIButton *restPassWord =  [UIButton buttonWithType:UIButtonTypeCustom];
+    restPassWord.frame = CGRectMake(0, 0, 100, 30);
+    [restPassWord setTitle:@"忘记密码？" forState:UIControlStateNormal];
+    restPassWord.titleLabel.font = [UIFont fontWithName:@"GurmukhiMN-Bold" size:17];
+    restPassWord.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [restPassWord addTarget:self action:@selector(restPassWordClick) forControlEvents:UIControlEventTouchUpInside];
+    [contentview2 addSubview:restPassWord];
+    
+    UIButton *gotologin =  [UIButton buttonWithType:UIButtonTypeCustom];
+    gotologin.frame = CGRectMake(170, 0, 100, 30);
+    [gotologin setTitle:@"登录" forState:UIControlStateNormal];
+    gotologin.titleLabel.font = [UIFont fontWithName:@"GurmukhiMN-Bold" size:17];
+    gotologin.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    [gotologin addTarget:self action:@selector(gotologinClick) forControlEvents:UIControlEventTouchUpInside];
+    [contentview2 addSubview:gotologin];
+    
+    UIButton *registered =  [UIButton buttonWithType:UIButtonTypeCustom];
+    registered.frame = CGRectMake(0, 172, 552/2, 40);
+    [registered setBackgroundImage:[UIImage imageNamed:@"注册_03.png"] forState:UIControlStateNormal];
+    [registered addTarget:self action:@selector(registeredClick) forControlEvents:UIControlEventTouchUpInside];
+    [contentview2 addSubview:registered];
+    
+    _passWordTextField = [[UITextField alloc] initWithFrame:CGRectMake(50,40,549/2-140,30)];
+    _passWordTextField.delegate = self;
+    _passWordTextField.textAlignment=NSTextAlignmentLeft;
+    _passWordTextField.placeholder=@"请输入手机号码";
+    _passWordTextField.returnKeyType=UIReturnKeyDone;
+    _passWordTextField.font =  [UIFont systemFontOfSize:15];
+    [_passWordTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [contentview2 addSubview:_passWordTextField];
+    
+    _yzmTextField = [[UITextField alloc] initWithFrame:CGRectMake(50,85,549/2-52,30)];
+    _yzmTextField.delegate = self;
+    _yzmTextField.textAlignment=NSTextAlignmentLeft;
+    _yzmTextField.placeholder=@"请输入验证码";
+    _yzmTextField.returnKeyType=UIReturnKeyDone;
+    _yzmTextField.font =  [UIFont systemFontOfSize:15];
+    [_yzmTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [contentview2 addSubview:_yzmTextField];
+    
+    _newPassWordTextField = [[UITextField alloc] initWithFrame:CGRectMake(50,125,549/2-52,30)];
+    _newPassWordTextField.delegate = self;
+    _newPassWordTextField.textAlignment=NSTextAlignmentLeft;
+    _newPassWordTextField.placeholder=@"请输入密码";
+    _newPassWordTextField.returnKeyType=UIReturnKeyDone;
+    _newPassWordTextField.font =  [UIFont systemFontOfSize:15];
+    [_newPassWordTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [contentview2 addSubview:_newPassWordTextField];
+    
+    [_passWordTextField becomeFirstResponder];
 }
 
 //qq登录成功

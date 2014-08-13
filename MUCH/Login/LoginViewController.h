@@ -16,6 +16,13 @@
     UIView *bgview;
     UITextField *_userNameTextField;
     UITextField *_passWordTextField;
+    UITextField *_phoneTextField;
+    UITextField *_yzmTextField;
+    UITextField *_newPassWordTextField;
+    UIView *contentview;//登录
+    UIView *contentview2;//注册
+    
+    int flag;//0登录 1注册
 }
 @property (nonatomic,strong) NSString *wbtoken;
 @end

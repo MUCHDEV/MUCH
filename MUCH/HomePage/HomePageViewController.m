@@ -57,8 +57,7 @@
     [self.view addSubview:topview];
     
     showArr = [[NSMutableArray alloc] init];
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, topview.frame.size.height+self.navigationController.navigationBar.frame.size.height+10, 320, self.view.frame.size.height-self.navigationController.navigationBar.frame.size.height-topview.frame.size.height)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, 320, 474)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = NO;
@@ -183,8 +182,7 @@
 
 //homepagetop的delegate
 -(void)openView{
-    [topview removeFromSuperview];
-    topview = nil;
+    topview.hidden = YES;
     if(topcontentview == nil){
         topcontentview = [[HomePageTopContentView alloc] initWithFrame:CGRectMake(0,65, 320, 110) index:btnIndex];
         [topcontentview setBackgroundColor:[UIColor whiteColor]];
@@ -198,11 +196,7 @@
 -(void)choseView:(NSInteger)index{
     [topcontentview removeFromSuperview];
     topcontentview = nil;
-    if(topview == nil){
-        topview = [[HomePageTopView alloc] initWithFrame:CGRectMake(0, 65, 320, 50)];
-        topview.delegate = self;
-        [self.view addSubview:topview];
-    }
+    topview.hidden = NO;
     btnIndex = (int)index;
 }
 

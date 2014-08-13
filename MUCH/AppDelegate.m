@@ -28,12 +28,12 @@
     [WeiboSDK registerApp:kAppKey];
     
     self.window.backgroundColor = [UIColor whiteColor];
-    HomePageViewController *homepage = [[HomePageViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homepage];
-    self.window.rootViewController = nav;
+    //HomePageViewController *homepage = [[HomePageViewController alloc] init];
+    //UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homepage];
+    //self.window.rootViewController = nav;
     
-    //LoginViewController *login = [[LoginViewController alloc] init];
-    //self.window.rootViewController = login;
+    LoginViewController *login = [[LoginViewController alloc] init];
+    self.window.rootViewController = login;
     [self.window makeKeyAndVisible];
     return YES;
 }
