@@ -7,7 +7,7 @@
 //
 
 #import "ReleasePageViewController.h"
-
+#import "GTMBase64.h"
 @interface ReleasePageViewController ()
 
 @end
@@ -99,6 +99,6 @@
 }
 
 -(void)rightBtnClick{
-    
+    // NSString* encoded = [[NSString alloc] initWithData:[GTMBase64 encodeData:photo2] encoding:NSUTF8StringEncoding];
 }
 @end

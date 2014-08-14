@@ -114,6 +114,7 @@
 		D3763A0B199C984D0052E775 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3763A0A199C984D0052E775 /* MobileCoreServices.framework */; };
 		D3763A0E199C98A10052E775 /* RegisterEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D3763A0D199C98A10052E775 /* RegisterEvent.m */; };
 		D3763A12199C997B0052E775 /* AFAppDotNetAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = D3763A11199C997B0052E775 /* AFAppDotNetAPIClient.m */; };
+		D3763A18199CCAE60052E775 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = D3763A15199CCAE60052E775 /* GTMBase64.m */; };
 		D3B1495419989F8B00F83FA7 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B1495319989F8B00F83FA7 /* LoginViewController.m */; };
 		D3B149641998A64600F83FA7 /* buttonhover.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B149561998A64600F83FA7 /* buttonhover.png */; };
 		D3B149651998A64600F83FA7 /* buttonnormal.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B149571998A64600F83FA7 /* buttonnormal.png */; };
@@ -314,6 +315,10 @@
 		D3763A0D199C98A10052E775 /* RegisterEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterEvent.m; sourceTree = "<group>"; };
 		D3763A10199C997B0052E775 /* AFAppDotNetAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFAppDotNetAPIClient.h; sourceTree = "<group>"; };
 		D3763A11199C997B0052E775 /* AFAppDotNetAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFAppDotNetAPIClient.m; sourceTree = "<group>"; };
+		D3763A14199CCAE60052E775 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		D3763A15199CCAE60052E775 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		D3763A16199CCAE60052E775 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		D3763A17199CCAE60052E775 /* GTMObjectSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMObjectSingleton.h; sourceTree = "<group>"; };
 		D3B1495219989F8B00F83FA7 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		D3B1495319989F8B00F83FA7 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		D3B149561998A64600F83FA7 /* buttonhover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonhover.png; sourceTree = "<group>"; };
@@ -682,6 +687,17 @@
 			path = AfNetWork;
 			sourceTree = "<group>";
 		};
+		D3763A13199CCAE60052E775 /* GTM */ = {
+			isa = PBXGroup;
+			children = (
+				D3763A14199CCAE60052E775 /* GTMBase64.h */,
+				D3763A15199CCAE60052E775 /* GTMBase64.m */,
+				D3763A16199CCAE60052E775 /* GTMDefines.h */,
+				D3763A17199CCAE60052E775 /* GTMObjectSingleton.h */,
+			);
+			path = GTM;
+			sourceTree = "<group>";
+		};
 		D3B1495119989F7500F83FA7 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,6 +733,7 @@
 		D3B149721998A66300F83FA7 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				D3763A13199CCAE60052E775 /* GTM */,
 				D3763A0F199C997B0052E775 /* AfNetWork */,
 				D37639D3199C98070052E775 /* AFNetworking */,
 				D37639E7199C98070052E775 /* UIKit+AFNetworking */,
@@ -1026,6 +1043,7 @@
 				D37639FB199C98070052E775 /* AFHTTPSessionManager.m in Sources */,
 				D348EE6D1999F57800066239 /* CenterTableViewController.m in Sources */,
 				D3B149B51999B04A00F83FA7 /* DetailViewController.m in Sources */,
+				D3763A18199CCAE60052E775 /* GTMBase64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

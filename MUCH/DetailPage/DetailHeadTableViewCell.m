@@ -51,7 +51,7 @@
     [self.contentView addSubview:imageView];
     
     UIButton *zanButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [zanButton setFrame:CGRectMake(270, 200, 67/2, 67/2)];
+    [zanButton setFrame:CGRectMake(260, 190, 67/2, 67/2)];
     [zanButton setBackgroundImage:[UIImage imageNamed:(i%2==0?@"04_09.png":@"04_07.png")] forState:UIControlStateNormal];
     [zanButton addTarget:self action:@selector(zanBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:zanButton];

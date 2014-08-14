@@ -47,8 +47,8 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     //NavigationItem设置属性
-    UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 71.5, 23)];
-    [titleview setImage:[UIImage imageNamed:@"字2_03.png"]];
+    UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    [titleview setImage:[UIImage imageNamed:@"03-2_033.png"]];
     self.navigationItem.titleView = titleview;
     
     NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"1",@"type",nil];
