@@ -16,6 +16,7 @@
     if (self) {
         // Initialization code
         image = img;
+        i=0;
         [self setBackgroundColor:[UIColor clearColor]];
         [self setContent];
     }
@@ -51,12 +52,20 @@
     
     UIButton *zanButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [zanButton setFrame:CGRectMake(270, 200, 67/2, 67/2)];
-    [zanButton setBackgroundImage:[UIImage imageNamed:@"04_07.png"] forState:UIControlStateNormal];
-    [zanButton addTarget:self action:@selector(zanBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [zanButton setBackgroundImage:[UIImage imageNamed:(i%2==0?@"04_09.png":@"04_07.png")] forState:UIControlStateNormal];
+    [zanButton addTarget:self action:@selector(zanBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:zanButton];
 }
 
--(void)zanBtnClick{
-    NSLog(@"zanBtnClick");
+-(void)zanBtnClick:(UIButton *)button{
+    //点赞动画
+    [button setBackgroundImage:[UIImage imageNamed:(i%2==0?@"04_07.png":@"04_09.png")] forState:UIControlStateNormal];
+    CAKeyframeAnimation *k = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    k.values = @[@(0.1),@(1.0),@(1.5)];
+    k.keyTimes = @[@(0.0),@(0.5),@(0.8),@(1.0)];
+    k.calculationMode = kCAAnimationLinear;
+    
+    i++;
+    [button.layer addAnimation:k forKey:@"SHOW"];
 }
 @end

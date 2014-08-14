@@ -10,6 +10,7 @@
 
 @interface DetailHeadTableViewCell : UITableViewCell{
     UIImage *image;
+    int i;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier img:(UIImage *)img;
 @end

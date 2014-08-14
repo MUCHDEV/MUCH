@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import "RegisterEvent.h"
 @interface LoginViewController ()
 
 @end
@@ -236,7 +237,12 @@
 }
 
 -(void)registeredClick{
-    NSLog(@"registeredClick");
+    NSLog(@"%@",_phoneTextField.text);
+    [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
+        if(!error){
+            NSLog(@"posts ==> %@",posts);
+        }
+    } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text];
 }
 
 
@@ -348,14 +354,14 @@
     [registered addTarget:self action:@selector(registeredClick) forControlEvents:UIControlEventTouchUpInside];
     [contentview2 addSubview:registered];
     
-    _passWordTextField = [[UITextField alloc] initWithFrame:CGRectMake(50,40,549/2-140,30)];
-    _passWordTextField.delegate = self;
-    _passWordTextField.textAlignment=NSTextAlignmentLeft;
-    _passWordTextField.placeholder=@"请输入手机号码";
-    _passWordTextField.returnKeyType=UIReturnKeyDone;
-    _passWordTextField.font =  [UIFont systemFontOfSize:15];
-    [_passWordTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [contentview2 addSubview:_passWordTextField];
+    _phoneTextField = [[UITextField alloc] initWithFrame:CGRectMake(50,40,549/2-140,30)];
+    _phoneTextField.delegate = self;
+    _phoneTextField.textAlignment=NSTextAlignmentLeft;
+    _phoneTextField.placeholder=@"请输入手机号码";
+    _phoneTextField.returnKeyType=UIReturnKeyDone;
+    _phoneTextField.font =  [UIFont systemFontOfSize:15];
+    [_phoneTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [contentview2 addSubview:_phoneTextField];
     
     _yzmTextField = [[UITextField alloc] initWithFrame:CGRectMake(50,85,549/2-52,30)];
     _yzmTextField.delegate = self;
@@ -375,8 +381,9 @@
     [_newPassWordTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [contentview2 addSubview:_newPassWordTextField];
     
-    [_passWordTextField becomeFirstResponder];
+    [_phoneTextField becomeFirstResponder];
 }
+
 
 //qq登录成功
 - (void)tencentDidLogin {
