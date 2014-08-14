@@ -14,8 +14,11 @@
     int arrIndex;
     EGOImageView *headimage;
     UILabel *content;
+    UIImageView *headView;
+    UIImageView *lineImage;
 }
 
 @property (nonatomic, strong) Message *messageModel;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier indexRow:(int)indexRow arrCount:(int)arrCount;
+-(void)setNewBgView:(int)newIndex newArrCount:(int)newArrCount;
 @end

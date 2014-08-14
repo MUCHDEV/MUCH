@@ -117,8 +117,8 @@
     [_allMessages insertObject:msg atIndex:0];
     [_tableView reloadData];
     // 3、滚动至当前行
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessages.count - 1 inSection:0];
-    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessages.count - 1 inSection:0];
+    //[_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -141,10 +141,12 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
-        NSString *stringcell = @"DetailContentTableViewCell";
+        NSString *stringcell = @"DetailContentTableViewCell%d";
         DetailContentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
         if(!cell){
-            cell = [[DetailContentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell indexRow:indexPath.row-2 arrCount:[_allMessages count]] ;
+            cell = [[DetailContentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell indexRow:indexPath.row arrCount:[_allMessages count]] ;
+        }else{
+            [cell setNewBgView:indexPath.row-1 newArrCount:[_allMessages count]];
         }
         cell.messageModel = _allMessages[indexPath.row-2];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

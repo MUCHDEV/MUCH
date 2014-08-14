@@ -16,7 +16,7 @@
     if (self) {
         // Initialization code
         [self setBackgroundColor:[UIColor clearColor]];
-        index = indexRow;
+        index = indexRow-1;
         arrIndex = arrCount;
         [self setContent];
     }
@@ -36,21 +36,19 @@
 }
 
 -(void)setContent{
-    UIImageView *headView = [[UIImageView alloc] init];
-    if(index == 0){
+    headView = [[UIImageView alloc] init];
+    lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
+    [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
+    if(index == 1){
         [headView setFrame:CGRectMake(8.25, 0, 607/2, 109/2)];
         [headView setImage:[UIImage imageNamed:@"04_032.png"]];
-        UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
-        [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
         [headView addSubview:lineImage];
-    }else if(index+1 == arrIndex){
+    }else if(index == arrIndex){
         [headView setFrame:CGRectMake(8.25, 0, 607/2, 98/2)];
         [headView setImage:[UIImage imageNamed:@"04_062.png"]];
     }else{
         [headView setFrame:CGRectMake(8.25, 0, 607/2, 98/2)];
         [headView setImage:[UIImage imageNamed:@"04_052.png"]];
-        UIImageView *lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
-        [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
         [headView addSubview:lineImage];
     }
     [self.contentView addSubview:headView];
@@ -77,5 +75,21 @@
         [attStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, messageModel.name.length)];
     }
     content.attributedText = attStr;
+}
+
+-(void)setNewBgView:(int)newIndex newArrCount:(int)newArrCount{
+    if(lineImage == nil){
+        lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
+    }
+    [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
+    if(newIndex == 1){
+        [headView setImage:[UIImage imageNamed:@"04_032.png"]];
+        [headView addSubview:lineImage];
+    }else if(newIndex == newArrCount){
+        [headView setImage:[UIImage imageNamed:@"04_062.png"]];
+    }else{
+        [headView setImage:[UIImage imageNamed:@"04_052.png"]];
+        [headView addSubview:lineImage];
+    }
 }
 @end
