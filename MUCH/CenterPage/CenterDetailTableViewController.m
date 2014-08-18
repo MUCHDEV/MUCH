@@ -9,6 +9,7 @@
 #import "CenterDetailTableViewController.h"
 #import "RegisterEvent.h"
 #import <QuartzCore/QuartzCore.h>
+#import "GTMBase64.h"
 @interface CenterDetailTableViewController ()
 
 @end
@@ -298,7 +299,7 @@
 }
 
 -(void)setBigImage:(UIImage *)img{
-    headImage = img;
+    /*headImage = img;
      NSData *data = UIImageJPEGRepresentation(img, 0.8);
     //图片保存的路径
     //这里将图片放在沙盒的documents文件夹中
@@ -310,6 +311,13 @@
     [fileManager createFileAtPath:[DocumentsPath stringByAppendingString:@"/image.png"] contents:data attributes:nil];
     //得到选择后沙盒中图片的完整路径
     _filePath = [[NSString alloc]initWithFormat:@"%@%@",DocumentsPath,  @"/image.png"];
-    [self.tableView reloadData];
+    [self.tableView reloadData];*/
+    NSData *photo = UIImageJPEGRepresentation(img, 0.8);
+    NSString* encoded = [[NSString alloc] initWithData:[GTMBase64 encodeData:photo] encoding:NSUTF8StringEncoding];
+    [RegisterEvent UpdataHeadWithBlock:^(NSMutableArray *posts, NSError *error) {
+        if(!error){
+            NSLog(@"posts ===>%@",posts);
+        }
+    } imaStr:encoded];
 }
 @end

@@ -80,4 +80,28 @@
         }
     }];
 }
+
++ (NSURLSessionDataTask *)UpdataHeadWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block imaStr:(NSString *)imaStr{
+    NSString *urlStr = [NSString stringWithFormat:@"user/"];
+    NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    imaStr,@"avatar",
+                                    [[NSUserDefaults standardUserDefaults]objectForKey:@"id"],@"_id",
+                                    nil];
+    //NSLog(@"parametersdata ===> %@",parametersdata);
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:parametersdata forKey:@"user"];
+    return [[AFAppDotNetAPIClient sharedClient] PUT:urlStr parameters:parameters success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        NSLog(@"JSON===>%@",JSON);
+        NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
+        
+        if (block) {
+            block([NSMutableArray arrayWithArray:mutablePosts], nil);
+        }
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        NSLog(@"error ==> %@",error);
+        if (block) {
+            block([NSMutableArray array], error);
+        }
+    }];
+}
 @end
