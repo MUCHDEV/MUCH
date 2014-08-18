@@ -8,12 +8,14 @@
 
 #import "ReleasePageViewController.h"
 #import "GTMBase64.h"
+#import "ReleaseEvent.h"
 @interface ReleasePageViewController ()
 
 @end
 
 @implementation ReleasePageViewController
 @synthesize image;
+@synthesize delegate;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -74,7 +76,6 @@
     [_priceTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [textView addSubview:_priceTextField];
     [self.view addSubview:textView];
-    
     [_priceTextField becomeFirstResponder];
 }
 
@@ -82,6 +83,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [_priceTextField becomeFirstResponder];
 }
 
 /*
@@ -99,6 +104,23 @@
 }
 
 -(void)rightBtnClick{
-    // NSString* encoded = [[NSString alloc] initWithData:[GTMBase64 encodeData:photo2] encoding:NSUTF8StringEncoding];
+    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"UserToken"]){
+        loginview = [[LoginViewController alloc] init];
+        [self presentViewController:loginview animated:YES completion:nil];
+    }else{
+        NSData *photo = UIImageJPEGRepresentation(image, 0.8);
+        NSString* encoded = [[NSString alloc] initWithData:[GTMBase64 encodeData:photo] encoding:NSUTF8StringEncoding];
+        [ReleaseEvent ReleaseWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                NSLog(@"posts ==> %@",posts);
+                if([[NSString stringWithFormat:@"%@",[posts objectAtIndex:0]] isEqualToString:@"200"]){
+                    if([delegate respondsToSelector:@selector(reloadList)]){
+                        [delegate reloadList];
+                    }
+                }
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }price:_priceTextField.text imgStr:encoded];
+    }
 }
 @end

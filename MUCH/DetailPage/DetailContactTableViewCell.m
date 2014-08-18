@@ -34,26 +34,30 @@
 }
 
 -(void)setContent{
-    UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 47.5, 47.5)];
+    headView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 47.5, 47.5)];
     [headView setImage:[UIImage imageNamed:@"06_11.png"]];
     [self.contentView addSubview:headView];
     
-    UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 140, 20)];
-    name.text = @"Natalia Vodianova";
-    name.textColor = [UIColor blackColor];
-    name.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
-    [self.contentView addSubview:name];
+    nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 140, 20)];
+    nameLabel.text = @"Natalia Vodianova";
+    nameLabel.textColor = [UIColor blackColor];
+    nameLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
+    [self.contentView addSubview:nameLabel];
     
-    UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(70, 25, 140, 20)];
-    price.text = @"￥10.24";
-    price.textColor = [UIColor blackColor];
-    price.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
-    [self.contentView addSubview:price];
+    priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 25, 140, 20)];
+    priceLabel.text = @"￥10.24";
+    priceLabel.textColor = [UIColor blackColor];
+    priceLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
+    [self.contentView addSubview:priceLabel];
     
-    UILabel *distance = [[UILabel alloc] initWithFrame:CGRectMake(240, 0, 140, 20)];
-    distance.text = @"距您120m";
-    distance.textColor = [UIColor grayColor];
-    distance.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
-    [self.contentView addSubview:distance];
+    distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(240, 0, 140, 20)];
+    distanceLabel.text = @"距您120m";
+    distanceLabel.textColor = [UIColor grayColor];
+    distanceLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
+    [self.contentView addSubview:distanceLabel];
+}
+
+-(void)setPrice:(NSString *)price{
+    priceLabel.text = [NSString stringWithFormat:@"￥ %@",price];
 }
 @end

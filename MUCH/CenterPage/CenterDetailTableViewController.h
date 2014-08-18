@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface CenterDetailTableViewController : UITableViewController
-
+#import "SinglePickerView.h"
+#import "Camera.h"
+#import "LoginViewController.h"
+@interface CenterDetailTableViewController : UITableViewController<UIActionSheetDelegate,CameraDelegate,UIActionSheetDelegate>{
+    SinglePickerView *singlepickerview;
+    UILabel *sexlabel;
+    Camera *camera;
+    UIActionSheet *_myActionSheet;
+    UIImage *headImage;
+    //图片2进制路径
+    NSString* _filePath;
+    LoginViewController *loginview;
+}
+@property(nonatomic,retain)NSMutableDictionary *dataDic;
 @end

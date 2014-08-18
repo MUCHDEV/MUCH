@@ -14,9 +14,12 @@ typedef enum {
     
 } MessageType;
 @interface Message : NSObject
+@property (nonatomic, copy) NSString *aid;
 @property (nonatomic, copy) NSURL *iconURL;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, assign) MessageType type;
 @property (nonatomic, copy) NSDictionary *dict;
+
++ (NSURLSessionDataTask *)CommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block arr:(NSMutableArray *)arr;
 @end

@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailHeadTableViewCell : UITableViewCell{
-    UIImage *image;
+    NSString *imageUrl;
     int i;
 }
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier img:(UIImage *)img;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imgUrl:(NSString *)imgUrl;
 @end

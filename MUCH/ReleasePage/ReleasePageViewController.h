@@ -7,10 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginViewController.h"
+@protocol ReleasePageViewDelegate <NSObject>
 
+-(void)reloadList;
+
+@end
 @interface ReleasePageViewController : UIViewController<UITextFieldDelegate>{
     UIImage *image;
     UITextField *_priceTextField;
+    id<ReleasePageViewDelegate>delegate;
+    LoginViewController *loginview;
 }
 @property(nonatomic,retain)UIImage *image;
+@property(nonatomic,strong)id<ReleasePageViewDelegate>delegate;
 @end

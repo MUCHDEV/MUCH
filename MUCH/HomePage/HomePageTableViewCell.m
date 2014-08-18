@@ -7,9 +7,9 @@
 //
 
 #import "HomePageTableViewCell.h"
-
+#import "GTMBase64.h"
 @implementation HomePageTableViewCell
-
+@synthesize bigImage;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -34,7 +34,7 @@
 }
 
 -(void)setContent{
-    UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 1, 120)];
+    UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 1, 130)];
     [lineImageView setBackgroundColor:RGBCOLOR(203, 203, 203)];
     [self.contentView addSubview:lineImageView];
     
@@ -62,36 +62,6 @@
     distancelabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:distancelabel];
     
-    contentNamelabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 30, 30)];
-    contentNamelabel.text = @"Alice";
-    contentNamelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
-    contentNamelabel.textColor = [UIColor blueColor];
-    [self.contentView addSubview:contentNamelabel];
-    
-    contentlabel = [[UILabel alloc] initWithFrame:CGRectMake(contentNamelabel.frame.size.width+contentNamelabel.frame.origin.x+5, 10, 120, 30)];
-    contentlabel.text = @"我的东西很便宜的";
-    contentlabel.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
-    [self.contentView addSubview:contentlabel];
-    
-    contentNamelabel2 = [[UILabel alloc] initWithFrame:CGRectMake(75, 30, 40, 30)];
-    contentNamelabel2.text = @"google";
-    contentNamelabel2.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
-    [self.contentView addSubview:contentNamelabel2];
-    
-    contentlabel2 = [[UILabel alloc] initWithFrame:CGRectMake(contentNamelabel2.frame.size.width+contentNamelabel2.frame.origin.x+5, 30, 120, 30)];
-    contentlabel2.text = @"有多便宜";
-    contentlabel2.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
-    [self.contentView addSubview:contentlabel2];
-    
-    contentNamelabel3 = [[UILabel alloc] initWithFrame:CGRectMake(75, 53, 20, 30)];
-    contentNamelabel3.text = @"kiki";
-    contentNamelabel3.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
-    [self.contentView addSubview:contentNamelabel3];
-    
-    contentlabel3 = [[UILabel alloc] initWithFrame:CGRectMake(contentNamelabel3.frame.size.width+contentNamelabel3.frame.origin.x+5, 53, 120, 30)];
-    contentlabel3.text = @"我用东西跟你换可";
-    contentlabel3.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
-    [self.contentView addSubview:contentlabel3];
     
     UIImageView *moreImageView = [[UIImageView alloc] initWithFrame:CGRectMake(120, 80, 9, 2)];
     [moreImageView setImage:[UIImage imageNamed:@"03-1_24.png"]];
@@ -118,8 +88,30 @@
     goodlabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:goodlabel];
     
-    bigImage = [[UIImageView alloc] initWithFrame:CGRectMake(210, 12, 100, 100)];
-    [bigImage setImage:[UIImage imageNamed:@"nature.jpg"]];
+    bigImage = [[EGOImageView alloc] initWithFrame:CGRectMake(210, 12, 100, 100)];
+    bigImage.placeholderImage = [UIImage imageNamed:@"nature.jpg"];
     [self.contentView addSubview:bigImage];
+}
+
+-(void)setReleaseEvent:(ReleaseEvent *)releaseEvent{
+    NSLog(@"%@",[releaseEvent.comments class]);
+    pricelabel.text = [NSString stringWithFormat:@"￥ %@",releaseEvent.price];
+    bigImage.imageURL = [NSURL URLWithString:releaseEvent.content];
+    for(int i=0;i<releaseEvent.comments.count;i++){
+        if(i%2==0){
+            if(i<6){
+                contentNamelabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 10*(i+1), 30, 30)];
+                contentNamelabel.text = @"Alice";
+                contentNamelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
+                contentNamelabel.textColor = [UIColor blueColor];
+                [self.contentView addSubview:contentNamelabel];
+                
+                contentlabel = [[UILabel alloc] initWithFrame:CGRectMake(contentNamelabel.frame.size.width+contentNamelabel.frame.origin.x+5, 10*(i+1), 100, 30)];
+                contentlabel.text = releaseEvent.comments[i];
+                contentlabel.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
+                [self.contentView addSubview:contentlabel];
+            }
+        }
+    }
 }
 @end

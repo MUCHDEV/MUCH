@@ -17,7 +17,7 @@
 #import "CSqlite.h"
 #import "DetailViewController.h"
 #import "CenterTableViewController.h"
-@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate,CLLocationManagerDelegate>{
+@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate,CLLocationManagerDelegate,ReleasePageViewDelegate>{
     HomePageTopView *topview;
     HomePageTopContentView *topcontentview;
     UITableView *_tableView;

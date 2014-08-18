@@ -10,6 +10,7 @@
 #import "DetailHeadTableViewCell.h"
 #import "DetailContactTableViewCell.h"
 #import "DetailContentTableViewCell.h"
+#import "GTMBase64.h"
 @interface DetailViewController ()
 
 @end
@@ -51,18 +52,19 @@
     [titleview setImage:[UIImage imageNamed:@"03-2_033.png"]];
     self.navigationItem.titleView = titleview;
     
-    NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"1",@"type",nil];
+    /*NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"1",@"type",nil];
     
-    NSDictionary *dic1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"0",@"type",nil];
+    NSDictionary *dic1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"0",@"type",nil];*/
     
-    NSArray *array = [[NSArray alloc] initWithObjects:dic,dic1, nil];
+    //NSArray *array = [[NSArray alloc] init];
     _allMessages = [NSMutableArray array];
-    for (NSDictionary *dict in array) {
+    for (NSDictionary *dict in arr) {
         Message *message = [[Message alloc] init];
         message.dict = dict;
         message.name = [dict objectForKey:@"name"];
         message.content = [dict objectForKey:@"content"];
         message.iconURL = [NSURL URLWithString:[dict objectForKey:@"url"]];
+        message.aid = aid;
         if([[dict objectForKey:@"type"] isEqualToString:@"1"]){
             message.type = MessageTypeOther;
         }else{
@@ -109,16 +111,27 @@
 
 #pragma mark 给数据源增加内容
 - (void)addMessageWithContent:(NSString *)content{
-    Message *msg = [[Message alloc] init];
-    msg.content = content;
-    msg.iconURL = [NSURL URLWithString:@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg"];
-    msg.name = @"wywyw";
-    msg.type = MessageTypeMe;
-    [_allMessages insertObject:msg atIndex:0];
-    [_tableView reloadData];
-    // 3、滚动至当前行
-    //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessages.count - 1 inSection:0];
-    //[_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"UserToken"]){
+        loginview = [[LoginViewController alloc] init];
+        [self presentViewController:loginview animated:YES completion:nil];
+    }else{
+        Message *msg = [[Message alloc] init];
+        msg.content = content;
+        msg.iconURL = [NSURL URLWithString:@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg"];
+        msg.name = @"wywyw";
+        msg.type = MessageTypeMe;
+        msg.aid = aid;
+        [_allMessages insertObject:msg atIndex:0];
+        [_tableView reloadData];
+        // 3、滚动至当前行
+        //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessages.count - 1 inSection:0];
+        //[_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [Message CommentsWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                NSLog(@"posts ==> %@",posts);
+            }
+        } arr:_allMessages];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -126,9 +139,8 @@
     if(indexPath.row == 0){
         NSString *stringcell = @"DetailHeadTableViewCell";
         DetailHeadTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
-        UIImage* image=[UIImage imageNamed:@"nature.jpg"];
         if(!cell){
-            cell = [[DetailHeadTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell img:image] ;
+            cell = [[DetailHeadTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell imgUrl:imageurl] ;
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -138,6 +150,7 @@
         if(!cell){
             cell = [[DetailContactTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
         }
+        cell.price = price;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
@@ -174,5 +187,18 @@
         return 109/2;
     }
     return 98/2;
+}
+
+-(void)setReleaseEvent:(ReleaseEvent *)releaseEvent{
+    imageurl = releaseEvent.content;
+    aid = releaseEvent.aid;
+    price = releaseEvent.price;
+    arr = [[NSMutableArray alloc] init];
+    for(int i=0;i<releaseEvent.comments.count;i++){
+        if(i%2==0){
+            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"Alice",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",releaseEvent.comments[i],@"content",@"1",@"type",nil];
+            [arr addObject:dic];
+        }
+    }
 }
 @end

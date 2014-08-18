@@ -33,6 +33,7 @@ static NSString * const AFAppDotNetAPIBaseURLString = @"http://121.40.127.189:30
         _sharedClient = [[AFAppDotNetAPIClient alloc] initWithBaseURL:[NSURL URLWithString:AFAppDotNetAPIBaseURLString]];
         _sharedClient.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone];
         _sharedClient.responseSerializer = [AFJSONResponseSerializer serializer];
+        //[_sharedClient.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     });
     
     return _sharedClient;

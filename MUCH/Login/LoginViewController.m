@@ -233,14 +233,25 @@
 }
 
 -(void)loginClick{
-    NSLog(@"loginClick");
+    [RegisterEvent LoginWithBlock:^(NSMutableArray *posts, NSError *error) {
+        if(!error){
+            NSLog(@"posts ==> %@",posts);
+            [[NSUserDefaults standardUserDefaults] setObject:posts[0] forKey:@"UserToken"];
+            [[NSUserDefaults standardUserDefaults] setObject:posts[1] forKey:@"id"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+    } userName:_userNameTextField.text passWord:_passWordTextField.text];
 }
 
 -(void)registeredClick{
-    NSLog(@"%@",_phoneTextField.text);
     [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
         if(!error){
             NSLog(@"posts ==> %@",posts);
+            [[NSUserDefaults standardUserDefaults] setObject:posts[0] forKey:@"UserToken"];
+            [[NSUserDefaults standardUserDefaults] setObject:posts[1] forKey:@"id"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
     } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text];
 }

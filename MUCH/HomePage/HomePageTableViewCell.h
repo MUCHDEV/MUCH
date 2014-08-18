@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ReleaseEvent.h"
+#import "EGOImageView.h"
 @interface HomePageTableViewCell : UITableViewCell{
     UILabel *namelabel;
     UILabel *distancelabel;
@@ -20,7 +21,8 @@
     UILabel *pricelabel;
     UIImageView *goodImage;
     UILabel *goodlabel;
-    UIImageView *bigImage;
+    EGOImageView *bigImage;
 }
-
+@property (nonatomic, strong) ReleaseEvent *releaseEvent;
+@property (nonatomic, strong) EGOImageView *bigImage;
 @end

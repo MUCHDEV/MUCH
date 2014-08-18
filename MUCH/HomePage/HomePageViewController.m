@@ -7,6 +7,7 @@
 //
 
 #import "HomePageViewController.h"
+#import "ReleaseEvent.h"
 @interface HomePageViewController ()
 
 @end
@@ -64,9 +65,13 @@
     [_tableView setBackgroundColor:RGBCOLOR(217, 217, 217)];
     [self.view addSubview:_tableView];
     
-    if(showArr.count == 0){
-        [showArr addObject:@"1"];
-    }
+    [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
+        if(!error){
+            showArr = posts;
+            [_tableView reloadData];
+        }
+    }];
+    
     
     m_sqlite = [[CSqlite alloc]init];
     [m_sqlite openSqlite];
@@ -136,7 +141,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([[showArr objectAtIndex:0] isEqualToString:@"0"]){
+    if(showArr.count ==0){
         NSString *stringcell = @"HomePageDefaultTableViewCell";
         HomePageDefaultTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
         if(!cell){
@@ -150,6 +155,9 @@
         HomePageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
         if(!cell){
             cell = [[HomePageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
+        }
+        if(showArr.count !=0){
+            cell.releaseEvent = showArr[indexPath.row];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -167,16 +175,17 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if([[showArr objectAtIndex:0] isEqualToString:@"0"]){
+    if(showArr.count ==0){
         return _tableView.frame.size.height;
     }else{
-        return 120;
+        return 130;
     }
-    return 120;
+    return 130;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     detailview = [[DetailViewController alloc] init];
+    detailview.releaseEvent = [showArr objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:detailview animated:YES];
 }
 
@@ -204,6 +213,7 @@
 -(void)setBigImage:(UIImage *)img{
     releasepageview = [[ReleasePageViewController alloc] init];
     releasepageview.image = img;
+    releasepageview.delegate = self;
     [self.navigationController pushViewController:releasepageview animated:YES];
 }
 
@@ -247,5 +257,15 @@
     return yGps;
     
     
+}
+
+-(void)reloadList{
+    [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
+        if(!error){
+            NSLog(@"posts ==> %@",posts);
+            showArr = posts;
+            [_tableView reloadData];
+        }
+    }];
 }
 @end

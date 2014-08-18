@@ -7,15 +7,15 @@
 //
 
 #import "DetailHeadTableViewCell.h"
-
+#import "EGOImageView.h"
 @implementation DetailHeadTableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier img:(UIImage *)img
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imgUrl:(NSString *)imgUrl
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        image = img;
+        imageUrl = imgUrl;
         i=0;
         [self setBackgroundColor:[UIColor clearColor]];
         [self setContent];
@@ -40,7 +40,9 @@
     [imageView setImage:[UIImage imageNamed:@"04-1_03.png"]];
     
     //图片裁剪
-    UIImage *srcimg = image;
+    EGOImageView *imageview = [[EGOImageView alloc] init];
+    imageview.imageURL = [NSURL URLWithString:imageUrl];
+    UIImage *srcimg = imageview.image;
     UIImageView *smallImageView = [[UIImageView alloc] init];
     smallImageView.frame = CGRectMake(4, 2, 601/2, 461/2);
     CGRect rect =  CGRectMake(19.5, 89.5, 601, 461);//要裁剪的图片区域，按照原图的像素大小来，超过原图大小的边自动适配
