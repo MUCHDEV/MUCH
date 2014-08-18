@@ -14,7 +14,6 @@
 #import "HomePageTableViewCell.h"
 #import "HomePageDefaultTableViewCell.h"
 #import <CoreLocation/CoreLocation.h>
-#import "CSqlite.h"
 #import "DetailViewController.h"
 #import "CenterTableViewController.h"
 @interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate,CLLocationManagerDelegate,ReleasePageViewDelegate>{
@@ -29,7 +28,6 @@
     CLLocationManager *locationManager;
     float latitude;
     float longitude;
-    CSqlite *m_sqlite;
     DetailViewController *detailview;
     CenterTableViewController *centerview;
 }

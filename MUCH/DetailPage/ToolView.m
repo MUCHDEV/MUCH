@@ -31,7 +31,7 @@
         
         UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [sendBtn setFrame:CGRectMake(260, 7, 49, 29)];
-        [sendBtn setImage:[UIImage imageNamed:@"04_17"] forState:UIControlStateNormal];
+        [sendBtn setImage:[UIImage imageNamed:@"04_033"] forState:UIControlStateNormal];
         [sendBtn addTarget:self action:@selector(sendClick) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:sendBtn];
         
@@ -67,18 +67,29 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    // 1、增加数据源
-    NSString *content = _textfield.text;
-    if ([delegate respondsToSelector:@selector(addMessageWithContent:)]){
-        [delegate addMessageWithContent:content];
+    if(![_textfield.text isEqualToString:@""]){
+        // 1、增加数据源
+        NSString *content = _textfield.text;
+        if ([delegate respondsToSelector:@selector(addMessageWithContent:)]){
+            [delegate addMessageWithContent:content];
+        }
+        // 4、清空文本框内容
+        _textfield.text = nil;
     }
-    // 4、清空文本框内容
-    _textfield.text = nil;
     [_textfield resignFirstResponder];
     return YES;
 }
 
 -(void)sendClick{
-    [_textfield resignFirstResponder];
+    if(![_textfield.text isEqualToString:@""]){
+        // 1、增加数据源
+        NSString *content = _textfield.text;
+        if ([delegate respondsToSelector:@selector(addMessageWithContent:)]){
+            [delegate addMessageWithContent:content];
+        }
+        // 4、清空文本框内容
+        _textfield.text = nil;
+        [_textfield resignFirstResponder];
+    }
 }
 @end

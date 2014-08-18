@@ -27,6 +27,16 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    NSArray *familyNames = [UIFont familyNames];
+    for( NSString *familyName in familyNames ){
+        printf( "Family: %s \n", [familyName UTF8String] );
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
+        for( NSString *fontName in fontNames ){
+            printf( "\tFont: %s \n", [fontName UTF8String] );
+        }
+    }
+    
+    
     self.title = @"MUCH";
     btnIndex = 0;
     //NavigationBar设置背景图
@@ -49,9 +59,12 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     //NavigationItem设置属性
-    UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    /*UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     [titleview setImage:[UIImage imageNamed:@"03-2_033.png"]];
-    self.navigationItem.titleView = titleview;
+    self.navigationItem.titleView = titleview;*/
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,[UIFont fontWithName:@"SnellRoundhand-Bold" size:19], NSFontAttributeName,
+                                                                     nil]];
     
     topview = [[HomePageTopView alloc] initWithFrame:CGRectMake(0, 65, 320, 50)];
     topview.delegate = self;
@@ -73,8 +86,6 @@
     }];
     
     
-    m_sqlite = [[CSqlite alloc]init];
-    [m_sqlite openSqlite];
     locationManager = [[CLLocationManager alloc] init];//创建位置管理器
     locationManager.delegate=self;
     locationManager.desiredAccuracy=kCLLocationAccuracyBest;
@@ -227,7 +238,6 @@
     //此处locations存储了持续更新的位置坐标值，取最后一个值为最新位置，如果不想让其持续更新位置，则在此方法中获取到一个值之后让locationManager stopUpdatingLocation
     CLLocation *currentLocation = [locations lastObject];
     CLLocationCoordinate2D coor = currentLocation.coordinate;
-    coor = [self zzTransGPS:coor];
     latitude =  coor.latitude;
     longitude = coor.longitude;
     [locationManager stopUpdatingLocation];
@@ -235,29 +245,6 @@
     NSLog(@"%f",longitude);
 }
 
--(CLLocationCoordinate2D)zzTransGPS:(CLLocationCoordinate2D)yGps
-{
-    int TenLat=0;
-    int TenLog=0;
-    TenLat = (int)(yGps.latitude*10);
-    TenLog = (int)(yGps.longitude*10);
-    NSString *sql = [[NSString alloc]initWithFormat:@"select offLat,offLog from gpsT where lat=%d and log = %d",TenLat,TenLog];
-    sqlite3_stmt* stmtL = [m_sqlite NSRunSql:sql];
-    int offLat=0;
-    int offLog=0;
-    while (sqlite3_step(stmtL)==SQLITE_ROW)
-    {
-        offLat = sqlite3_column_int(stmtL, 0);
-        offLog = sqlite3_column_int(stmtL, 1);
-        
-    }
-    
-    yGps.latitude = yGps.latitude+offLat*0.0001;
-    yGps.longitude = yGps.longitude + offLog*0.0001;
-    return yGps;
-    
-    
-}
 
 -(void)reloadList{
     [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {

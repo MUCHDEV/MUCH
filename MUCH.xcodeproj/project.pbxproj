@@ -146,8 +146,6 @@
 		D3B149981998DA4800F83FA7 /* UIImage+BoxBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B149961998DA4800F83FA7 /* UIImage+BoxBlur.m */; };
 		D3B1499A1998DD6200F83FA7 /* nature.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D3B149991998DD6200F83FA7 /* nature.jpg */; };
 		D3B1499C19999F1D00F83FA7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3B1499B19999F1D00F83FA7 /* CoreLocation.framework */; };
-		D3B149A61999A3DA00F83FA7 /* gps.db in Resources */ = {isa = PBXBuildFile; fileRef = D3B1499E1999A3DA00F83FA7 /* gps.db */; };
-		D3B149A71999A3DA00F83FA7 /* CSqlite.m in Sources */ = {isa = PBXBuildFile; fileRef = D3B149A11999A3DA00F83FA7 /* CSqlite.m */; };
 		D3B149AB1999A90D00F83FA7 /* 091_03.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B149AA1999A90D00F83FA7 /* 091_03.png */; };
 		D3B149AD1999A99300F83FA7 /* 09-2_032.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B149AC1999A99300F83FA7 /* 09-2_032.png */; };
 		D3B149AF1999AE1B00F83FA7 /* 登陆_03.png in Resources */ = {isa = PBXBuildFile; fileRef = D3B149AE1999AE1B00F83FA7 /* 登陆_03.png */; };
@@ -158,6 +156,8 @@
 		D3EAB219199F41AC00E010E8 /* controls_03.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EAB217199F41AC00E010E8 /* controls_03.png */; };
 		D3EAB21A199F41AC00E010E8 /* controls_05.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EAB218199F41AC00E010E8 /* controls_05.png */; };
 		D3EAB21C19A03CDE00E010E8 /* 07_033.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EAB21B19A03CDE00E010E8 /* 07_033.png */; };
+		D3EAB21E19A1A03400E010E8 /* 04_033.png in Resources */ = {isa = PBXBuildFile; fileRef = D3EAB21D19A1A03400E010E8 /* 04_033.png */; };
+		D3EAB22119A1A29000E010E8 /* ziti.TTF in Resources */ = {isa = PBXBuildFile; fileRef = D3EAB22019A1A29000E010E8 /* ziti.TTF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -364,11 +364,6 @@
 		D3B149961998DA4800F83FA7 /* UIImage+BoxBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BoxBlur.m"; sourceTree = "<group>"; };
 		D3B149991998DD6200F83FA7 /* nature.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nature.jpg; sourceTree = "<group>"; };
 		D3B1499B19999F1D00F83FA7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		D3B1499E1999A3DA00F83FA7 /* gps.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = gps.db; sourceTree = "<group>"; };
-		D3B149A01999A3DA00F83FA7 /* CSqlite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSqlite.h; sourceTree = "<group>"; };
-		D3B149A11999A3DA00F83FA7 /* CSqlite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSqlite.m; sourceTree = "<group>"; };
-		D3B149A41999A3DA00F83FA7 /* sqlite3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3.h; sourceTree = "<group>"; };
-		D3B149A51999A3DA00F83FA7 /* sqlite3ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3ext.h; sourceTree = "<group>"; };
 		D3B149AA1999A90D00F83FA7 /* 091_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 091_03.png; sourceTree = "<group>"; };
 		D3B149AC1999A99300F83FA7 /* 09-2_032.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "09-2_032.png"; sourceTree = "<group>"; };
 		D3B149AE1999AE1B00F83FA7 /* 登陆_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "登陆_03.png"; sourceTree = "<group>"; };
@@ -382,6 +377,8 @@
 		D3EAB217199F41AC00E010E8 /* controls_03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_03.png; sourceTree = "<group>"; };
 		D3EAB218199F41AC00E010E8 /* controls_05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls_05.png; sourceTree = "<group>"; };
 		D3EAB21B19A03CDE00E010E8 /* 07_033.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 07_033.png; sourceTree = "<group>"; };
+		D3EAB21D19A1A03400E010E8 /* 04_033.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 04_033.png; sourceTree = "<group>"; };
+		D3EAB22019A1A29000E010E8 /* ziti.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = ziti.TTF; path = Tools/ziti.TTF; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -477,6 +474,7 @@
 		D30DDB331994B897007A8A9C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D3EAB22019A1A29000E010E8 /* ziti.TTF */,
 				D30DDB5F1995ED39007A8A9C /* images */,
 				D30DDB341994B897007A8A9C /* MUCH-Info.plist */,
 				D30DDB351994B897007A8A9C /* InfoPlist.strings */,
@@ -526,6 +524,7 @@
 		D30DDB5F1995ED39007A8A9C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				D3EAB21D19A1A03400E010E8 /* 04_033.png */,
 				D3EAB21B19A03CDE00E010E8 /* 07_033.png */,
 				D3EAB217199F41AC00E010E8 /* controls_03.png */,
 				D3EAB218199F41AC00E010E8 /* controls_05.png */,
@@ -774,7 +773,6 @@
 				D37639D3199C98070052E775 /* AFNetworking */,
 				D37639E7199C98070052E775 /* UIKit+AFNetworking */,
 				D348EE551999D8F500066239 /* EGOImageView */,
-				D3B1499D1999A3DA00F83FA7 /* GPS */,
 				D3B149891998BEE900F83FA7 /* JCRBlurView */,
 				D3B149821998ADA300F83FA7 /* sina */,
 				D3B149731998A66300F83FA7 /* qq */,
@@ -817,26 +815,6 @@
 				D3B149961998DA4800F83FA7 /* UIImage+BoxBlur.m */,
 			);
 			path = JCRBlurView;
-			sourceTree = "<group>";
-		};
-		D3B1499D1999A3DA00F83FA7 /* GPS */ = {
-			isa = PBXGroup;
-			children = (
-				D3B1499E1999A3DA00F83FA7 /* gps.db */,
-				D3B1499F1999A3DA00F83FA7 /* Sqlite */,
-			);
-			path = GPS;
-			sourceTree = "<group>";
-		};
-		D3B1499F1999A3DA00F83FA7 /* Sqlite */ = {
-			isa = PBXGroup;
-			children = (
-				D3B149A01999A3DA00F83FA7 /* CSqlite.h */,
-				D3B149A11999A3DA00F83FA7 /* CSqlite.m */,
-				D3B149A41999A3DA00F83FA7 /* sqlite3.h */,
-				D3B149A51999A3DA00F83FA7 /* sqlite3ext.h */,
-			);
-			path = Sqlite;
 			sourceTree = "<group>";
 		};
 		D3B149B21999B03700F83FA7 /* DetailPage */ = {
@@ -953,6 +931,7 @@
 				D30DDBB11995ED39007A8A9C /* 09-2_15.png in Resources */,
 				D348EE511999CD4200066239 /* 04_062.png in Resources */,
 				D30DDB9A1995ED39007A8A9C /* 04_17.png in Resources */,
+				D3EAB22119A1A29000E010E8 /* ziti.TTF in Resources */,
 				D30DDB961995ED39007A8A9C /* 04_03.png in Resources */,
 				D30DDB901995ED39007A8A9C /* 03-1_15.png in Resources */,
 				D348EE4F1999CD4200066239 /* 04_032.png in Resources */,
@@ -977,6 +956,7 @@
 				D30DDB991995ED39007A8A9C /* 04_14.png in Resources */,
 				D3B149AB1999A90D00F83FA7 /* 091_03.png in Resources */,
 				D30DDBA91995ED39007A8A9C /* 07_15.png in Resources */,
+				D3EAB21E19A1A03400E010E8 /* 04_033.png in Resources */,
 				D30DDB9C1995ED39007A8A9C /* 04_23.png in Resources */,
 				D30DDB9F1995ED39007A8A9C /* 04_35.png in Resources */,
 				D30DDB9D1995ED39007A8A9C /* 04_26.png in Resources */,
@@ -1005,7 +985,6 @@
 				D30DDB9E1995ED39007A8A9C /* 04_32.png in Resources */,
 				D37639CE199C53F40052E775 /* 03-2_033.png in Resources */,
 				D30DDB931995ED39007A8A9C /* 03-1_30.png in Resources */,
-				D3B149A61999A3DA00F83FA7 /* gps.db in Resources */,
 				D30DDBB51995ED39007A8A9C /* 09_08.png in Resources */,
 				D30DDBB21995ED39007A8A9C /* 09-2_19.png in Resources */,
 				D30DDB951995ED39007A8A9C /* 03_03.png in Resources */,
@@ -1086,7 +1065,6 @@
 				D3763A08199C98070052E775 /* UIRefreshControl+AFNetworking.m in Sources */,
 				D348EE481999C85900066239 /* ToolView.m in Sources */,
 				D3B149971998DA4800F83FA7 /* ANBlurredImageView.m in Sources */,
-				D3B149A71999A3DA00F83FA7 /* CSqlite.m in Sources */,
 				D30DDB5E1994CCED007A8A9C /* HomePageViewController.m in Sources */,
 				D30DDBBA1996230C007A8A9C /* HomePageTableViewCell.m in Sources */,
 				D37639FF199C98070052E775 /* AFURLRequestSerialization.m in Sources */,
