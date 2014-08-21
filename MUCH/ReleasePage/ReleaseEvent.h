@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *price;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *likes;
+@property (nonatomic, copy) NSString *youlikeit;
 @property (nonatomic, copy) NSString *created;
 @property (nonatomic, copy) NSDictionary *createdby;
 @property (nonatomic, copy) NSArray *comments;

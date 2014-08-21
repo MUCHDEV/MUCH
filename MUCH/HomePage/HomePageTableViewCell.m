@@ -90,7 +90,7 @@
     [self.contentView addSubview:goodImage];
     
     goodlabel = [[UILabel alloc] initWithFrame:CGRectMake(185, 86, 100, 30)];
-    goodlabel.text = @"869";
+    goodlabel.text = @"";
     goodlabel.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
     goodlabel.textColor = RGBCOLOR(159, 159, 159);
     [self.contentView addSubview:goodlabel];
@@ -136,11 +136,13 @@
 -(void)setReleaseEvent:(ReleaseEvent *)releaseEvent{
     pricelabel.text = [NSString stringWithFormat:@"￥ %@",releaseEvent.price];
     bigImage.imageURL = [NSURL URLWithString:releaseEvent.content];
-    NSLog(@"%d",releaseEvent.comments.count);
+    goodlabel.text = releaseEvent.likes;
+    if([releaseEvent.likes intValue] >0){
+        [goodImage setImage:[UIImage imageNamed:@"04_07"]];
+    }
     if(releaseEvent.comments.count !=0){
         for(int i=0;i<releaseEvent.comments.count;i++){
             if(i==0){
-                NSLog(@"%@",releaseEvent.comments[0][@"nickname"]);
                 if(![[NSString stringWithFormat:@"%@",releaseEvent.comments[0]]isEqualToString:@"<null>"]){
                     contentNamelabel.text = releaseEvent.comments[0][@"nickname"];
                     contentlabel.text = releaseEvent.comments[0][@"content"];

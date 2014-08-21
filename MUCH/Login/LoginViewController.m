@@ -242,17 +242,11 @@
     }else{
         [RegisterEvent LoginWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
-                NSLog(@"posts ==> %@",posts);
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"avatar"];
+                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"avatar"] forKey:@"avatar"];
                 [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"nickname"];
+                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"nickname"] forKey:@"nickname"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self dismissViewControllerAnimated:YES completion:nil];
-            }else{
-                NSLog(@"%@",error);
-                NSHTTPURLResponse* httpResponse = error.userInfo[@"AFNetworkingOperationFailingURLResponseErrorKey"];
-                int responseStatusCode = [httpResponse statusCode];
-                NSLog(@"%d",responseStatusCode);
             }
         } userName:_userNameTextField.text passWord:_passWordTextField.text];
     }
@@ -270,7 +264,6 @@
     }else{
         [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
-                NSLog(@"posts ==> %@",posts);
                 [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"avatar"] forKey:@"avatar"];
                 [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
                 [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"nickname"] forKey:@"nickname"];

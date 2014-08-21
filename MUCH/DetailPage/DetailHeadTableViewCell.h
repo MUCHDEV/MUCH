@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol DetailHeadDelegate <NSObject>
+
+-(void)showAlertView;
+-(void)showLoginView;
+-(void)showAnimation;
+@end
 @interface DetailHeadTableViewCell : UITableViewCell{
     NSString *imageUrl;
-    int i;
+    NSString *postId;
+    NSString *youlikeit;
 }
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imgUrl:(NSString *)imgUrl;
+@property(nonatomic,weak)id<DetailHeadDelegate>delegate;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imgUrl:(NSString *)imgUrl aid:(NSString *)aid like:(NSString *)like;
 @end

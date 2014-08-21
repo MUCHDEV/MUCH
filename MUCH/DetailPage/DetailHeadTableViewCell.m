@@ -8,15 +8,19 @@
 
 #import "DetailHeadTableViewCell.h"
 #import "EGOImageView.h"
+#import "ConnectionAvailable.h"
+#import "MBProgressHUD.h"
+#import "Message.h"
 @implementation DetailHeadTableViewCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imgUrl:(NSString *)imgUrl
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imgUrl:(NSString *)imgUrl aid:(NSString *)aid like:(NSString *)like
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
         imageUrl = imgUrl;
-        i=0;
+        postId = aid;
+        youlikeit = like;
         [self setBackgroundColor:[UIColor clearColor]];
         [self setContent];
     }
@@ -54,20 +58,44 @@
     
     UIButton *zanButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [zanButton setFrame:CGRectMake(260, 190, 67/2, 67/2)];
-    [zanButton setBackgroundImage:[UIImage imageNamed:(i%2==0?@"04_09.png":@"04_07.png")] forState:UIControlStateNormal];
+    if([youlikeit isEqualToString:@"0"]){
+        [zanButton setBackgroundImage:[UIImage imageNamed:@"04_09.png"] forState:UIControlStateNormal];
+    }else{
+        [zanButton setBackgroundImage:[UIImage imageNamed:@"04_07.png"] forState:UIControlStateNormal];
+    }
     [zanButton addTarget:self action:@selector(zanBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:zanButton];
 }
 
 -(void)zanBtnClick:(UIButton *)button{
-    //点赞动画
-    [button setBackgroundImage:[UIImage imageNamed:(i%2==0?@"04_07.png":@"04_09.png")] forState:UIControlStateNormal];
     CAKeyframeAnimation *k = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     k.values = @[@(0.1),@(1.0),@(1.5)];
     k.keyTimes = @[@(0.0),@(0.5),@(0.8),@(1.0)];
     k.calculationMode = kCAAnimationLinear;
-    
-    i++;
     [button.layer addAnimation:k forKey:@"SHOW"];
+    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
+        if([self.delegate respondsToSelector:@selector(showLoginView)]){
+            [self.delegate showLoginView];
+        }
+    }else{
+        if (![ConnectionAvailable isConnectionAvailable]) {
+            if([self.delegate respondsToSelector:@selector(showAlertView)]){
+                [self.delegate showAlertView];
+            }
+        }else{
+            if([youlikeit isEqualToString:@"0"]){
+                [Message LikeWithBlock:^(NSMutableArray *posts, NSError *error) {
+                    if(!error){
+                        //点赞动画
+                        [button setBackgroundImage:[UIImage imageNamed:@"04_07.png"] forState:UIControlStateNormal];
+                        youlikeit = @"1";
+                        if([self.delegate respondsToSelector:@selector(showAnimation)]){
+                            [self.delegate showAnimation];
+                        }
+                    }
+                } aid:postId];
+            }
+        }
+    }
 }
 @end

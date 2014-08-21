@@ -49,17 +49,6 @@
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
-    //NavigationItem设置属性
-    /*UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
-    [titleview setImage:[UIImage imageNamed:@"03-2_033.png"]];
-    self.navigationItem.titleView = titleview;*/
-    
-    /*NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"1",@"type",nil];
-    
-    NSDictionary *dic1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"0",@"type",nil];*/
-    
-    //NSArray *array = [[NSArray alloc] init];
-    
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, 320, self.view.frame.size.height-44)];
     _tableView.delegate = self;
@@ -72,26 +61,36 @@
     toolview.delegate = self;
     [self.view addSubview:toolview];
     
-    [Message GetCommentsWithBlock:^(NSMutableArray *posts, NSError *error) {
-        if(!error){
-            _allMessages = [NSMutableArray array];
-            for (NSDictionary *dict in posts[0]) {
-                Message *message = [[Message alloc] init];
-                message.dict = dict;
-                message.name = [dict objectForKey:@"nickname"];
-                message.content = [dict objectForKey:@"content"];
-                message.iconURL = [NSURL URLWithString:[dict objectForKey:@"avatar"]];
-                message.aid = aid;
-                if([[dict objectForKey:@"type"] isEqualToString:@"1"]){
-                    message.type = MessageTypeOther;
-                }else{
-                    message.type = MessageTypeMe;
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:1];
+    }else{
+        [Message GetCommentsWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                _allMessages = [NSMutableArray array];
+                for (NSDictionary *dict in posts[0]) {
+                    Message *message = [[Message alloc] init];
+                    message.dict = dict;
+                    message.name = [dict objectForKey:@"nickname"];
+                    message.content = [dict objectForKey:@"content"];
+                    message.iconURL = [NSURL URLWithString:[dict objectForKey:@"avatar"]];
+                    message.aid = aid;
+                    if([[dict objectForKey:@"type"] isEqualToString:@"1"]){
+                        message.type = MessageTypeOther;
+                    }else{
+                        message.type = MessageTypeMe;
+                    }
+                    [_allMessages addObject:message];
                 }
-                [_allMessages addObject:message];
+                [_tableView reloadData];
             }
-            [_tableView reloadData];
-        }
-    } aid:aid];
+        } aid:aid];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -136,6 +135,7 @@
         }else{
             msg.name = @"匿名";
         }
+        NSLog(@"====>%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"avatar"]);
         msg.iconURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults]objectForKey:@"avatar"] ];
         msg.aid = aid;
         [_allMessages insertObject:msg atIndex:0];
@@ -167,8 +167,9 @@
         NSString *stringcell = @"DetailHeadTableViewCell";
         DetailHeadTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
         if(!cell){
-            cell = [[DetailHeadTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell imgUrl:imageurl] ;
+            cell = [[DetailHeadTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell imgUrl:imageurl aid:aid like:youlikeit] ;
         }
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else if (indexPath.row == 1){
@@ -222,6 +223,7 @@
     imageurl = releaseEvent.content;
     aid = releaseEvent.aid;
     price = releaseEvent.price;
+    youlikeit = releaseEvent.youlikeit;
     if(![[NSString stringWithFormat:@"%@",releaseEvent.createdby] isEqualToString:@"<null>"]){
         headurl = releaseEvent.createdby[@"avatar"];
         nickName = releaseEvent.createdby[@"nickname"];
@@ -229,10 +231,69 @@
         nickName = @"匿名";
         headurl = @"";
     }
-    /*arr = [[NSMutableArray alloc] init];
-    for(int i=0;i<releaseEvent.comments.count;i++){
-        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:releaseEvent.comments[i][@"nickname"],@"name",releaseEvent.comments[i][@"avatarUrl"],@"url",releaseEvent.comments[i][@"content"],@"content",@"1",@"type",nil];
-        [arr addObject:dic];
-    }*/
+}
+
+-(void)showAlertView{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.removeFromSuperViewOnHide =YES;
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = @"当前网络不可用，请检查网络连接！";
+    hud.labelFont = [UIFont fontWithName:nil size:14];
+    hud.minSize = CGSizeMake(132.f, 108.0f);
+    [hud hide:YES afterDelay:1];
+}
+
+-(void)showLoginView{
+    loginview = [[LoginViewController alloc] init];
+    [self presentViewController:loginview animated:YES completion:nil];
+}
+
+-(void)showAnimation{
+    // 第一条移动星星闪烁动画
+    do {
+        CGMutablePathRef path = CGPathCreateMutable();
+        
+        CGPathMoveToPoint(path, NULL, 0, 0);
+        CGPathAddCurveToPoint(path, NULL, 50.0, 100.0, 50.0, 120.0, 50.0, 275.0);
+        CGPathAddCurveToPoint(path, NULL, 50.0, 275.0, 150.0, 275.0, 160.0, 160.0);
+        
+        animationView = [[LYMovePathView alloc] initWithFrame:CGRectMake(0, 0, 320, 320) movePath:path];
+        [self.view addSubview:animationView];
+    } while (0);
+    
+    // 第二条移动星星闪烁动画
+    do {
+        CGMutablePathRef path = CGPathCreateMutable();
+        
+        CGPathMoveToPoint(path, NULL, 320 - 0, 320 - 0);
+        CGPathAddCurveToPoint(path, NULL, 320 - 50.0, 320 - 100.0, 320 - 50.0, 320 - 120.0, 320 - 50.0, 320 - 275.0);
+        CGPathAddCurveToPoint(path, NULL, 320 - 50.0, 320 - 275.0, 320 - 150.0, 320 - 275.0, 160.0, 160.0);
+        
+        animationView3 = [[LYMovePathView alloc] initWithFrame:CGRectMake(0, 0, 320, 320) movePath:path];
+        [self.view addSubview:animationView3];
+    } while (0);
+    
+    // 祝贺花筒，彩色炮竹
+    do {
+        animationView2 = [[LYFireworksView alloc] initWithFrame:CGRectMake(0, 0, 320, 320)];
+        [self.view addSubview:animationView2];
+    } while (0);
+    
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector: @selector(closeAnimation)  userInfo:nil repeats:NO];
+}
+
+-(void)closeAnimation{
+    do {
+        [animationView removeFromSuperview];
+        animationView = nil;
+    } while (0);
+    
+    do {
+        [animationView3 removeFromSuperview];
+        animationView3 = nil;
+    } while (0);
+    
+    [animationView2 removeFromSuperview];
+    animationView2 = nil;
 }
 @end

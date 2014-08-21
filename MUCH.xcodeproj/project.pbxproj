@@ -69,6 +69,16 @@
 		D3311C2219A43319003B2682 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D3311C1D19A43319003B2682 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		D3311C2319A43319003B2682 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D3311C2019A43319003B2682 /* MBProgressHUD.m */; };
 		D3311C2619A4333D003B2682 /* ConnectionAvailable.m in Sources */ = {isa = PBXBuildFile; fileRef = D3311C2519A4333D003B2682 /* ConnectionAvailable.m */; };
+		D3311C3E19A5F35B003B2682 /* LYBgImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3311C3919A5F35B003B2682 /* LYBgImageView.m */; };
+		D3311C3F19A5F35B003B2682 /* LYFireworksView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3311C3B19A5F35B003B2682 /* LYFireworksView.m */; };
+		D3311C4019A5F35B003B2682 /* LYMovePathView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3311C3D19A5F35B003B2682 /* LYMovePathView.m */; };
+		D3311C5619A5F6EF003B2682 /* bg1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3311C4F19A5F6EF003B2682 /* bg1.png */; };
+		D3311C5719A5F6EF003B2682 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = D3311C5019A5F6EF003B2682 /* bg2.png */; };
+		D3311C5819A5F6EF003B2682 /* bgAnimationPoint1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3311C5119A5F6EF003B2682 /* bgAnimationPoint1.png */; };
+		D3311C5919A5F6EF003B2682 /* bgAnimationStar.png in Resources */ = {isa = PBXBuildFile; fileRef = D3311C5219A5F6EF003B2682 /* bgAnimationStar.png */; };
+		D3311C5A19A5F6EF003B2682 /* bgAnimationStar1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3311C5319A5F6EF003B2682 /* bgAnimationStar1.png */; };
+		D3311C5B19A5F6EF003B2682 /* cycle1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3311C5419A5F6EF003B2682 /* cycle1.png */; };
+		D3311C5C19A5F6EF003B2682 /* star1.png in Resources */ = {isa = PBXBuildFile; fileRef = D3311C5519A5F6EF003B2682 /* star1.png */; };
 		D33E25F71999BE7F0068C2C5 /* DetailContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D33E25F61999BE7F0068C2C5 /* DetailContactTableViewCell.m */; };
 		D348EE481999C85900066239 /* ToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE471999C85900066239 /* ToolView.m */; };
 		D348EE4B1999CCBB00066239 /* DetailContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE4A1999CCBB00066239 /* DetailContentTableViewCell.m */; };
@@ -256,6 +266,19 @@
 		D3311C2019A43319003B2682 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		D3311C2419A4333D003B2682 /* ConnectionAvailable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionAvailable.h; sourceTree = "<group>"; };
 		D3311C2519A4333D003B2682 /* ConnectionAvailable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionAvailable.m; sourceTree = "<group>"; };
+		D3311C3819A5F35B003B2682 /* LYBgImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYBgImageView.h; sourceTree = "<group>"; };
+		D3311C3919A5F35B003B2682 /* LYBgImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYBgImageView.m; sourceTree = "<group>"; };
+		D3311C3A19A5F35B003B2682 /* LYFireworksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYFireworksView.h; sourceTree = "<group>"; };
+		D3311C3B19A5F35B003B2682 /* LYFireworksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYFireworksView.m; sourceTree = "<group>"; };
+		D3311C3C19A5F35B003B2682 /* LYMovePathView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LYMovePathView.h; sourceTree = "<group>"; };
+		D3311C3D19A5F35B003B2682 /* LYMovePathView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LYMovePathView.m; sourceTree = "<group>"; };
+		D3311C4F19A5F6EF003B2682 /* bg1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg1.png; sourceTree = "<group>"; };
+		D3311C5019A5F6EF003B2682 /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
+		D3311C5119A5F6EF003B2682 /* bgAnimationPoint1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bgAnimationPoint1.png; sourceTree = "<group>"; };
+		D3311C5219A5F6EF003B2682 /* bgAnimationStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bgAnimationStar.png; sourceTree = "<group>"; };
+		D3311C5319A5F6EF003B2682 /* bgAnimationStar1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bgAnimationStar1.png; sourceTree = "<group>"; };
+		D3311C5419A5F6EF003B2682 /* cycle1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cycle1.png; sourceTree = "<group>"; };
+		D3311C5519A5F6EF003B2682 /* star1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star1.png; sourceTree = "<group>"; };
 		D33E25F51999BE7F0068C2C5 /* DetailContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailContactTableViewCell.h; sourceTree = "<group>"; };
 		D33E25F61999BE7F0068C2C5 /* DetailContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailContactTableViewCell.m; sourceTree = "<group>"; };
 		D348EE461999C85900066239 /* ToolView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToolView.h; sourceTree = "<group>"; };
@@ -563,6 +586,13 @@
 		D30DDB5F1995ED39007A8A9C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				D3311C4F19A5F6EF003B2682 /* bg1.png */,
+				D3311C5019A5F6EF003B2682 /* bg2.png */,
+				D3311C5119A5F6EF003B2682 /* bgAnimationPoint1.png */,
+				D3311C5219A5F6EF003B2682 /* bgAnimationStar.png */,
+				D3311C5319A5F6EF003B2682 /* bgAnimationStar1.png */,
+				D3311C5419A5F6EF003B2682 /* cycle1.png */,
+				D3311C5519A5F6EF003B2682 /* star1.png */,
 				D3EAB24519A2F27200E010E8 /* 03-1_30副本.png */,
 				D3EAB24619A2F27200E010E8 /* 06_11副本.png */,
 				D3EAB21D19A1A03400E010E8 /* 04_033.png */,
@@ -654,6 +684,19 @@
 				D3311C2019A43319003B2682 /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		D3311C3719A5F35B003B2682 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				D3311C3819A5F35B003B2682 /* LYBgImageView.h */,
+				D3311C3919A5F35B003B2682 /* LYBgImageView.m */,
+				D3311C3A19A5F35B003B2682 /* LYFireworksView.h */,
+				D3311C3B19A5F35B003B2682 /* LYFireworksView.m */,
+				D3311C3C19A5F35B003B2682 /* LYMovePathView.h */,
+				D3311C3D19A5F35B003B2682 /* LYMovePathView.m */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		D348EE551999D8F500066239 /* EGOImageView */ = {
@@ -829,6 +872,7 @@
 		D3B149721998A66300F83FA7 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				D3311C3719A5F35B003B2682 /* Animation */,
 				D3311C1919A43319003B2682 /* Connection */,
 				D3311C1E19A43319003B2682 /* MBProgressHUD */,
 				D3EAB22619A1D06100E010E8 /* MJRefresh */,
@@ -1013,15 +1057,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3311C5619A5F6EF003B2682 /* bg1.png in Resources */,
 				D3B149751998A68200F83FA7 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				D361D51F1998897F004B86AF /* 04-1_03.png in Resources */,
 				D3EAB23719A1D06100E010E8 /* MJRefresh.bundle in Resources */,
+				D3311C5819A5F6EF003B2682 /* bgAnimationPoint1.png in Resources */,
 				D30DDBA61995ED39007A8A9C /* 07_07.png in Resources */,
 				D30DDBAB1995ED39007A8A9C /* 09-1_03.png in Resources */,
 				D30DDBAE1995ED39007A8A9C /* 09-2_03.png in Resources */,
 				D30DDBB11995ED39007A8A9C /* 09-2_15.png in Resources */,
 				D348EE511999CD4200066239 /* 04_062.png in Resources */,
 				D30DDB9A1995ED39007A8A9C /* 04_17.png in Resources */,
+				D3311C5A19A5F6EF003B2682 /* bgAnimationStar1.png in Resources */,
 				D30DDB961995ED39007A8A9C /* 04_03.png in Resources */,
 				D30DDB901995ED39007A8A9C /* 03-1_15.png in Resources */,
 				D348EE4F1999CD4200066239 /* 04_032.png in Resources */,
@@ -1033,6 +1080,7 @@
 				D30DDBB41995ED39007A8A9C /* 09_06.png in Resources */,
 				D30DDB941995ED39007A8A9C /* 03-1_34.png in Resources */,
 				D3B149661998A64600F83FA7 /* close_btn_src_normal.png in Resources */,
+				D3311C5B19A5F6EF003B2682 /* cycle1.png in Resources */,
 				D348EE501999CD4200066239 /* 04_052.png in Resources */,
 				D361D5231998898B004B86AF /* 03-2_03.png in Resources */,
 				D30DDB8D1995ED39007A8A9C /* 03-1_06.png in Resources */,
@@ -1084,15 +1132,18 @@
 				D30DDBA51995ED39007A8A9C /* 07_03.png in Resources */,
 				D30DDBA31995ED39007A8A9C /* 06_15.png in Resources */,
 				D3B1496B1998A64600F83FA7 /* qzone2.jpg in Resources */,
+				D3311C5919A5F6EF003B2682 /* bgAnimationStar.png in Resources */,
 				D30DDB9B1995ED39007A8A9C /* 04_20.png in Resources */,
 				D3B149881998ADA300F83FA7 /* WeiboSDK.bundle in Resources */,
 				D3B1499A1998DD6200F83FA7 /* nature.jpg in Resources */,
+				D3311C5C19A5F6EF003B2682 /* star1.png in Resources */,
 				D30DDBA21995ED39007A8A9C /* 06_11.png in Resources */,
 				D30DDBA41995ED39007A8A9C /* 06_18.png in Resources */,
 				D30DDBB61995ED39007A8A9C /* 12_03.png in Resources */,
 				D3B149AD1999A99300F83FA7 /* 09-2_032.png in Resources */,
 				D30DDB911995ED39007A8A9C /* 03-1_17.png in Resources */,
 				D30DDBAD1995ED39007A8A9C /* 09-1_11.png in Resources */,
+				D3311C5719A5F6EF003B2682 /* bg2.png in Resources */,
 				D3B1496C1998A64600F83FA7 /* qzone3.jpg in Resources */,
 				D30DDB8E1995ED39007A8A9C /* 03-1_09.png in Resources */,
 				D30DDBB31995ED39007A8A9C /* 09_03.png in Resources */,
@@ -1131,6 +1182,7 @@
 				D348EE621999D8F500066239 /* EGOImageLoader.m in Sources */,
 				D348EE601999D8F500066239 /* EGOCache.m in Sources */,
 				D3763A03199C98070052E775 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				D3311C4019A5F35B003B2682 /* LYMovePathView.m in Sources */,
 				D348EE4B1999CCBB00066239 /* DetailContentTableViewCell.m in Sources */,
 				D3763A01199C98070052E775 /* AFURLSessionManager.m in Sources */,
 				D3B1495419989F8B00F83FA7 /* LoginViewController.m in Sources */,
@@ -1158,6 +1210,7 @@
 				D3763A06199C98070052E775 /* UIImageView+AFNetworking.m in Sources */,
 				D3EAB216199F3EC600E010E8 /* SinglePickerView.m in Sources */,
 				D37639F9199C98070052E775 /* AFHTTPRequestOperation.m in Sources */,
+				D3311C3E19A5F35B003B2682 /* LYBgImageView.m in Sources */,
 				D3763A07199C98070052E775 /* UIProgressView+AFNetworking.m in Sources */,
 				D37639FE199C98070052E775 /* AFURLConnectionOperation.m in Sources */,
 				D3EAB23C19A1D06100E010E8 /* UIScrollView+Extension.m in Sources */,
@@ -1175,6 +1228,7 @@
 				D3763A02199C98070052E775 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				D37639FB199C98070052E775 /* AFHTTPSessionManager.m in Sources */,
 				D348EE6D1999F57800066239 /* CenterTableViewController.m in Sources */,
+				D3311C3F19A5F35B003B2682 /* LYFireworksView.m in Sources */,
 				D3B149B51999B04A00F83FA7 /* DetailViewController.m in Sources */,
 				D3763A18199CCAE60052E775 /* GTMBase64.m in Sources */,
 			);

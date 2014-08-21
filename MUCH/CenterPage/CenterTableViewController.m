@@ -74,7 +74,6 @@
         [ReleaseEvent GetMyListWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
                 showArr = posts;
-                NSLog(@"%@",posts);
                 for(int i=0; i<[[posts[0] allKeys]count];i++){
                     // NSLog(@"%@",[posts[0] objectForKey:[posts[0] allKeys][i]]);
                     centercontentview = [CenterContentView setFram:[posts[0] objectForKey:[posts[0] allKeys][i]]];
@@ -116,7 +115,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    NSLog(@"%d",[[showArr[0] allKeys]count]);
     return [[showArr[0] allKeys]count]+1;
 }
 

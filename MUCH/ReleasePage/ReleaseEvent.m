@@ -10,13 +10,12 @@
 #import "AFAppDotNetAPIClient.h"
 @implementation ReleaseEvent
 - (void)setDict:(NSDictionary *)dict{
-    
     _dict = dict;
-    
     self.aid = dict[@"_id"];
     self.price = dict[@"title"];
     self.content = dict[@"content"];
-    self.likes = dict[@"likes"];
+    self.likes = [NSString stringWithFormat:@"%@",dict[@"likes"]];
+    self.youlikeit = [NSString stringWithFormat:@"%@",dict[@"youlikeit"]];
     self.created = dict[@"created"];
     self.createdby = dict[@"createdby"];
     self.comments = dict[@"comments"];
@@ -50,7 +49,7 @@
 
 
 + (NSURLSessionDataTask *)GetListWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block start:(int)start{
-    NSString *urlStr = [NSString stringWithFormat:@"/post?offset=%d&size=5",start];
+    NSString *urlStr = [NSString stringWithFormat:@"/post?offset=%d&size=5&userid=%@",start,[[NSUserDefaults standardUserDefaults]objectForKey:@"id"]];
     return [[AFAppDotNetAPIClient sharedClient] GET:urlStr parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
         //NSLog(@"JSON===>%@",JSON);
         if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){
@@ -77,7 +76,7 @@
 }
 
 + (NSURLSessionDataTask *)GetMyListWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid{
-    NSString *urlStr = [NSString stringWithFormat:@"/owner?id=%@&groupby=date",aid];
+    NSString *urlStr = [NSString stringWithFormat:@"/owner?id=%@",aid];
     return [[AFAppDotNetAPIClient sharedClient] GET:urlStr parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
         //NSLog(@"JSON===>%@",JSON);
         if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){

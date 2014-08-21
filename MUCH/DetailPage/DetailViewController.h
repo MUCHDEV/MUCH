@@ -11,7 +11,10 @@
 #import "ReleaseEvent.h"
 #import "LoginViewController.h"
 #import "RegisterEvent.h"
-@interface DetailViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,ToolViewDelegate>{
+#import "DetailHeadTableViewCell.h"
+#import "LYMovePathView.h"
+#import "LYFireworksView.h"
+@interface DetailViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,ToolViewDelegate,DetailHeadDelegate>{
     UITableView *_tableView;
     ToolView *toolview;
     NSMutableArray  *_allMessages;
@@ -21,9 +24,13 @@
     NSString *price;
     NSString *headurl;
     NSString *nickName;
+    NSString *youlikeit;
     LoginViewController *loginview;
     NSMutableArray *arr;
     RegisterEvent *regModel;
+    LYMovePathView *animationView;
+    LYFireworksView *animationView2;
+    LYMovePathView *animationView3;
 }
 @property (nonatomic, strong) ReleaseEvent *releaseEvent;
 @end
