@@ -10,6 +10,8 @@
 #import "RegisterEvent.h"
 #import <QuartzCore/QuartzCore.h>
 #import "GTMBase64.h"
+#import "ConnectionAvailable.h"
+#import "MBProgressHUD.h"
 @interface CenterDetailTableViewController ()
 
 @end
@@ -44,18 +46,30 @@
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     //NavigationItem设置属性
-    UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    /*UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     [titleview setImage:[UIImage imageNamed:@"03-2_033.png"]];
-    self.navigationItem.titleView = titleview;
+    self.navigationItem.titleView = titleview;*/
     
     [self.tableView setBackgroundColor:RGBCOLOR(217, 217, 217)];
     self.tableView.separatorStyle = NO;
     self.tableView.scrollEnabled = NO;
     
-    self.dataDic = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Natalia Vodianova",@"nick",@"女",@"sex", nil];
-    NSString * DocumentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    _filePath = [[NSString alloc]initWithFormat:@"%@%@",DocumentsPath,  @"/image.png"];
-    headImage = [UIImage imageWithContentsOfFile:_filePath];
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:1];
+    }else{
+        [RegisterEvent GetUserWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                NSLog(@"===>%@",posts);
+                model = posts[0];
+                [self.tableView reloadData];
+            }
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -110,14 +124,11 @@
         [cell.contentView addSubview:label];
         
         
-        UIImageView *headView = [[UIImageView alloc] initWithFrame:CGRectMake(232, 12, 47.5, 47.5)];
+        EGOImageView *headView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"03-1_30副本"]];
+        headView.frame = CGRectMake(232, 12, 47.5, 47.5);
         headView.layer.cornerRadius = 23.75;
         headView.layer.masksToBounds = YES;
-        if(!headImage){
-            [headView setImage:[UIImage imageNamed:@"06_11.png"]];
-        }else{
-            [headView setImage:headImage];
-        }
+        headView.imageURL = [NSURL URLWithString:model.avatar];
         [cell.contentView addSubview:headView];
     }else if(indexPath.row == 1){
         UIImageView *bgImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 63)];
@@ -135,11 +146,13 @@
         label.font = [UIFont fontWithName:@"GurmukhiMN" size:16];
         [cell.contentView addSubview:label];
         
-        UILabel *nicklabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 15, 140, 40)];
-        nicklabel.text = [self.dataDic objectForKey:@"nick"];
-        nicklabel.font = [UIFont fontWithName:@"GurmukhiMN" size:16];
-        nicklabel.textAlignment = NSTextAlignmentRight;
-        [cell.contentView addSubview:nicklabel];
+        nick = [[UITextField alloc] initWithFrame:CGRectMake(140, 15, 140, 40)];
+        nick.text = model.nickname;
+        nick.font = [UIFont fontWithName:@"GurmukhiMN" size:16];
+        nick.textAlignment = NSTextAlignmentRight;
+        nick.returnKeyType = UIReturnKeyDone;
+        nick.delegate = self;
+        [cell.contentView addSubview:nick];
     }else if (indexPath.row == 2){
         UIImageView *bgImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 63)];
         [bgImage setBackgroundColor:[UIColor whiteColor]];
@@ -157,7 +170,7 @@
         [cell.contentView addSubview:label];
         
         sexlabel = [[UILabel alloc] initWithFrame:CGRectMake(140, 15, 140, 40)];
-        sexlabel.text = [self.dataDic objectForKey:@"sex"];
+        sexlabel.text = model.gender;
         sexlabel.font = [UIFont fontWithName:@"GurmukhiMN" size:16];
         sexlabel.tag = indexPath.row;
         sexlabel.textAlignment = NSTextAlignmentRight;
@@ -214,7 +227,10 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"UserToken"]){
+    [nick resignFirstResponder];
+    [singlepickerview removeFromSuperview];
+    singlepickerview = nil;
+    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
         loginview = [[LoginViewController alloc] init];
         [self presentViewController:loginview animated:YES completion:nil];
     }else{
@@ -230,8 +246,6 @@
         }else if(indexPath.row == 1){
             
         }else if(indexPath.row == 2){
-            [singlepickerview removeFromSuperview];
-            singlepickerview = nil;
             NSArray *arr = [[NSArray alloc] initWithObjects:@"男",@"女",nil];
             singlepickerview = [[SinglePickerView alloc] initWithTitle:CGRectMake(0, 0, 320, 260) title:nil Arr:arr delegate:self];
             singlepickerview.tag = 1;
@@ -257,6 +271,12 @@
 
 -(void)logoutClick{
     NSLog(@"logoutClick");
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"id"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"avatar"];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"nickname"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"提示" message:@"退出成功！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alertview show];
 }
 
 //选择框
@@ -287,13 +307,13 @@
         }else {
             singlepickerview = (SinglePickerView *)actionSheet;
             sexlabel.text = singlepickerview.selectStr;
-            [self.dataDic setObject:singlepickerview.selectStr forKey:@"sex"];
+            model.gender = singlepickerview.selectStr;
+            [RegisterEvent UpdataWithBlock:^(NSMutableArray *posts, NSError *error) {
+                if(!error){
+                    
+                }
+            } model:model];
         }
-        [RegisterEvent UpdataWithBlock:^(NSMutableArray *posts, NSError *error) {
-            if(!error){
-                
-            }
-        } dic:self.dataDic];
     }
     [self.tableView reloadData];
 }
@@ -317,7 +337,33 @@
     [RegisterEvent UpdataHeadWithBlock:^(NSMutableArray *posts, NSError *error) {
         if(!error){
             NSLog(@"posts ===>%@",posts);
+            model.avatar = posts[0];
+            [[NSUserDefaults standardUserDefaults] setObject:posts[0] forKey:@"avatar"];
+            [self.tableView reloadData];
         }
     } imaStr:encoded];
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    textField.text = nil;
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    if(![textField.text isEqualToString:@""]){
+        model.nickname = textField.text;
+        [RegisterEvent UpdataWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"nickname"];
+            }
+        } model:model];
+    }
+    [self.tableView reloadData];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    [self.tableView reloadData];
+    return YES;
 }
 @end

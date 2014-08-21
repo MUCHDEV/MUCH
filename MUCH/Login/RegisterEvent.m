@@ -9,6 +9,18 @@
 #import "RegisterEvent.h"
 #import "AFAppDotNetAPIClient.h"
 @implementation RegisterEvent
+- (void)setDict:(NSDictionary *)dict{
+    
+    _dict = dict;
+    
+    self.aid = dict[@"_id"];
+    self.avatar = dict[@"avatar"];
+    self.created = dict[@"created"];
+    self.gender = dict[@"gender"];
+    self.nickname = dict[@"nickname"];
+    self.username = dict[@"username"];
+}
+
 + (NSURLSessionDataTask *)RegisterWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block userName:(NSString *)userName passWord:(NSString *)passWord passwordConfirmation:(NSString *)passwordConfirmation{
     NSString *urlStr = [NSString stringWithFormat:@"user/register"];
     NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:
@@ -19,11 +31,15 @@
     NSLog(@"parametersdata ===> %@",parametersdata);
     return [[AFAppDotNetAPIClient sharedClient] POST:urlStr parameters:parametersdata success:^(NSURLSessionDataTask * __unused task, id JSON) {
         NSLog(@"JSON===>%@",JSON);
-        NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
-        [mutablePosts addObject:[JSON objectForKey:@"token"]];
-        [mutablePosts addObject:[JSON objectForKey:@"id"]];
-        if (block) {
-            block([NSMutableArray arrayWithArray:mutablePosts], nil);
+        if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){
+            NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
+            [mutablePosts addObject:JSON[@"result"]];
+            if (block) {
+                block([NSMutableArray arrayWithArray:mutablePosts], nil);
+            }
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"status"][@"text"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
         }
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         NSLog(@"error ==> %@",error);
@@ -42,30 +58,34 @@
     NSLog(@"parametersdata ===> %@",parametersdata);
     return [[AFAppDotNetAPIClient sharedClient] POST:urlStr parameters:parametersdata success:^(NSURLSessionDataTask * __unused task, id JSON) {
         NSLog(@"JSON===>%@",JSON);
-        NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
-        [mutablePosts addObject:[JSON objectForKey:@"token"]];
-        [mutablePosts addObject:[JSON objectForKey:@"id"]];
-        if (block) {
-            block([NSMutableArray arrayWithArray:mutablePosts], nil);
+        if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){
+            NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
+            [mutablePosts addObject:JSON[@"result"]];
+            if (block) {
+                block([NSMutableArray arrayWithArray:mutablePosts], nil);
+            }
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"status"][@"text"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
         }
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
-        NSLog(@"error ==> %@",error);
         if (block) {
             block([NSMutableArray array], error);
         }
     }];
 }
 
-+ (NSURLSessionDataTask *)UpdataWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block dic:(NSMutableDictionary *)dic{
++ (NSURLSessionDataTask *)UpdataWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block model:(RegisterEvent *)model{
+    NSLog(@"%@",model.nickname);
     NSString *urlStr = [NSString stringWithFormat:@"user/"];
     NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                    dic[@"nick"],@"nickname",
-                                    dic[@"sex"],@"gender",
+                                    model.nickname,@"nickname",
+                                    model.gender,@"gender",
                                     [[NSUserDefaults standardUserDefaults]objectForKey:@"id"],@"_id",
                                     nil];
-    NSLog(@"parametersdata ===> %@",parametersdata);
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject:parametersdata forKey:@"user"];
+    NSLog(@"parameters ===> %@",parameters);
     return [[AFAppDotNetAPIClient sharedClient] PUT:urlStr parameters:parameters success:^(NSURLSessionDataTask * __unused task, id JSON) {
         NSLog(@"JSON===>%@",JSON);
         NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
@@ -92,10 +112,39 @@
     [parameters setObject:parametersdata forKey:@"user"];
     return [[AFAppDotNetAPIClient sharedClient] PUT:urlStr parameters:parameters success:^(NSURLSessionDataTask * __unused task, id JSON) {
         NSLog(@"JSON===>%@",JSON);
-        NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
-        
+        if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){
+            NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
+            [mutablePosts addObject:JSON[@"result"][@"avatar"]];
+            if (block) {
+                block([NSMutableArray arrayWithArray:mutablePosts], nil);
+            }
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"status"][@"text"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
+        NSLog(@"error ==> %@",error);
         if (block) {
-            block([NSMutableArray arrayWithArray:mutablePosts], nil);
+            block([NSMutableArray array], error);
+        }
+    }];
+}
+
++ (NSURLSessionDataTask *)GetUserWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block{
+    NSString *urlStr = [NSString stringWithFormat:@"user/%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"id"]];
+    return [[AFAppDotNetAPIClient sharedClient] GET:urlStr parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
+        NSLog(@"JSON===>%@",JSON);
+        if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){
+            NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
+            RegisterEvent *model = [[RegisterEvent alloc] init];
+            [model setDict:JSON[@"result"]];
+            [mutablePosts addObject:model];
+            if (block) {
+                block([NSMutableArray arrayWithArray:mutablePosts], nil);
+            }
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:JSON[@"status"][@"text"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
         }
     } failure:^(NSURLSessionDataTask *__unused task, NSError *error) {
         NSLog(@"error ==> %@",error);

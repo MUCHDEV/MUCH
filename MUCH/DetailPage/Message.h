@@ -22,4 +22,6 @@ typedef enum {
 @property (nonatomic, copy) NSDictionary *dict;
 
 + (NSURLSessionDataTask *)CommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block arr:(NSMutableArray *)arr;
+
++ (NSURLSessionDataTask *)GetCommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid;
 @end

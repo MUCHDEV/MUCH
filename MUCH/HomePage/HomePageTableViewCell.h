@@ -22,6 +22,7 @@
     UIImageView *goodImage;
     UILabel *goodlabel;
     EGOImageView *bigImage;
+    EGOImageView *headView;
 }
 @property (nonatomic, strong) ReleaseEvent *releaseEvent;
 @property (nonatomic, strong) EGOImageView *bigImage;

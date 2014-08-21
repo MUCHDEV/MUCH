@@ -8,6 +8,9 @@
 
 #import "CenterTableViewController.h"
 #import "CenterTableViewCell.h"
+#import "ReleaseEvent.h"
+#import "ConnectionAvailable.h"
+#import "MBProgressHUD.h"
 @interface CenterTableViewController ()
 
 @end
@@ -50,39 +53,37 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     //NavigationItem设置属性
-    UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    /*UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     [titleview setImage:[UIImage imageNamed:@"03-2_033.png"]];
-    self.navigationItem.titleView = titleview;
+    self.navigationItem.titleView = titleview;*/
     
     [self.tableView setBackgroundColor:RGBCOLOR(217, 217, 217)];
     self.tableView.separatorStyle = NO;
     
-    viewArr = [[NSMutableArray alloc] init];
-    for(int i=0;i<5;i++){
-        imageArr = [[NSMutableArray alloc] init];
-        if(i == 0){
-            [imageArr addObject:@"0"];
-        }else if(i == 1){
-            [imageArr addObject:@"0"];
-            [imageArr addObject:@"1"];
-        }else if(i == 2){
-            [imageArr addObject:@"0"];
-            [imageArr addObject:@"1"];
-            [imageArr addObject:@"2"];
-        }else if(i == 3){
-            [imageArr addObject:@"0"];
-            [imageArr addObject:@"1"];
-            [imageArr addObject:@"2"];
-            [imageArr addObject:@"3"];
-        }else if(i == 4){
-            [imageArr addObject:@"0"];
-            [imageArr addObject:@"1"];
-            [imageArr addObject:@"2"];
-            [imageArr addObject:@"3"];
-            [imageArr addObject:@"4"];
-        }
-        centercontentview = [CenterContentView setFram:imageArr priceArr:nil];
-        [viewArr addObject:centercontentview];
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:1];
+    }else{
+        viewArr = [[NSMutableArray alloc] init];
+        dateArr = [[NSMutableArray alloc] init];
+        [ReleaseEvent GetMyListWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                showArr = posts;
+                NSLog(@"%@",posts);
+                for(int i=0; i<[[posts[0] allKeys]count];i++){
+                    // NSLog(@"%@",[posts[0] objectForKey:[posts[0] allKeys][i]]);
+                    centercontentview = [CenterContentView setFram:[posts[0] objectForKey:[posts[0] allKeys][i]]];
+                    [viewArr insertObject:centercontentview atIndex:0];
+                    [dateArr insertObject:[posts[0] allKeys][i] atIndex:0];
+                }
+                [self.tableView reloadData];
+            }
+        } aid:[[NSUserDefaults standardUserDefaults]objectForKey:@"id"]];
     }
 }
 
@@ -90,6 +91,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [self.tableView reloadData];
 }
 
 -(void)leftBtnClick{
@@ -111,7 +116,8 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 6;
+    NSLog(@"%d",[[showArr[0] allKeys]count]);
+    return [[showArr[0] allKeys]count]+1;
 }
 
 
@@ -122,8 +128,9 @@
         CenterTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
         if(!cell){
             cell = [[CenterTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
+        }else{
+            [cell setNewContent];
         }
-        NSLog(@"%f",cell.frame.size.height);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
@@ -137,36 +144,35 @@
         }
         [cell setBackgroundColor:[UIColor clearColor]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        centercontentview = [viewArr objectAtIndex:indexPath.row-1];
-        [cell.contentView addSubview:centercontentview];
-        
-        //NSLog(@"%f",cell.frame.size.height);
-        UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 1, centercontentview.frame.size.height)];
-        [lineImageView setBackgroundColor:RGBCOLOR(203, 203, 203)];
-        [cell.contentView addSubview:lineImageView];
-        
-        UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(1, 15, 30, 30)];
-        [imageview setImage:[UIImage imageNamed:@"06_18.png"]];
-        [cell.contentView addSubview:imageview];
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-        NSString *time = [dateFormatter stringFromDate:[NSDate date]];
-        NSArray *arr = [time componentsSeparatedByString:@"-"];
-        
-        UILabel *day = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 30, 10)];
-        day.text = [NSString stringWithFormat:@"%@",[arr objectAtIndex:2]];
-        day.font = [UIFont fontWithName:@"GurmukhiMN-Bold" size:13];
-        day.textColor = [UIColor whiteColor];
-        day.textAlignment = NSTextAlignmentCenter;
-        [cell.contentView addSubview:day];
-        
-        UILabel *month = [[UILabel alloc] initWithFrame:CGRectMake(1, 32, 30, 10)];
-        month.text = [NSString stringWithFormat:@"%d月",[[arr objectAtIndex:1] integerValue]];
-        month.font = [UIFont fontWithName:@"GurmukhiMN-Bold" size:9];
-        month.textColor = [UIColor whiteColor];
-        month.textAlignment = NSTextAlignmentCenter;
-        [cell.contentView addSubview:month];
+        if(viewArr.count !=0){
+            centercontentview = [viewArr objectAtIndex:indexPath.row-1];
+            [cell.contentView addSubview:centercontentview];
+            
+            //NSLog(@"%f",cell.frame.size.height);
+            UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 1, centercontentview.frame.size.height)];
+            [lineImageView setBackgroundColor:RGBCOLOR(203, 203, 203)];
+            [cell.contentView addSubview:lineImageView];
+            
+            UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(1, 15, 30, 30)];
+            [imageview setImage:[UIImage imageNamed:@"06_18.png"]];
+            [cell.contentView addSubview:imageview];
+            
+            NSArray *arr = [dateArr[indexPath.row-1] componentsSeparatedByString:@"-"];
+            
+            UILabel *day = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 30, 10)];
+            day.text = [NSString stringWithFormat:@"%@",[arr objectAtIndex:2]];
+            day.font = [UIFont fontWithName:@"GurmukhiMN" size:13];
+            day.textColor = [UIColor whiteColor];
+            day.textAlignment = NSTextAlignmentCenter;
+            [cell.contentView addSubview:day];
+            
+            UILabel *month = [[UILabel alloc] initWithFrame:CGRectMake(1, 32, 30, 10)];
+            month.text = [NSString stringWithFormat:@"%d月",[[arr objectAtIndex:1] integerValue]];
+            month.font = [UIFont fontWithName:@"GurmukhiMN-Bold" size:9];
+            month.textColor = [UIColor whiteColor];
+            month.textAlignment = NSTextAlignmentCenter;
+            [cell.contentView addSubview:month];
+        }
         return cell;
     }
 }
@@ -176,9 +182,11 @@
     if(indexPath.row == 0){
         return 70;
     }else{
-        centercontentview = [viewArr objectAtIndex:indexPath.row-1];
-        //NSLog(@"%f",centercontentview.frame.size.height);
-        return centercontentview.frame.size.height;
+        if(viewArr.count !=0){
+            centercontentview = [viewArr objectAtIndex:indexPath.row-1];
+            //NSLog(@"%f",centercontentview.frame.size.height);
+            return centercontentview.frame.size.height;
+        }
     }
     return 44;
 }

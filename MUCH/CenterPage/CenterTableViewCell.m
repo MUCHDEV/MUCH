@@ -16,7 +16,12 @@
     if (self) {
         // Initialization code
         [self setBackgroundColor:[UIColor clearColor]];
-        [self setContent];
+        [RegisterEvent GetUserWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                model = posts[0];
+                [self setContent];
+            }
+        }];
     }
     return self;
 }
@@ -46,17 +51,30 @@
     [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
     [self.contentView addSubview:lineImage];
     
-    UIImageView *headImage = [[UIImageView alloc] initWithFrame:CGRectMake(20, 15, 47.5, 47.5)];
-    [headImage setImage:[UIImage imageNamed:@"06_11.png"]];
+    headImage = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"03-1_30副本"]];
+    headImage.frame = CGRectMake(20, 15, 47.5, 47.5);
+    headImage.imageURL = [NSURL URLWithString:model.avatar];
+    headImage.layer.cornerRadius = 23.75;
+    headImage.layer.masksToBounds = YES;
     [self.contentView addSubview:headImage];
     
-    UILabel *namelabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 20, 100, 40)];
-    namelabel.text = @"Alice";
+    namelabel = [[UILabel alloc] initWithFrame:CGRectMake(95, 20, 100, 40)];
+    namelabel.text = model.nickname;
     namelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:18];
     [self.contentView addSubview:namelabel];
     
     UIImageView *arrowImage = [[UIImageView alloc] initWithFrame:CGRectMake(290, 30, 10, 33/2)];
     [arrowImage setImage:[UIImage imageNamed:@"03_03.png"]];
     [self.contentView addSubview:arrowImage];
+}
+
+-(void)setNewContent{
+    [RegisterEvent GetUserWithBlock:^(NSMutableArray *posts, NSError *error) {
+        if(!error){
+            model = posts[0];
+            headImage.imageURL = [NSURL URLWithString:model.avatar];
+            namelabel.text = model.nickname;
+        }
+    }];
 }
 @end

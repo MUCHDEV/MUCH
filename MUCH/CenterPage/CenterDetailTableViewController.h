@@ -10,15 +10,17 @@
 #import "SinglePickerView.h"
 #import "Camera.h"
 #import "LoginViewController.h"
-@interface CenterDetailTableViewController : UITableViewController<UIActionSheetDelegate,CameraDelegate,UIActionSheetDelegate>{
+#import "EGOImageView.h"
+#import "RegisterEvent.h"
+@interface CenterDetailTableViewController : UITableViewController<UIActionSheetDelegate,CameraDelegate,UIActionSheetDelegate,UITextFieldDelegate>{
     SinglePickerView *singlepickerview;
     UILabel *sexlabel;
     Camera *camera;
     UIActionSheet *_myActionSheet;
     UIImage *headImage;
-    //图片2进制路径
-    NSString* _filePath;
     LoginViewController *loginview;
+    UITextField *nick;
+    NSMutableArray *showArr;
+    RegisterEvent *model;
 }
-@property(nonatomic,retain)NSMutableDictionary *dataDic;
 @end

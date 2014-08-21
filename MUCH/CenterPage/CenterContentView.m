@@ -7,7 +7,8 @@
 //
 
 #import "CenterContentView.h"
-
+#import "ReleaseEvent.h"
+#import "EGOImageView.h"
 @implementation CenterContentView
 
 - (id)initWithFrame:(CGRect)frame
@@ -27,8 +28,8 @@
     // Drawing code
 }
 */
-+(CenterContentView *)setFram:(NSMutableArray *)imgArr priceArr:(NSMutableArray *)priceArr{
-    //92.5 107.5
++(CenterContentView *)setFram:(NSMutableArray *)imgArr{
+    //NSLog(@"%@",imgArr);
     CenterContentView *centercontent = [[CenterContentView alloc] init];
     [centercontent setBackgroundColor:[UIColor clearColor]];
     int imgcount = imgArr.count;
@@ -37,22 +38,23 @@
     }else{
         [centercontent setFrame:CGRectMake(35, 15, 95*3, 105*(imgcount/3)+127.5)];
     }
+    //NSLog(@"%d",imgcount);
     for(int i=0;i<imgcount;i++){
         int row = i/3;
         int line = i%3;
         UIImageView *bgImage = [[UIImageView alloc] init];
         [bgImage setBackgroundColor:[UIColor whiteColor]];
         [bgImage setFrame:CGRectMake(line*(90+5), row*(105+5), 90, 90)];
-        UIImageView *contentImage = [[UIImageView alloc] initWithFrame:CGRectMake(2, 2, 90-4, 90-4)];
-        [contentImage setImage:[UIImage imageNamed:@"nature.jpg"]];
+        EGOImageView *contentImage = [[EGOImageView alloc] initWithFrame:CGRectMake(2, 2, 90-4, 90-4)];
+        contentImage.imageURL = [NSURL URLWithString:imgArr[i][@"content"]];
         [bgImage addSubview:contentImage];
         [centercontent addSubview:bgImage];
         
         UILabel *pricelabel = [[UILabel alloc] init];
-        [pricelabel setFrame:CGRectMake(line*(90+5), row*(105+5)+90, 90, 30)];
-        pricelabel.text = @"￥ 12.00";
-        pricelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:15];
-        pricelabel.textColor = [UIColor blueColor];
+        [pricelabel setFrame:CGRectMake(line*(90+5), row*(105+5)+88, 90, 30)];
+        pricelabel.text = [NSString stringWithFormat:@"￥ %@",imgArr[i][@"title"]];
+        pricelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
+        pricelabel.textColor = RGBCOLOR(20, 118, 243);
         [centercontent addSubview:pricelabel];
     }
     return centercontent;

@@ -9,6 +9,8 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "RegisterEvent.h"
+#import "ConnectionAvailable.h"
+#import "MBProgressHUD.h"
 @interface LoginViewController ()
 
 @end
@@ -134,9 +136,6 @@
                          @"Other_Info_2": @[@"obj1", @"obj2"],
                          @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
     [WeiboSDK sendRequest:request];
-    
-    NSLog(@"11111%@",[WBAuthorizeResponse alloc].userID);
-    NSLog(@"22222222%@",[WBAuthorizeResponse alloc].accessToken);
 }
 
 //qq
@@ -159,7 +158,6 @@
         contentview2.frame=CGRectMake(320, 347/2-91/2, 549/2, 215);
     }];
     if(contentview == nil){
-        NSLog(@"asdfasdf");
         contentview = [[UIView alloc] initWithFrame:CGRectMake(-(549/2), 347/2-91/2, 549/2, 170)];
         [self setLoginView];
         [UIView animateWithDuration:0.3 animations:^{
@@ -233,27 +231,54 @@
 }
 
 -(void)loginClick{
-    [RegisterEvent LoginWithBlock:^(NSMutableArray *posts, NSError *error) {
-        if(!error){
-            NSLog(@"posts ==> %@",posts);
-            [[NSUserDefaults standardUserDefaults] setObject:posts[0] forKey:@"UserToken"];
-            [[NSUserDefaults standardUserDefaults] setObject:posts[1] forKey:@"id"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    } userName:_userNameTextField.text passWord:_passWordTextField.text];
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:1];
+    }else{
+        [RegisterEvent LoginWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                NSLog(@"posts ==> %@",posts);
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"avatar"];
+                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"nickname"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }else{
+                NSLog(@"%@",error);
+                NSHTTPURLResponse* httpResponse = error.userInfo[@"AFNetworkingOperationFailingURLResponseErrorKey"];
+                int responseStatusCode = [httpResponse statusCode];
+                NSLog(@"%d",responseStatusCode);
+            }
+        } userName:_userNameTextField.text passWord:_passWordTextField.text];
+    }
 }
 
 -(void)registeredClick{
-    [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
-        if(!error){
-            NSLog(@"posts ==> %@",posts);
-            [[NSUserDefaults standardUserDefaults] setObject:posts[0] forKey:@"UserToken"];
-            [[NSUserDefaults standardUserDefaults] setObject:posts[1] forKey:@"id"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text];
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:1];
+    }else{
+        [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                NSLog(@"posts ==> %@",posts);
+                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"avatar"] forKey:@"avatar"];
+                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"nickname"] forKey:@"nickname"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text];
+    }
 }
 
 

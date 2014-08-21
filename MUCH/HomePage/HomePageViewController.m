@@ -8,6 +8,10 @@
 
 #import "HomePageViewController.h"
 #import "ReleaseEvent.h"
+#import "MJRefresh.h"
+#import "ReleaseEvent.h"
+#import "ConnectionAvailable.h"
+#import "MBProgressHUD.h"
 @interface HomePageViewController ()
 
 @end
@@ -27,18 +31,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSArray *familyNames = [UIFont familyNames];
-    for( NSString *familyName in familyNames ){
-        printf( "Family: %s \n", [familyName UTF8String] );
-        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
-        for( NSString *fontName in fontNames ){
-            printf( "\tFont: %s \n", [fontName UTF8String] );
-        }
-    }
-    
     
     self.title = @"MUCH";
     btnIndex = 0;
+    startIndex = 0;
     //NavigationBar设置背景图
     self.navigationController.navigationBar.barTintColor = RGBCOLOR(255,228,19);
     
@@ -63,8 +59,7 @@
     [titleview setImage:[UIImage imageNamed:@"03-2_033.png"]];
     self.navigationItem.titleView = titleview;*/
     
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,[UIFont fontWithName:@"SnellRoundhand-Bold" size:19], NSFontAttributeName,
-                                                                     nil]];
+    //[self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor], NSForegroundColorAttributeName,[UIFont fontWithName:@"Yuanti SC Bold.otf" size:19], NSFontAttributeName,nil]];
     
     topview = [[HomePageTopView alloc] initWithFrame:CGRectMake(0, 65, 320, 50)];
     topview.delegate = self;
@@ -78,12 +73,25 @@
     [_tableView setBackgroundColor:RGBCOLOR(217, 217, 217)];
     [self.view addSubview:_tableView];
     
-    [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
-        if(!error){
-            showArr = posts;
-            [_tableView reloadData];
-        }
-    }];
+    //集成刷新控件
+    [self setupRefresh];
+    
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:1];
+    }else{
+        [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                showArr = posts;
+                [_tableView reloadData];
+            }
+        }start:startIndex];
+    }
     
     
     locationManager = [[CLLocationManager alloc] init];//创建位置管理器
@@ -101,6 +109,7 @@
 -(void)viewDidAppear:(BOOL)animated{
     //启动位置更新
     //[locationManager startUpdatingLocation];
+    [self reloadList];
 }
 
 /*
@@ -113,9 +122,81 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
+{
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [_tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+    //[_tableView headerBeginRefreshing];
+    
+    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+}
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:3];
+        [_tableView footerEndRefreshing];
+        [_tableView headerEndRefreshing];
+    }else{
+        startIndex = 0;
+        [showArr removeAllObjects];
+        [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                //NSLog(@"posts ==> %@",posts);
+                showArr = posts;
+                [_tableView reloadData];
+                [_tableView footerEndRefreshing];
+                [_tableView headerEndRefreshing];
+            }
+        }start:startIndex];
+    }
+}
+
+- (void)footerRereshing
+{
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:3];
+        [_tableView footerEndRefreshing];
+        [_tableView headerEndRefreshing];
+    }else{
+        startIndex = startIndex +5;
+        [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                [showArr addObjectsFromArray:posts];
+                [_tableView reloadData];
+                [_tableView footerEndRefreshing];
+                [_tableView headerEndRefreshing];
+            }
+        }start:startIndex];
+    }
+}
+
 -(void)leftBtnClick{
-    centerview = [[CenterTableViewController alloc] init];
-    [self.navigationController pushViewController:centerview animated:YES];
+    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
+        loginview = [[LoginViewController alloc] init];
+        [self presentViewController:loginview animated:YES completion:nil];
+    }else{
+        centerview = [[CenterTableViewController alloc] init];
+        [self.navigationController pushViewController:centerview animated:YES];
+    }
 }
 
 -(void)rightBtnClick{
@@ -167,9 +248,7 @@
         if(!cell){
             cell = [[HomePageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
         }
-        if(showArr.count !=0){
-            cell.releaseEvent = showArr[indexPath.row];
-        }
+        cell.releaseEvent = showArr[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }
@@ -241,18 +320,27 @@
     latitude =  coor.latitude;
     longitude = coor.longitude;
     [locationManager stopUpdatingLocation];
-    NSLog(@"%f",latitude);
-    NSLog(@"%f",longitude);
 }
 
 
 -(void)reloadList{
-    [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
-        if(!error){
-            NSLog(@"posts ==> %@",posts);
-            showArr = posts;
-            [_tableView reloadData];
-        }
-    }];
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:3];
+    }else{
+        [showArr removeAllObjects];
+        [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                //NSLog(@"posts ==> %@",posts);
+                showArr = posts;
+                [_tableView reloadData];
+            }
+        }start:startIndex];
+    }
 }
 @end

@@ -39,6 +39,7 @@
     headView = [[UIImageView alloc] init];
     lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
     [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
+    //NSLog(@"%d...%d",index,arrIndex);
     if(index == 1){
         [headView setFrame:CGRectMake(8.25, 0, 607/2, 109/2)];
         [headView setImage:[UIImage imageNamed:@"04_032.png"]];
@@ -53,15 +54,15 @@
     }
     [self.contentView addSubview:headView];
     
-    headimage = [[EGOImageView alloc] initWithFrame:CGRectMake(20, 20, 52/2, 51/2)];
-    headimage.placeholderImage=[UIImage imageNamed:@"04_20.png"];
+    headimage = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"04_20.png"]];
+    headimage.frame = CGRectMake(20, 20, 52/2, 51/2);
     headimage.layer.cornerRadius = 3;
     headimage.layer.masksToBounds = YES;
     [self.contentView addSubview:headimage];
     
     content =  [[UILabel alloc] initWithFrame:CGRectMake(60,10,240,40)];
     [content setNumberOfLines:2];
-    content.textColor = [UIColor blackColor];
+    content.textColor = RGBCOLOR(24, 24, 24);
     content.textAlignment=NSTextAlignmentLeft;
     content.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
     [self.contentView addSubview:content];
@@ -69,19 +70,19 @@
 
 - (void)setMessageModel:(Message *)messageModel{
     headimage.imageURL = messageModel.iconURL;
-    NSString* tempStr = [NSString stringWithFormat:@"%@:%@",messageModel.name,messageModel.content];
+    NSString* tempStr = [NSString stringWithFormat:@"%@ : %@",messageModel.name,messageModel.content];
     NSMutableAttributedString* attStr=[[NSMutableAttributedString alloc]initWithString:tempStr];
     if(messageModel.type == MessageTypeMe){
-        [attStr addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0, messageModel.name.length)];
+        [attStr addAttribute:NSForegroundColorAttributeName value:RGBCOLOR(242, 66, 146) range:NSMakeRange(0, messageModel.name.length)];
     }
     content.attributedText = attStr;
 }
 
 -(void)setNewBgView:(int)newIndex newArrCount:(int)newArrCount{
-    if(lineImage == nil){
-        lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
-    }
-    [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
+//    if(lineImage == nil){
+//        lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
+//    }
+//    [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
     if(newIndex == 1){
         [headView setImage:[UIImage imageNamed:@"04_032.png"]];
         [headView addSubview:lineImage];

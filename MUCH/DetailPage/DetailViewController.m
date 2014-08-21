@@ -11,6 +11,8 @@
 #import "DetailContactTableViewCell.h"
 #import "DetailContentTableViewCell.h"
 #import "GTMBase64.h"
+#import "ConnectionAvailable.h"
+#import "MBProgressHUD.h"
 @interface DetailViewController ()
 
 @end
@@ -48,30 +50,16 @@
     self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     //NavigationItem设置属性
-    UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    /*UIImageView *titleview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
     [titleview setImage:[UIImage imageNamed:@"03-2_033.png"]];
-    self.navigationItem.titleView = titleview;
+    self.navigationItem.titleView = titleview;*/
     
     /*NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"1",@"type",nil];
     
     NSDictionary *dic1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"lululululu",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",@"不高兴，买包包asdfsadfasdfsadfasdfasdfasdfas",@"content",@"0",@"type",nil];*/
     
     //NSArray *array = [[NSArray alloc] init];
-    _allMessages = [NSMutableArray array];
-    for (NSDictionary *dict in arr) {
-        Message *message = [[Message alloc] init];
-        message.dict = dict;
-        message.name = [dict objectForKey:@"name"];
-        message.content = [dict objectForKey:@"content"];
-        message.iconURL = [NSURL URLWithString:[dict objectForKey:@"url"]];
-        message.aid = aid;
-        if([[dict objectForKey:@"type"] isEqualToString:@"1"]){
-            message.type = MessageTypeOther;
-        }else{
-            message.type = MessageTypeMe;
-        }
-        [_allMessages addObject:message];
-    }
+    
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, 320, self.view.frame.size.height-44)];
     _tableView.delegate = self;
@@ -83,6 +71,27 @@
     toolview = [[ToolView alloc] initWithFrame:CGRectMake(0, 524, 320, 44) superView:self.view];
     toolview.delegate = self;
     [self.view addSubview:toolview];
+    
+    [Message GetCommentsWithBlock:^(NSMutableArray *posts, NSError *error) {
+        if(!error){
+            _allMessages = [NSMutableArray array];
+            for (NSDictionary *dict in posts[0]) {
+                Message *message = [[Message alloc] init];
+                message.dict = dict;
+                message.name = [dict objectForKey:@"nickname"];
+                message.content = [dict objectForKey:@"content"];
+                message.iconURL = [NSURL URLWithString:[dict objectForKey:@"avatar"]];
+                message.aid = aid;
+                if([[dict objectForKey:@"type"] isEqualToString:@"1"]){
+                    message.type = MessageTypeOther;
+                }else{
+                    message.type = MessageTypeMe;
+                }
+                [_allMessages addObject:message];
+            }
+            [_tableView reloadData];
+        }
+    } aid:aid];
 }
 
 - (void)didReceiveMemoryWarning
@@ -111,26 +120,44 @@
 
 #pragma mark 给数据源增加内容
 - (void)addMessageWithContent:(NSString *)content{
-    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"UserToken"]){
+    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
         loginview = [[LoginViewController alloc] init];
         [self presentViewController:loginview animated:YES completion:nil];
     }else{
         Message *msg = [[Message alloc] init];
         msg.content = content;
-        msg.iconURL = [NSURL URLWithString:@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg"];
-        msg.name = @"wywyw";
         msg.type = MessageTypeMe;
+        if([[NSUserDefaults standardUserDefaults]objectForKey:@"nickname"]){
+            if(![[[NSUserDefaults standardUserDefaults]objectForKey:@"nickname"] isEqualToString:@""]){
+                msg.name =[[NSUserDefaults standardUserDefaults]objectForKey:@"nickname"];
+            }else{
+                msg.name = @"匿名";
+            }
+        }else{
+            msg.name = @"匿名";
+        }
+        msg.iconURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults]objectForKey:@"avatar"] ];
         msg.aid = aid;
         [_allMessages insertObject:msg atIndex:0];
         [_tableView reloadData];
         // 3、滚动至当前行
         //NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_allMessages.count - 1 inSection:0];
         //[_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        [Message CommentsWithBlock:^(NSMutableArray *posts, NSError *error) {
-            if(!error){
-                NSLog(@"posts ==> %@",posts);
-            }
-        } arr:_allMessages];
+        if (![ConnectionAvailable isConnectionAvailable]) {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.removeFromSuperViewOnHide =YES;
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"当前网络不可用，请检查网络连接！";
+            hud.labelFont = [UIFont fontWithName:nil size:14];
+            hud.minSize = CGSizeMake(132.f, 108.0f);
+            [hud hide:YES afterDelay:1];
+        }else{
+            [Message CommentsWithBlock:^(NSMutableArray *posts, NSError *error) {
+                if(!error){
+                    NSLog(@"posts ==> %@",posts);
+                }
+            } arr:_allMessages];
+        }
     }
 }
 
@@ -151,6 +178,8 @@
             cell = [[DetailContactTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
         }
         cell.price = price;
+        cell.headurl = headurl;
+        cell.name = nickName;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
@@ -193,12 +222,17 @@
     imageurl = releaseEvent.content;
     aid = releaseEvent.aid;
     price = releaseEvent.price;
-    arr = [[NSMutableArray alloc] init];
-    for(int i=0;i<releaseEvent.comments.count;i++){
-        if(i%2==0){
-            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"Alice",@"name",@"http://www.faceplusplus.com.cn/wp-content/themes/faceplusplus/assets/img/demo/1.jpg",@"url",releaseEvent.comments[i],@"content",@"1",@"type",nil];
-            [arr addObject:dic];
-        }
+    if(![[NSString stringWithFormat:@"%@",releaseEvent.createdby] isEqualToString:@"<null>"]){
+        headurl = releaseEvent.createdby[@"avatar"];
+        nickName = releaseEvent.createdby[@"nickname"];
+    }else{
+        nickName = @"匿名";
+        headurl = @"";
     }
+    /*arr = [[NSMutableArray alloc] init];
+    for(int i=0;i<releaseEvent.comments.count;i++){
+        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:releaseEvent.comments[i][@"nickname"],@"name",releaseEvent.comments[i][@"avatarUrl"],@"url",releaseEvent.comments[i][@"content"],@"content",@"1",@"type",nil];
+        [arr addObject:dic];
+    }*/
 }
 @end

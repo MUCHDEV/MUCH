@@ -9,6 +9,8 @@
 #import "ReleasePageViewController.h"
 #import "GTMBase64.h"
 #import "ReleaseEvent.h"
+#import "ConnectionAvailable.h"
+#import "MBProgressHUD.h"
 @interface ReleasePageViewController ()
 
 @end
@@ -104,19 +106,24 @@
 }
 
 -(void)rightBtnClick{
-    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"UserToken"]){
-        loginview = [[LoginViewController alloc] init];
-        [self presentViewController:loginview animated:YES completion:nil];
+    if (![ConnectionAvailable isConnectionAvailable]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.removeFromSuperViewOnHide =YES;
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"当前网络不可用，请检查网络连接！";
+        hud.labelFont = [UIFont fontWithName:nil size:14];
+        hud.minSize = CGSizeMake(132.f, 108.0f);
+        [hud hide:YES afterDelay:1];
     }else{
         NSData *photo = UIImageJPEGRepresentation(image, 0.8);
         NSString* encoded = [[NSString alloc] initWithData:[GTMBase64 encodeData:photo] encoding:NSUTF8StringEncoding];
         [ReleaseEvent ReleaseWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
-                NSLog(@"posts ==> %@",posts);
+                //NSLog(@"posts ==> %@",posts);
                 if([[NSString stringWithFormat:@"%@",[posts objectAtIndex:0]] isEqualToString:@"200"]){
-                    if([delegate respondsToSelector:@selector(reloadList)]){
-                        [delegate reloadList];
-                    }
+                    /*if([delegate respondsToSelector:@selector(reloadList)]){
+                     [delegate reloadList];
+                     }*/
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }

@@ -14,6 +14,8 @@
     NSMutableArray *imageArr;
     CenterContentView *centercontentview;
     CenterDetailTableViewController *detailview;
+    NSMutableArray *showArr;
+    NSMutableArray *dateArr;
 }
 
 @end

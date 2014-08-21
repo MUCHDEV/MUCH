@@ -46,7 +46,7 @@
     UILabel *label2 = [[UILabel alloc] initWithFrame:CGRectMake(imageView.frame.origin.x+imageView.frame.size.width+5, 78, 160, 30)];
     label2.text = @"看更远的地方";
     label2.font = [UIFont fontWithName:@"GurmukhiMN" size:13];
-    label2.textColor = [UIColor grayColor];
+    label2.textColor = RGBCOLOR(159, 159, 159);
     [self.contentView addSubview:label2];
     
     UIImageView *btnImage = [[UIImageView alloc] initWithFrame:CGRectMake(20, 410, 555/2, 40)];

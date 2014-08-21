@@ -34,30 +34,40 @@
 }
 
 -(void)setContent{
-    headView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 47.5, 47.5)];
-    [headView setImage:[UIImage imageNamed:@"06_11.png"]];
+    headView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"06_11副本.png"]];
+    headView.frame = CGRectMake(15, 0, 47.5, 47.5);
+    headView.layer.cornerRadius = 47.5/2;
+    headView.layer.masksToBounds = YES;
     [self.contentView addSubview:headView];
     
     nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 0, 140, 20)];
     nameLabel.text = @"Natalia Vodianova";
-    nameLabel.textColor = [UIColor blackColor];
+    nameLabel.textColor = RGBCOLOR(24, 24, 24);
     nameLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
     [self.contentView addSubview:nameLabel];
     
     priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(70, 25, 140, 20)];
     priceLabel.text = @"￥10.24";
-    priceLabel.textColor = [UIColor blackColor];
+    priceLabel.textColor = RGBCOLOR(24, 24, 24);
     priceLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
     [self.contentView addSubview:priceLabel];
     
     distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(240, 0, 140, 20)];
     distanceLabel.text = @"距您120m";
-    distanceLabel.textColor = [UIColor grayColor];
+    distanceLabel.textColor = RGBCOLOR(159, 159, 159);
     distanceLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
     [self.contentView addSubview:distanceLabel];
 }
 
 -(void)setPrice:(NSString *)price{
     priceLabel.text = [NSString stringWithFormat:@"￥ %@",price];
+}
+
+-(void)setHeadurl:(NSString *)headurl{
+    headView.imageURL = [NSURL URLWithString:headurl];
+}
+
+-(void)setName:(NSString *)name{
+    nameLabel.text = name;
 }
 @end

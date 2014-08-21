@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface CenterTableViewCell : UITableViewCell
-
+#import "RegisterEvent.h"
+#import "EGOImageView.h"
+@interface CenterTableViewCell : UITableViewCell{
+    RegisterEvent *model;
+    EGOImageView *headImage;
+    UILabel *namelabel;
+}
+-(void)setNewContent;
 @end

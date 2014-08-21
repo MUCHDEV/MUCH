@@ -16,6 +16,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "DetailViewController.h"
 #import "CenterTableViewController.h"
+#import "LoginViewController.h"
 @interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate,CLLocationManagerDelegate,ReleasePageViewDelegate>{
     HomePageTopView *topview;
     HomePageTopContentView *topcontentview;
@@ -30,6 +31,8 @@
     float longitude;
     DetailViewController *detailview;
     CenterTableViewController *centerview;
+    int startIndex;
+    LoginViewController *loginview;
 }
 
 @end

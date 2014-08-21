@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface CenterContentView : UIView
-+(CenterContentView *)setFram:(NSMutableArray *)imgArr priceArr:(NSMutableArray *)priceArr;
++(CenterContentView *)setFram:(NSMutableArray *)imgArr;
 @end
