@@ -39,7 +39,6 @@
     headView = [[UIImageView alloc] init];
     lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
     [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
-    NSLog(@"%d...%d",index,arrIndex);
     if(index == 1){
         [headView setFrame:CGRectMake(8.25, 0, 607/2, 109/2)];
         [headView setImage:[UIImage imageNamed:@"04_032.png"]];
@@ -56,12 +55,12 @@
     [self.contentView addSubview:headView];
     
     headimage = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"04_20.png"]];
-    headimage.frame = CGRectMake(20, 20, 52/2, 51/2);
+    headimage.frame = CGRectMake(20, 16, 52/2, 51/2);
     headimage.layer.cornerRadius = 3;
     headimage.layer.masksToBounds = YES;
     [self.contentView addSubview:headimage];
     
-    content =  [[UILabel alloc] initWithFrame:CGRectMake(60,10,240,40)];
+    content =  [[UILabel alloc] initWithFrame:CGRectMake(60,8,240,40)];
     [content setNumberOfLines:2];
     content.textColor = RGBCOLOR(24, 24, 24);
     content.textAlignment=NSTextAlignmentLeft;

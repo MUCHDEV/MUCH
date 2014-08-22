@@ -12,7 +12,7 @@
 #import "LoginViewController.h"
 #import "EGOImageView.h"
 #import "RegisterEvent.h"
-@interface CenterDetailTableViewController : UITableViewController<UIActionSheetDelegate,CameraDelegate,UIActionSheetDelegate,UITextFieldDelegate>{
+@interface CenterDetailTableViewController : UITableViewController<UIActionSheetDelegate,CameraDelegate,UITextFieldDelegate,UIAlertViewDelegate>{
     SinglePickerView *singlepickerview;
     UILabel *sexlabel;
     Camera *camera;

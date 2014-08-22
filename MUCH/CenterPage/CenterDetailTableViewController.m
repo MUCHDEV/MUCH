@@ -275,7 +275,7 @@
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"avatar"];
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"nickname"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"提示" message:@"退出成功！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"提示" message:@"退出成功！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertview show];
 }
 
@@ -365,5 +365,9 @@
     [textField resignFirstResponder];
     [self.tableView reloadData];
     return YES;
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 @end
