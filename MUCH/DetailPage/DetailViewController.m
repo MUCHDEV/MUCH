@@ -188,8 +188,10 @@
         DetailContentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:stringcell];
         if(!cell){
             cell = [[DetailContentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell indexRow:indexPath.row arrCount:[_allMessages count]] ;
+            NSLog(@"222");
         }else{
-            [cell setNewBgView:indexPath.row-1 newArrCount:[_allMessages count]];
+            //[cell setNewBgView:indexPath.row-1 newArrCount:[_allMessages count]];
+            cell = [[DetailContentTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell indexRow:indexPath.row arrCount:[_allMessages count]] ;
         }
         cell.messageModel = _allMessages[indexPath.row-2];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -214,7 +216,7 @@
     }else if(indexPath.row == 1){
         return 60;
     }else if (indexPath.row == 2){
-        return 109/2;
+        return 54.5;
     }
     return 98/2;
 }
