@@ -31,7 +31,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -40,15 +40,18 @@
     lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
     [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
     if(index == 1){
-        [headView setFrame:CGRectMake(8.25, 0, 607/2, 109/2)];
+        [headView setFrame:CGRectMake(8.25, 0, 303.5, 54.5)];
         [headView setImage:[UIImage imageNamed:@"04_032.png"]];
+        lineImage.frame=CGRectMake(50, 54.5-1, 240, 1);
         //[headView addSubview:lineImage];
     }else if(index == arrIndex){
-        [headView setFrame:CGRectMake(8.25, 0, 607/2, 98/2)];
+        [headView setFrame:CGRectMake(8.25, 0, 303.5, 98/2)];
         [headView setImage:[UIImage imageNamed:@"04_062.png"]];
+        lineImage.frame=CGRectZero;
     }else{
-        [headView setFrame:CGRectMake(8.25, 0, 607/2, 98/2)];
+        [headView setFrame:CGRectMake(8.25, 0, 303.5, 98/2)];
         [headView setImage:[UIImage imageNamed:@"04_052.png"]];
+        lineImage.frame=CGRectMake(50, 98/2-1, 240, 1);
         //[headView addSubview:lineImage];
     }
     [headView addSubview:lineImage];

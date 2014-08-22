@@ -39,9 +39,9 @@
 }
 
 -(void)setContent{
-    UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 1, 70)];
-    [lineImageView setBackgroundColor:RGBCOLOR(203, 203, 203)];
-    [self.contentView addSubview:lineImageView];
+//    UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 1, 70)];
+//    [lineImageView setBackgroundColor:RGBCOLOR(203, 203, 203)];
+//    [self.contentView addSubview:lineImageView];
     
     UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 320, 60)];
     [bgImageView setBackgroundColor:[UIColor whiteColor]];

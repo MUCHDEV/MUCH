@@ -248,6 +248,7 @@
         if(!cell){
             cell = [[HomePageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:stringcell] ;
         }
+        cell.myNeedLong=(indexPath.row==showArr.count-1)?YES:NO;
         cell.releaseEvent = showArr[indexPath.row];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
@@ -333,6 +334,7 @@
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hide:YES afterDelay:3];
     }else{
+        NSLog(@"action");
         [showArr removeAllObjects];
         [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){

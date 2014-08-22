@@ -147,7 +147,8 @@
             [cell.contentView addSubview:centercontentview];
             
             //NSLog(@"%f",cell.frame.size.height);
-            UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 1, centercontentview.frame.size.height)];
+            CGFloat tempHeight=centercontentview.frame.size.height;
+            UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 1, (indexPath.row!=[[showArr[0] allKeys]count])?tempHeight:tempHeight+400)];
             [lineImageView setBackgroundColor:RGBCOLOR(203, 203, 203)];
             [cell.contentView addSubview:lineImageView];
             

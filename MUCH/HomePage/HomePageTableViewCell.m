@@ -9,7 +9,9 @@
 #import "HomePageTableViewCell.h"
 #import "GTMBase64.h"
 #import "EGOImageView.h"
-@implementation HomePageTableViewCell
+@implementation HomePageTableViewCell{
+   UIImageView * lineImageView;
+}
 @synthesize bigImage;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -35,7 +37,7 @@
 }
 
 -(void)setContent{
-    UIImageView *lineImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, 0, 1, 130)];
+    lineImageView = [[UIImageView alloc] init];
     [lineImageView setBackgroundColor:RGBCOLOR(203, 203, 203)];
     [self.contentView addSubview:lineImageView];
     
@@ -134,6 +136,8 @@
 }
 
 -(void)setReleaseEvent:(ReleaseEvent *)releaseEvent{
+    lineImageView.frame=CGRectMake(15, 0, 1, !self.myNeedLong?130:600);
+    
     pricelabel.text = [NSString stringWithFormat:@"￥ %@",releaseEvent.price];
     bigImage.imageURL = [NSURL URLWithString:releaseEvent.content];
     goodlabel.text = releaseEvent.likes;
