@@ -26,4 +26,6 @@
 }
 @property (nonatomic, strong) ReleaseEvent *releaseEvent;
 @property (nonatomic, strong) EGOImageView *bigImage;
+@property (nonatomic)BOOL myNeedLong;
+//- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier needLong:(BOOL)needLong;
 @end
