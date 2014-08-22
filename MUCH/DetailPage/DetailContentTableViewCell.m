@@ -39,19 +39,20 @@
     headView = [[UIImageView alloc] init];
     lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
     [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
-    //NSLog(@"%d...%d",index,arrIndex);
+    NSLog(@"%d...%d",index,arrIndex);
     if(index == 1){
         [headView setFrame:CGRectMake(8.25, 0, 607/2, 109/2)];
         [headView setImage:[UIImage imageNamed:@"04_032.png"]];
-        [headView addSubview:lineImage];
+        //[headView addSubview:lineImage];
     }else if(index == arrIndex){
         [headView setFrame:CGRectMake(8.25, 0, 607/2, 98/2)];
         [headView setImage:[UIImage imageNamed:@"04_062.png"]];
     }else{
         [headView setFrame:CGRectMake(8.25, 0, 607/2, 98/2)];
         [headView setImage:[UIImage imageNamed:@"04_052.png"]];
-        [headView addSubview:lineImage];
+        //[headView addSubview:lineImage];
     }
+    [headView addSubview:lineImage];
     [self.contentView addSubview:headView];
     
     headimage = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"04_20.png"]];
@@ -79,18 +80,18 @@
 }
 
 -(void)setNewBgView:(int)newIndex newArrCount:(int)newArrCount{
-//    if(lineImage == nil){
-//        lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
-//    }
-//    [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
+    if(lineImage == nil){
+        lineImage = [[UIImageView alloc] initWithFrame:CGRectMake(50, 109/2-1, 240, 1)];
+    }
+    [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
     if(newIndex == 1){
         [headView setImage:[UIImage imageNamed:@"04_032.png"]];
-        [headView addSubview:lineImage];
+        //[headView addSubview:lineImage];
     }else if(newIndex == newArrCount){
         [headView setImage:[UIImage imageNamed:@"04_062.png"]];
     }else{
         [headView setImage:[UIImage imageNamed:@"04_052.png"]];
-        [headView addSubview:lineImage];
+        //[headView addSubview:lineImage];
     }
 }
 @end

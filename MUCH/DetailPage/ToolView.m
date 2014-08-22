@@ -22,11 +22,14 @@
         [lineImage setImage:[UIImage imageNamed:@"07_03.png"]];
         [self addSubview:lineImage];
         
-        _textfield = [[UITextField alloc] initWithFrame:CGRectMake(10, 7, 240, 30)];
-        [_textfield setBackground:[UIImage imageNamed:@"04_14.png"]];
+        UIImageView *fieldBgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 7, 240, 30)];
+        [fieldBgView setImage:[UIImage imageNamed:@"04_14.png"]];
+        [self addSubview:fieldBgView];
+        
+        _textfield = [[UITextField alloc] initWithFrame:CGRectMake(20, 7, 230, 30)];
         _textfield.delegate = self;
         _textfield.font = [UIFont systemFontOfSize:14.0];
-        _textfield.returnKeyType = UIReturnKeySend;
+        //_textfield.returnKeyType = UIReturnKeySend;
         [self addSubview:_textfield];
         
         UIButton *sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -250,7 +250,7 @@
 
 -(void)showAnimation{
     // 第一条移动星星闪烁动画
-    do {
+    /*do {
         CGMutablePathRef path = CGPathCreateMutable();
         
         CGPathMoveToPoint(path, NULL, 0, 0);
@@ -279,7 +279,7 @@
         [self.view addSubview:animationView2];
     } while (0);
     
-    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector: @selector(closeAnimation)  userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector: @selector(closeAnimation)  userInfo:nil repeats:NO];*/
 }
 
 -(void)closeAnimation{
