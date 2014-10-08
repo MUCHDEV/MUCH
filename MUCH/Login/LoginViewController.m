@@ -32,6 +32,7 @@
     // Do any additional setup after loading the view.
     [self.view setBackgroundColor:RGBCOLOR(255, 229, 52)];
     
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(56.75, 90, 413/2, 232/2)];
     [imageView setImage:[UIImage imageNamed:@"字_03.png"]];
     [self.view addSubview:imageView];
@@ -277,7 +278,7 @@
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
-        } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text avatar:@""];
+        } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text avatar:@"" nickName:@""];
     }
 }
 
@@ -473,7 +474,7 @@
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
-        } userName:tencentAuth.openId passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[response.jsonResponse objectForKey:@"figureurl_qq_2"]];
+        } userName:tencentAuth.openId passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[response.jsonResponse objectForKey:@"figureurl_qq_2"] nickName:[response.jsonResponse objectForKey:@"nickname"]];
 	}
 	else
     {
@@ -535,7 +536,7 @@
                 [self dismissViewControllerAnimated:YES completion:nil];
                 NSLog(@"%@",self);
             }
-        } userName:[dic2 objectForKey:@"openid"] passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[dic2 objectForKey:@"headimgurl"]];
+        } userName:[dic2 objectForKey:@"openid"] passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[dic2 objectForKey:@"headimgurl"] nickName:[dic2 objectForKey:@"nickname"]];
     }
 }
 

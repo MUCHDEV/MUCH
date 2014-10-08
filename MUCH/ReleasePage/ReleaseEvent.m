@@ -78,7 +78,7 @@
 + (NSURLSessionDataTask *)GetMyListWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid{
     NSString *urlStr = [NSString stringWithFormat:@"/owner?id=%@",aid];
     return [[AFAppDotNetAPIClient sharedClient] GET:urlStr parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
-        //NSLog(@"JSON===>%@",JSON);
+        NSLog(@"JSON===>%@",JSON);
         if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){
             NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
             [mutablePosts addObject:JSON[@"result"]];

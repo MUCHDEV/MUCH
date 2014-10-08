@@ -22,13 +22,14 @@
     self.username = dict[@"username"];
 }
 
-+ (NSURLSessionDataTask *)RegisterWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block userName:(NSString *)userName passWord:(NSString *)passWord passwordConfirmation:(NSString *)passwordConfirmation avatar:(NSString *)avatar{
++ (NSURLSessionDataTask *)RegisterWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block userName:(NSString *)userName passWord:(NSString *)passWord passwordConfirmation:(NSString *)passwordConfirmation avatar:(NSString *)avatar nickName:(NSString *)nickName{
     NSString *urlStr = [NSString stringWithFormat:@"user/register"];
     NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     userName,@"username",
                                     passWord,@"password",
                                     passwordConfirmation,@"passwordConfirmation",
                                     avatar,@"avatar",
+                                    nickName,@"nickname",
                                     nil];
     NSLog(@"parametersdata ===> %@",parametersdata);
     return [[AFAppDotNetAPIClient sharedClient] POST:urlStr parameters:parametersdata success:^(NSURLSessionDataTask * __unused task, id JSON) {
@@ -178,7 +179,7 @@
     NSData *data=[NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&err];
     //NSString *str=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSDictionary *resultDict = [data objectFromJSONData];
-    //NSLog(@"temp is :%@",resultDict);
+    NSLog(@"temp is :%@",resultDict);
     return resultDict;
 }
 @end

@@ -86,7 +86,6 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     NSArray *arr = [[NSString stringWithFormat:@"%@",url] componentsSeparatedByString:@":"];
     if([arr[0] isEqualToString:@"wx2fe5e9a05cc63f07"]){
-        NSLog(@"%@",self.loginView);
         return [WXApi handleOpenURL:url delegate:self.loginView];
     }else{
         return [TencentOAuth HandleOpenURL:url];
