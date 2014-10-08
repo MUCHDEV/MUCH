@@ -12,6 +12,7 @@
 #import "ReleaseEvent.h"
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 @interface HomePageViewController ()
 
 @end
@@ -191,8 +192,8 @@
 
 -(void)leftBtnClick{
     if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
-        loginview = [[LoginViewController alloc] init];
-        [self presentViewController:loginview animated:YES completion:nil];
+        AppDelegate* app=[AppDelegate instance];
+        [self presentViewController:app.loginView animated:YES completion:nil];
     }else{
         centerview = [[CenterTableViewController alloc] init];
         [self.navigationController pushViewController:centerview animated:YES];
