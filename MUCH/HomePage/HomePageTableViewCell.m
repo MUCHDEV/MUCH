@@ -45,7 +45,7 @@
     [headBgImage setImage:[UIImage imageNamed:@"03-1_30.png"]];
     [self.contentView addSubview:headBgImage];
     
-    headView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"06_11副本.png"]];
+    headView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"03_1_03.png"]];
     headView.frame = CGRectMake(5, 10, 47.5, 47.5);
     headView.layer.cornerRadius = 47.5/2;
     headView.layer.masksToBounds = YES;
@@ -59,7 +59,7 @@
     [contentView setImage:[UIImage imageNamed:@"03-1_34.png"]];
     [self.contentView addSubview:contentView];
     
-    namelabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 52.5, 100, 30)];
+    namelabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 52.5, 45, 30)];
     namelabel.text = @"";
     namelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
     namelabel.textColor = RGBCOLOR(50, 118, 243);
@@ -97,7 +97,7 @@
     goodlabel.textColor = RGBCOLOR(159, 159, 159);
     [self.contentView addSubview:goodlabel];
     
-    bigImage = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"nature.jpg"]];
+    bigImage = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"03_1_03"]];
     bigImage.frame = CGRectMake(210, 12, 100, 100);
     [self.contentView addSubview:bigImage];
     
@@ -136,6 +136,12 @@
 }
 
 -(void)setReleaseEvent:(ReleaseEvent *)releaseEvent{
+    contentNamelabel.text = @"";
+    contentlabel.text = @"";
+    contentNamelabel2.text = @"";
+    contentlabel2.text = @"";
+    contentNamelabel3.text = @"";
+    contentlabel3.text = @"";
     lineImageView.frame=CGRectMake(15, 0, 1, !self.myNeedLong?130:600);
     
     pricelabel.text = [NSString stringWithFormat:@"￥ %@",releaseEvent.price];
@@ -171,9 +177,14 @@
         contentNamelabel3.text = @"";
         contentlabel3.text = @"";
     }
+    
+    
     if(![[NSString stringWithFormat:@"%@",releaseEvent.createdby]isEqualToString:@"<null>"]){
         headView.imageURL = [NSURL URLWithString:releaseEvent.createdby[@"avatar"]];
         namelabel.text = releaseEvent.createdby[@"nickname"];
+    }else{
+        headView.imageURL = nil;
+        namelabel.text = @"";
     }
 }
 @end

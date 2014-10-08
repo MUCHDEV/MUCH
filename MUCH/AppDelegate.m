@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "HomePageViewController.h"
 #import "LoginViewController.h"
+#import "ScrollViewController.h"
 @interface WBBaseRequest ()
 - (void)debugPrint;
 @end
@@ -18,6 +19,10 @@
 @end
 
 @implementation AppDelegate
++ (AppDelegate *)instance {
+	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -27,14 +32,27 @@
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:kAppKey];
     
-    self.window.backgroundColor = [UIColor whiteColor];
-    HomePageViewController *homepage = [[HomePageViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homepage];
-    self.window.rootViewController = nav;
+    //向微信注册
+    [WXApi registerApp:@"wx2fe5e9a05cc63f07"];
+    self.loginView = [[LoginViewController alloc] init];
     
-    //LoginViewController *login = [[LoginViewController alloc] init];
-    //self.window.rootViewController = login;
-    [self.window makeKeyAndVisible];
+    self.window.backgroundColor = [UIColor whiteColor];
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]){
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+        NSLog(@"第一次启动");
+        ScrollViewController *scrollview = [[ScrollViewController alloc] init];
+        [self.window setRootViewController:scrollview];
+        [self.window makeKeyAndVisible];
+    }else{
+        NSLog(@"已经不是第一次启动了");
+        HomePageViewController *homepage = [[HomePageViewController alloc] init];
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homepage];
+        self.window.rootViewController = nav;
+        [self.window makeKeyAndVisible];
+    }
+    
+    
     return YES;
 }
 
@@ -66,11 +84,23 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    
-    return [TencentOAuth HandleOpenURL:url];
+    NSArray *arr = [[NSString stringWithFormat:@"%@",url] componentsSeparatedByString:@":"];
+    if([arr[0] isEqualToString:@"wx2fe5e9a05cc63f07"]){
+        NSLog(@"%@",self.loginView);
+        return [WXApi handleOpenURL:url delegate:self.loginView];
+    }else{
+        return [TencentOAuth HandleOpenURL:url];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
-    return [TencentOAuth HandleOpenURL:url];
+    NSArray *arr = [[NSString stringWithFormat:@"%@",url] componentsSeparatedByString:@":"];
+    if([arr[0] isEqualToString:@"wx2fe5e9a05cc63f07"]){
+        return [WXApi handleOpenURL:url delegate:self.loginView];
+    }else{
+        return [TencentOAuth HandleOpenURL:url];
+    }
 }
+
+
 @end

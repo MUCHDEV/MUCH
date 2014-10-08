@@ -72,7 +72,7 @@
     [loginbtn addTarget:self action:@selector(loginbtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginbtn];
     
-    NSString *appid = @"222222";
+    NSString *appid = @"1102292194";
     
     
 	tencentAuth = [[TencentOAuth alloc] initWithAppId:appid
@@ -124,6 +124,17 @@
 //微信
 -(void)wenxinbtnClick{
     NSLog(@"wenxinbtnClick");
+    //构造SendAuthReq结构体
+    if([WXApi isWXAppInstalled]){
+        SendAuthReq* req =[[SendAuthReq alloc ] init];
+        req.scope = @"snsapi_userinfo" ;
+        req.state = @"MUCH" ;
+        //第三方向微信终端发送一个SendAuthReq消息结构
+        [WXApi sendReq:req];
+    }else{
+        UIAlertView *view = [[UIAlertView alloc] initWithTitle:@"提醒" message:@"还没有安装微信" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [view show];
+    }
 }
 
 //微博
@@ -131,10 +142,6 @@
     WBAuthorizeRequest *request = [WBAuthorizeRequest request];
     request.redirectURI = kRedirectURI;
     request.scope = @"all";
-    request.userInfo = @{@"SSO_From": @"SendMessageToWeiboViewController",
-                         @"Other_Info_1": [NSNumber numberWithInt:123],
-                         @"Other_Info_2": @[@"obj1", @"obj2"],
-                         @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
     [WeiboSDK sendRequest:request];
 }
 
@@ -270,7 +277,7 @@
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
-        } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text];
+        } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text avatar:@""];
     }
 }
 
@@ -418,6 +425,7 @@
 - (void)tencentDidLogin {
 	// 登录成功
     NSLog(@"登录成功");
+    NSLog(@"==>%@",tencentAuth.openId);
     [self getMessage];
 }
 
@@ -456,18 +464,16 @@
 	if (response.retCode == URLREQUEST_SUCCEED)
 	{
         NSLog(@"userInfo%@",response.jsonResponse);
-        NSLog(@"nickName%@",[response.jsonResponse objectForKey:@"nickname"]);
-		NSMutableString *str=[NSMutableString stringWithFormat:@""];
-		for (id key in response.jsonResponse) {
-            
-			[str appendString: [NSString stringWithFormat:@"%@:%@\n",key,[response.jsonResponse objectForKey:key]]];
-		}
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"操作成功" message:[NSString stringWithFormat:@"%@",str]
-							  
-													   delegate:self cancelButtonTitle:@"我知道啦" otherButtonTitles: nil];
-		[alert show];
-        
-        
+        int value = (arc4random() % 9999999) + 1000000;
+        [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"figureurl_qq_2"] forKey:@"avatar"];
+                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+                [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickname"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }
+        } userName:tencentAuth.openId passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[response.jsonResponse objectForKey:@"figureurl_qq_2"]];
 	}
 	else
     {
@@ -514,8 +520,24 @@
 }
 
 
-- (void)didReceiveWeiboRequest:(WBBaseRequest *)request
-{
-
+//微信回调
+-(void) onResp:(SendAuthResp *)resp{
+    NSDictionary *dic=[RegisterEvent GetWeiXin:resp.code];
+    NSDictionary *dic2 = [RegisterEvent GetWeiXinUser:dic[@"access_token"]];
+    if(![dic2[@"openid"] isEqualToString:@""]){
+        int value = (arc4random() % 9999999) + 1000000;
+        [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
+            if(!error){
+                [[NSUserDefaults standardUserDefaults] setObject:[dic2 objectForKey:@"headimgurl"] forKey:@"avatar"];
+                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+                [[NSUserDefaults standardUserDefaults] setObject:[dic2 objectForKey:@"nickname"] forKey:@"nickname"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                [self dismissViewControllerAnimated:YES completion:nil];
+                NSLog(@"%@",self);
+            }
+        } userName:[dic2 objectForKey:@"openid"] passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[dic2 objectForKey:@"headimgurl"]];
+    }
 }
+
+
 @end

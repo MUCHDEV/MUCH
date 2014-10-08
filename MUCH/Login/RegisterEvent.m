@@ -8,6 +8,7 @@
 
 #import "RegisterEvent.h"
 #import "AFAppDotNetAPIClient.h"
+#import "JSONKit.h"
 @implementation RegisterEvent
 - (void)setDict:(NSDictionary *)dict{
     
@@ -21,16 +22,17 @@
     self.username = dict[@"username"];
 }
 
-+ (NSURLSessionDataTask *)RegisterWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block userName:(NSString *)userName passWord:(NSString *)passWord passwordConfirmation:(NSString *)passwordConfirmation{
++ (NSURLSessionDataTask *)RegisterWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block userName:(NSString *)userName passWord:(NSString *)passWord passwordConfirmation:(NSString *)passwordConfirmation avatar:(NSString *)avatar{
     NSString *urlStr = [NSString stringWithFormat:@"user/register"];
     NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     userName,@"username",
                                     passWord,@"password",
                                     passwordConfirmation,@"passwordConfirmation",
+                                    avatar,@"avatar",
                                     nil];
     NSLog(@"parametersdata ===> %@",parametersdata);
     return [[AFAppDotNetAPIClient sharedClient] POST:urlStr parameters:parametersdata success:^(NSURLSessionDataTask * __unused task, id JSON) {
-        //NSLog(@"JSON===>%@",JSON);
+        NSLog(@"JSON===>%@",JSON);
         if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){
             NSMutableArray *mutablePosts = [[NSMutableArray alloc] init];
             [mutablePosts addObject:JSON[@"result"]];
@@ -152,5 +154,31 @@
             block([NSMutableArray array], error);
         }
     }];
+}
+
++(NSDictionary *)GetWeiXin:(NSString *)code{
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2fe5e9a05cc63f07&secret=03abac544342b22288ae0fdf5a05d630&code=%@&grant_type=authorization_code",code]];//创建URL
+    NSMutableURLRequest *request=[[NSMutableURLRequest alloc]initWithURL:url];//通过URL创建网络请求
+    [request setTimeoutInterval:30];//设置超时时间
+    [request setHTTPMethod:@"GET"];//设置请求方式
+    NSError *err;
+    NSData *data=[NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&err];
+    //NSString *str=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSDictionary *resultDict = [data objectFromJSONData];
+    //NSLog(@"temp is :%@",resultDict);
+    return resultDict;
+}
+
++ (NSDictionary *)GetWeiXinUser:(NSString *)access_token{
+    NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=OPENID",access_token]];//创建URL
+    NSMutableURLRequest *request=[[NSMutableURLRequest alloc]initWithURL:url];//通过URL创建网络请求
+    [request setTimeoutInterval:30];//设置超时时间
+    [request setHTTPMethod:@"GET"];//设置请求方式
+    NSError *err;
+    NSData *data=[NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&err];
+    //NSString *str=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSDictionary *resultDict = [data objectFromJSONData];
+    //NSLog(@"temp is :%@",resultDict);
+    return resultDict;
 }
 @end

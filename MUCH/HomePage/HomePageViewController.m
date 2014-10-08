@@ -296,6 +296,7 @@
 -(void)choseView:(NSInteger)index{
     [topcontentview removeFromSuperview];
     topcontentview = nil;
+    //[topview removeFromSuperview];
     topview.hidden = NO;
     btnIndex = (int)index;
 }
@@ -334,7 +335,7 @@
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hide:YES afterDelay:3];
     }else{
-        NSLog(@"action");
+        startIndex = 0;
         [showArr removeAllObjects];
         [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
