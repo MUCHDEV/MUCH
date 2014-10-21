@@ -217,14 +217,18 @@
     {
         NSLog(@"取消");
     }
-    if(buttonIndex == 0){
-        Camera *camera = [[Camera alloc] init];
-        camera.delegate = self;
-        [camera getCameraView:self flag:0];
-    }else if (buttonIndex == 1){
-        Camera *camera = [[Camera alloc] init];
-        camera.delegate = self;
-        [camera getCameraView:self flag:1];
+    switch (buttonIndex)
+    {
+        case 0:  //打开照相机拍照
+            camera = [[Camera alloc] init];
+            camera.delegate = self;
+            [camera getCameraView:self flag:0];
+            break;
+        case 1:  //打开本地相册
+            camera = [[Camera alloc] init];
+            camera.delegate = self;
+            [camera getCameraView:self flag:1];
+            break;
     }
 }
 

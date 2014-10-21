@@ -24,6 +24,7 @@
     NSMutableArray *showArr;
     int btnIndex;
     UIActionSheet *_myActionSheet;
+    Camera *camera;
     ReleasePageViewController *releasepageview;
     CLLocationManager *locationManager;
     float latitude;
