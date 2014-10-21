@@ -23,6 +23,9 @@
 	return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
+-(void)initLoginView{
+    self.loginView = [[LoginViewController alloc] init];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -34,7 +37,7 @@
     
     //向微信注册
     [WXApi registerApp:@"wx2fe5e9a05cc63f07"];
-    self.loginView = [[LoginViewController alloc] init];
+    [self initLoginView];
     
     self.window.backgroundColor = [UIColor whiteColor];
     

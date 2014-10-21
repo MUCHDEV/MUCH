@@ -12,6 +12,7 @@
 #import "GTMBase64.h"
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 @interface CenterDetailTableViewController ()
 
 @end
@@ -231,8 +232,9 @@
     [singlepickerview removeFromSuperview];
     singlepickerview = nil;
     if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
-        loginview = [[LoginViewController alloc] init];
-        [self presentViewController:loginview animated:YES completion:nil];
+        AppDelegate* app=[AppDelegate instance];
+        [app initLoginView];
+        [self presentViewController:app.loginView animated:YES completion:nil];
     }else{
         if(indexPath.row == 0){
             _myActionSheet = [[UIActionSheet alloc]

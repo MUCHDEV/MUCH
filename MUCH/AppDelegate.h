@@ -14,4 +14,5 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) LoginViewController *loginView;
 + (AppDelegate *)instance;
+-(void)initLoginView;
 @end

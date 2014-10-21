@@ -13,6 +13,7 @@
 #import "GTMBase64.h"
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 @interface DetailViewController ()
 
 @end
@@ -46,8 +47,8 @@
     [rightButton setFrame:CGRectMake(0, 0, 22, 39/2)];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"04_03"] forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    self.navigationItem.rightBarButtonItem = rightButtonItem;
+    //UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    //self.navigationItem.rightBarButtonItem = rightButtonItem;
     
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, 320, self.view.frame.size.height-44)];
@@ -120,8 +121,9 @@
 #pragma mark 给数据源增加内容
 - (void)addMessageWithContent:(NSString *)content{
     if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
-        loginview = [[LoginViewController alloc] init];
-        [self presentViewController:loginview animated:YES completion:nil];
+        AppDelegate *app = [AppDelegate instance];
+        [app initLoginView];
+        [self presentViewController:app.loginView animated:YES completion:nil];
     }else{
         Message *msg = [[Message alloc] init];
         msg.content = content;
@@ -246,8 +248,9 @@
 }
 
 -(void)showLoginView{
-    loginview = [[LoginViewController alloc] init];
-    [self presentViewController:loginview animated:YES completion:nil];
+    AppDelegate *app = [AppDelegate instance];
+    [app initLoginView];
+    [self presentViewController:app.loginView animated:YES completion:nil];
 }
 
 -(void)showAnimation{

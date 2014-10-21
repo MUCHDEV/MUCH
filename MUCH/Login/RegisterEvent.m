@@ -157,7 +157,7 @@
     }];
 }
 
-+(NSDictionary *)GetWeiXin:(NSString *)code{
++(void)GetWeiXin:(void (^)(NSDictionary *posts, NSError *error))block code:(NSString *)code{
     NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2fe5e9a05cc63f07&secret=03abac544342b22288ae0fdf5a05d630&code=%@&grant_type=authorization_code",code]];//创建URL
     NSMutableURLRequest *request=[[NSMutableURLRequest alloc]initWithURL:url];//通过URL创建网络请求
     [request setTimeoutInterval:30];//设置超时时间
@@ -167,10 +167,12 @@
     //NSString *str=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSDictionary *resultDict = [data objectFromJSONData];
     //NSLog(@"temp is :%@",resultDict);
-    return resultDict;
+    if(block){
+        block([NSDictionary dictionaryWithDictionary:resultDict],nil);
+    }
 }
 
-+ (NSDictionary *)GetWeiXinUser:(NSString *)access_token{
++ (void)GetWeiXinUser:(void (^)(NSDictionary *dic, NSError *error))block access_token:(NSString *)access_token{
     NSURL *url=[NSURL URLWithString:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/userinfo?access_token=%@&openid=OPENID",access_token]];//创建URL
     NSMutableURLRequest *request=[[NSMutableURLRequest alloc]initWithURL:url];//通过URL创建网络请求
     [request setTimeoutInterval:30];//设置超时时间
@@ -180,6 +182,8 @@
     //NSString *str=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     NSDictionary *resultDict = [data objectFromJSONData];
     NSLog(@"temp is :%@",resultDict);
-    return resultDict;
+    if(block){
+        block([NSDictionary dictionaryWithDictionary:resultDict],nil);
+    }
 }
 @end

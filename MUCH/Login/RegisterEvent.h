@@ -24,6 +24,6 @@
 + (NSURLSessionDataTask *)UpdataHeadWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block imaStr:(NSString *)imaStr;
 + (NSURLSessionDataTask *)GetUserWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block;
 
-+ (NSDictionary *)GetWeiXin:(NSString *)code;
-+ (NSDictionary *)GetWeiXinUser:(NSString *)access_token;
++ (void)GetWeiXin:(void (^)(NSDictionary *posts, NSError *error))block code:(NSString *)code;
++ (void)GetWeiXinUser:(void (^)(NSDictionary *dic, NSError *error))block access_token:(NSString *)access_token;
 @end

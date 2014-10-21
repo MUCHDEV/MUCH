@@ -97,6 +97,7 @@
 		D348EE701999F71400066239 /* CenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE6F1999F71400066239 /* CenterTableViewCell.m */; };
 		D348EE76199A065300066239 /* CenterContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE75199A065300066239 /* CenterContentView.m */; };
 		D348EE7F199AFF8C00066239 /* CenterDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D348EE7E199AFF8C00066239 /* CenterDetailTableViewController.m */; };
+		D36040E219F5053600E9727D /* 09_032.png in Resources */ = {isa = PBXBuildFile; fileRef = D36040E119F5053500E9727D /* 09_032.png */; };
 		D361D50F19984F1C004B86AF /* HomePageTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D50E19984F1C004B86AF /* HomePageTopView.m */; };
 		D361D51219985A72004B86AF /* HomePageTopContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = D361D51119985A72004B86AF /* HomePageTopContentView.m */; };
 		D361D51519986C9A004B86AF /* 字_03.png in Resources */ = {isa = PBXBuildFile; fileRef = D361D51319986C9A004B86AF /* 字_03.png */; };
@@ -322,6 +323,7 @@
 		D348EE75199A065300066239 /* CenterContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterContentView.m; sourceTree = "<group>"; };
 		D348EE7D199AFF8C00066239 /* CenterDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CenterDetailTableViewController.h; sourceTree = "<group>"; };
 		D348EE7E199AFF8C00066239 /* CenterDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CenterDetailTableViewController.m; sourceTree = "<group>"; };
+		D36040E119F5053500E9727D /* 09_032.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 09_032.png; sourceTree = "<group>"; };
 		D361D50D19984F1C004B86AF /* HomePageTopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTopView.h; sourceTree = "<group>"; };
 		D361D50E19984F1C004B86AF /* HomePageTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageTopView.m; sourceTree = "<group>"; };
 		D361D51019985A72004B86AF /* HomePageTopContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageTopContentView.h; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 		D30DDB5F1995ED39007A8A9C /* images */ = {
 			isa = PBXGroup;
 			children = (
+				D36040E119F5053500E9727D /* 09_032.png */,
 				D3AD62A219B439CB001FD483 /* 03_1_03.png */,
 				D3AD62A319B439CB001FD483 /* 04-01_03.png */,
 				D3AD61DC19AF17DA001FD483 /* 引导页_03.png */,
@@ -1111,6 +1114,7 @@
 				D3EAB23719A1D06100E010E8 /* MJRefresh.bundle in Resources */,
 				D3311C5819A5F6EF003B2682 /* bgAnimationPoint1.png in Resources */,
 				D30DDBA61995ED39007A8A9C /* 07_07.png in Resources */,
+				D36040E219F5053600E9727D /* 09_032.png in Resources */,
 				D30DDBAB1995ED39007A8A9C /* 09-1_03.png in Resources */,
 				D30DDBAE1995ED39007A8A9C /* 09-2_03.png in Resources */,
 				D30DDBB11995ED39007A8A9C /* 09-2_15.png in Resources */,
@@ -1410,7 +1414,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Hua Ye (87BWFFQURA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1439,7 +1443,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Hua Ye (87BWFFQURA)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

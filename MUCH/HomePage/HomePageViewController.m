@@ -64,10 +64,10 @@
     
     topview = [[HomePageTopView alloc] initWithFrame:CGRectMake(0, 65, 320, 50)];
     topview.delegate = self;
-    [self.view addSubview:topview];
+    //[self.view addSubview:topview];
     
     showArr = [[NSMutableArray alloc] init];
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, 320, 474)];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, 320, 569)];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = NO;
@@ -193,6 +193,7 @@
 -(void)leftBtnClick{
     if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
         AppDelegate* app=[AppDelegate instance];
+        [app initLoginView];
         [self presentViewController:app.loginView animated:YES completion:nil];
     }else{
         centerview = [[CenterTableViewController alloc] init];
@@ -216,18 +217,14 @@
     {
         NSLog(@"取消");
     }
-    switch (buttonIndex)
-    {
-        case 0:  //打开照相机拍照
-            camera = [[Camera alloc] init];
-            camera.delegate = self;
-            [camera getCameraView:self flag:0];
-            break;
-        case 1:  //打开本地相册
-            camera = [[Camera alloc] init];
-            camera.delegate = self;
-            [camera getCameraView:self flag:1];
-            break;
+    if(buttonIndex == 0){
+        Camera *camera = [[Camera alloc] init];
+        camera.delegate = self;
+        [camera getCameraView:self flag:0];
+    }else if (buttonIndex == 1){
+        Camera *camera = [[Camera alloc] init];
+        camera.delegate = self;
+        [camera getCameraView:self flag:1];
     }
 }
 

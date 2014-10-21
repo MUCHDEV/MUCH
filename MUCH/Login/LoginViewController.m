@@ -41,22 +41,22 @@
     [wenxinbtn setImage:[UIImage imageNamed:@"09_03.png"] forState:UIControlStateNormal];
     wenxinbtn.frame = CGRectMake(20, 380, 554/2, 41);
     [wenxinbtn addTarget:self action:@selector(wenxinbtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:wenxinbtn];
+    //[self.view addSubview:wenxinbtn];
     
     UIButton *weibobtn =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [weibobtn setImage:[UIImage imageNamed:@"09_06.png"] forState:UIControlStateNormal];
-    weibobtn.frame = CGRectMake(20, 430, 268/2, 83/2);
+    [weibobtn setImage:[UIImage imageNamed:@"09_032"] forState:UIControlStateNormal];
+    weibobtn.frame = CGRectMake(20, 410, 268/2, 83/2);
     [weibobtn addTarget:self action:@selector(weibobtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:weibobtn];
     
     UIButton *qqbtn =  [UIButton buttonWithType:UIButtonTypeCustom];
     [qqbtn setImage:[UIImage imageNamed:@"09_08.png"] forState:UIControlStateNormal];
-    qqbtn.frame = CGRectMake(163, 430, 268/2, 83/2);
+    qqbtn.frame = CGRectMake(163, 410, 268/2, 83/2);
     [qqbtn addTarget:self action:@selector(qqbtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:qqbtn];
     
     UIButton *registerbtn =  [UIButton buttonWithType:UIButtonTypeCustom];
-    registerbtn.frame = CGRectMake(20, 480, 120, 30);
+    registerbtn.frame = CGRectMake(20, 460, 120, 30);
     [registerbtn setTitle:@"注册账号" forState:UIControlStateNormal];
     [registerbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     registerbtn.titleLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
@@ -65,7 +65,7 @@
     [self.view addSubview:registerbtn];
     
     UIButton *loginbtn =  [UIButton buttonWithType:UIButtonTypeCustom];
-    loginbtn.frame = CGRectMake(270, 480, 120, 30);
+    loginbtn.frame = CGRectMake(270, 460, 120, 30);
     [loginbtn setTitle:@"登录" forState:UIControlStateNormal];
     [loginbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     loginbtn.titleLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
@@ -140,10 +140,12 @@
 
 //微博
 -(void)weibobtnClick{
-    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
-    request.redirectURI = kRedirectURI;
-    request.scope = @"all";
-    [WeiboSDK sendRequest:request];
+//    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+//    request.redirectURI = kRedirectURI;
+//    request.scope = @"all";
+//    [WeiboSDK sendRequest:request];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"暂无功能，下版本开放" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
 }
 
 //qq
@@ -415,6 +417,7 @@
     _newPassWordTextField.placeholder=@"请输入密码";
     _newPassWordTextField.returnKeyType=UIReturnKeyDone;
     _newPassWordTextField.font =  [UIFont systemFontOfSize:15];
+    _newPassWordTextField.secureTextEntry = YES;
     [_newPassWordTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [contentview2 addSubview:_newPassWordTextField];
     
@@ -523,21 +526,26 @@
 
 //微信回调
 -(void) onResp:(SendAuthResp *)resp{
-    NSDictionary *dic=[RegisterEvent GetWeiXin:resp.code];
-    NSDictionary *dic2 = [RegisterEvent GetWeiXinUser:dic[@"access_token"]];
-    if(![dic2[@"openid"] isEqualToString:@""]){
-        int value = (arc4random() % 9999999) + 1000000;
-        [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
-            if(!error){
-                [[NSUserDefaults standardUserDefaults] setObject:[dic2 objectForKey:@"headimgurl"] forKey:@"avatar"];
-                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
-                [[NSUserDefaults standardUserDefaults] setObject:[dic2 objectForKey:@"nickname"] forKey:@"nickname"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                [self dismissViewControllerAnimated:YES completion:nil];
-                NSLog(@"%@",self);
-            }
-        } userName:[dic2 objectForKey:@"openid"] passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[dic2 objectForKey:@"headimgurl"] nickName:[dic2 objectForKey:@"nickname"]];
-    }
+    [RegisterEvent GetWeiXin:^(NSDictionary *posts, NSError *error) {
+        if(!error){
+            NSLog(@"%@",posts[@"access_token"]);
+            [RegisterEvent GetWeiXinUser:^(NSDictionary *dic, NSError *error) {
+                if(!error){
+                    int value = (arc4random() % 9999999) + 1000000;
+                    [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
+                        if(!error){
+                            [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"headimgurl"] forKey:@"avatar"];
+                            [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+                            [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"nickname"] forKey:@"nickname"];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            [self dismissViewControllerAnimated:YES completion:nil];
+                            NSLog(@"%@",self);
+                        }
+                    } userName:[dic objectForKey:@"openid"] passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[dic objectForKey:@"headimgurl"] nickName:[dic objectForKey:@"nickname"]];
+                }
+            } access_token:posts[@"access_token"]];
+        }
+    } code:resp.code];
 }
 
 
