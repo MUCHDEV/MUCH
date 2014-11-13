@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "LoginViewController.h"
 #import "WXApi.h"
-@interface AppDelegate : UIResponder <UIApplicationDelegate,WXApiDelegate>
-
+#import "BMapKit.h"
+#import <CoreLocation/CoreLocation.h>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,WXApiDelegate,CLLocationManagerDelegate,BMKGeneralDelegate,BMKLocationServiceDelegate,BMKMapViewDelegate>{
+    BMKMapManager* _mapManager;
+    BMKLocationService* _locService;
+}
+@property (nonatomic) CLLocationCoordinate2D coor;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) LoginViewController *loginView;
 + (AppDelegate *)instance;

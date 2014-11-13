@@ -11,6 +11,7 @@
 #import "RegisterEvent.h"
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
+#import "LoginSqlite.h"
 @interface LoginViewController ()
 
 @end
@@ -37,17 +38,17 @@
     [imageView setImage:[UIImage imageNamed:@"字_03.png"]];
     [self.view addSubview:imageView];
     
-    UIButton *wenxinbtn =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [wenxinbtn setImage:[UIImage imageNamed:@"09_03.png"] forState:UIControlStateNormal];
-    wenxinbtn.frame = CGRectMake(20, 380, 554/2, 41);
-    [wenxinbtn addTarget:self action:@selector(wenxinbtnClick) forControlEvents:UIControlEventTouchUpInside];
-    //[self.view addSubview:wenxinbtn];
+//    UIButton *wenxinbtn =  [UIButton buttonWithType:UIButtonTypeCustom];
+//    [wenxinbtn setImage:[UIImage imageNamed:@"09_03.png"] forState:UIControlStateNormal];
+//    wenxinbtn.frame = CGRectMake(20, 380, 554/2, 41);
+//    [wenxinbtn addTarget:self action:@selector(wenxinbtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:wenxinbtn];
     
-    UIButton *weibobtn =  [UIButton buttonWithType:UIButtonTypeCustom];
-    [weibobtn setImage:[UIImage imageNamed:@"09_032"] forState:UIControlStateNormal];
-    weibobtn.frame = CGRectMake(20, 410, 268/2, 83/2);
-    [weibobtn addTarget:self action:@selector(weibobtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:weibobtn];
+    UIButton *wenxinbtn =  [UIButton buttonWithType:UIButtonTypeCustom];
+    [wenxinbtn setImage:[UIImage imageNamed:@"09_032"] forState:UIControlStateNormal];
+    wenxinbtn.frame = CGRectMake(20, 410, 268/2, 83/2);
+    [wenxinbtn addTarget:self action:@selector(wenxinbtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:wenxinbtn];
     
     UIButton *qqbtn =  [UIButton buttonWithType:UIButtonTypeCustom];
     [qqbtn setImage:[UIImage imageNamed:@"09_08.png"] forState:UIControlStateNormal];
@@ -72,6 +73,12 @@
     loginbtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [loginbtn addTarget:self action:@selector(loginbtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:loginbtn];
+    
+    UIButton *closebtn =  [UIButton buttonWithType:UIButtonTypeCustom];
+    closebtn.frame = CGRectMake(280, 40, 20, 20);
+    [closebtn setBackgroundImage:[UIImage imageNamed:@"09-2_03.png"] forState:UIControlStateNormal];
+    [closebtn addTarget:self action:@selector(closebtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:closebtn];
     
     NSString *appid = @"1102292194";
     
@@ -121,6 +128,10 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void)closebtnClick{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 //微信
 -(void)wenxinbtnClick{
@@ -252,10 +263,13 @@
     }else{
         [RegisterEvent LoginWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
-                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"avatar"] forKey:@"avatar"];
-                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
-                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"nickname"] forKey:@"nickname"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+//                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"avatar"] forKey:@"avatar"];
+//                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+//                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"nickname"] forKey:@"nickname"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+                [LoginSqlite insertData:posts[0][@"avatar"] datakey:@"avatar"];
+                [LoginSqlite insertData:posts[0][@"id"] datakey:@"userId"];
+                [LoginSqlite insertData:posts[0][@"nickname"] datakey:@"nickname"];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         } userName:_userNameTextField.text passWord:_passWordTextField.text];
@@ -274,10 +288,13 @@
     }else{
         [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
-                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"avatar"] forKey:@"avatar"];
-                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
-                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"nickname"] forKey:@"nickname"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+//                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"avatar"] forKey:@"avatar"];
+//                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+//                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"nickname"] forKey:@"nickname"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+                [LoginSqlite insertData:posts[0][@"avatar"] datakey:@"avatar"];
+                [LoginSqlite insertData:posts[0][@"id"] datakey:@"userId"];
+                [LoginSqlite insertData:posts[0][@"nickname"] datakey:@"nickname"];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         } userName:_phoneTextField.text passWord:_newPassWordTextField.text passwordConfirmation:_newPassWordTextField.text avatar:@"" nickName:@""];
@@ -471,10 +488,13 @@
         int value = (arc4random() % 9999999) + 1000000;
         [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
-                [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"figureurl_qq_2"] forKey:@"avatar"];
-                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
-                [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickname"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
+//                [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"figureurl_qq_2"] forKey:@"avatar"];
+//                [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+//                [[NSUserDefaults standardUserDefaults] setObject:[response.jsonResponse objectForKey:@"nickname"] forKey:@"nickname"];
+//                [[NSUserDefaults standardUserDefaults] synchronize];
+                [LoginSqlite insertData:[response.jsonResponse objectForKey:@"figureurl_qq_2"] datakey:@"avatar"];
+                [LoginSqlite insertData:posts[0][@"id"] datakey:@"userId"];
+                [LoginSqlite insertData:[response.jsonResponse objectForKey:@"nickname"] datakey:@"nickname"];
                 [self dismissViewControllerAnimated:YES completion:nil];
             }
         } userName:tencentAuth.openId passWord:[NSString stringWithFormat:@"%d",value] passwordConfirmation:[NSString stringWithFormat:@"%d",value] avatar:[response.jsonResponse objectForKey:@"figureurl_qq_2"] nickName:[response.jsonResponse objectForKey:@"nickname"]];
@@ -534,10 +554,13 @@
                     int value = (arc4random() % 9999999) + 1000000;
                     [RegisterEvent RegisterWithBlock:^(NSMutableArray *posts, NSError *error) {
                         if(!error){
-                            [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"headimgurl"] forKey:@"avatar"];
-                            [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
-                            [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"nickname"] forKey:@"nickname"];
-                            [[NSUserDefaults standardUserDefaults] synchronize];
+//                            [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"headimgurl"] forKey:@"avatar"];
+//                            [[NSUserDefaults standardUserDefaults] setObject:posts[0][@"id"] forKey:@"id"];
+//                            [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"nickname"] forKey:@"nickname"];
+//                            [[NSUserDefaults standardUserDefaults] synchronize];
+                            [LoginSqlite insertData:[dic objectForKey:@"headimgurl"] datakey:@"avatar"];
+                            [LoginSqlite insertData:posts[0][@"id"] datakey:@"userId"];
+                            [LoginSqlite insertData:[dic objectForKey:@"nickname"] datakey:@"nickname"];
                             [self dismissViewControllerAnimated:YES completion:nil];
                             NSLog(@"%@",self);
                         }

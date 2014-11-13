@@ -13,6 +13,7 @@
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
+#import "LoginSqlite.h"
 @interface HomePageViewController ()
 
 @end
@@ -76,29 +77,6 @@
     
     //集成刷新控件
     [self setupRefresh];
-    
-    if (![ConnectionAvailable isConnectionAvailable]) {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.removeFromSuperViewOnHide =YES;
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"当前网络不可用，请检查网络连接！";
-        hud.labelFont = [UIFont fontWithName:nil size:14];
-        hud.minSize = CGSizeMake(132.f, 108.0f);
-        [hud hide:YES afterDelay:1];
-    }else{
-        [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
-            if(!error){
-                showArr = posts;
-                [_tableView reloadData];
-            }
-        }start:startIndex];
-    }
-    
-    
-    locationManager = [[CLLocationManager alloc] init];//创建位置管理器
-    locationManager.delegate=self;
-    locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-    locationManager.distanceFilter=1000.0f;
 }
 
 - (void)didReceiveMemoryWarning
@@ -140,6 +118,8 @@
 #pragma mark 开始进入刷新状态
 - (void)headerRereshing
 {
+    _tableView.scrollEnabled = NO;
+    [[AppDelegate instance].locationManager startUpdatingLocation];
     if (![ConnectionAvailable isConnectionAvailable]) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
@@ -153,6 +133,7 @@
     }else{
         startIndex = 0;
         [showArr removeAllObjects];
+        NSLog(@"%f...%f",[AppDelegate instance].coor.latitude,[AppDelegate instance].coor.longitude);
         [ReleaseEvent GetListWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
                 //NSLog(@"posts ==> %@",posts);
@@ -160,8 +141,9 @@
                 [_tableView reloadData];
                 [_tableView footerEndRefreshing];
                 [_tableView headerEndRefreshing];
+                _tableView.scrollEnabled = YES;
             }
-        }start:startIndex];
+        }start:startIndex log:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.longitude] lat:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.latitude]];
     }
 }
 
@@ -186,12 +168,13 @@
                 [_tableView footerEndRefreshing];
                 [_tableView headerEndRefreshing];
             }
-        }start:startIndex];
+        }start:startIndex log:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.longitude] lat:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.latitude]];
     }
 }
 
 -(void)leftBtnClick{
-    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
+    NSLog(@"====>%@",[LoginSqlite getdata:@"userId"]);
+    if([[LoginSqlite getdata:@"userId"] isEqualToString:@""]){
         AppDelegate* app=[AppDelegate instance];
         [app initLoginView];
         [self presentViewController:app.loginView animated:YES completion:nil];
@@ -315,18 +298,6 @@
     [self rightBtnClick];
 }
 
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    //此处locations存储了持续更新的位置坐标值，取最后一个值为最新位置，如果不想让其持续更新位置，则在此方法中获取到一个值之后让locationManager stopUpdatingLocation
-    CLLocation *currentLocation = [locations lastObject];
-    CLLocationCoordinate2D coor = currentLocation.coordinate;
-    latitude =  coor.latitude;
-    longitude = coor.longitude;
-    [locationManager stopUpdatingLocation];
-}
-
-
 -(void)reloadList{
     if (![ConnectionAvailable isConnectionAvailable]) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -345,7 +316,7 @@
                 showArr = posts;
                 [_tableView reloadData];
             }
-        }start:startIndex];
+        }start:startIndex log:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.longitude] lat:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.latitude]];
     }
 }
 @end

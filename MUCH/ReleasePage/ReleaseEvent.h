@@ -15,13 +15,15 @@
 @property (nonatomic, copy) NSString *likes;
 @property (nonatomic, copy) NSString *youlikeit;
 @property (nonatomic, copy) NSString *created;
+@property (nonatomic, copy) NSString *distance;
 @property (nonatomic, copy) NSDictionary *createdby;
 @property (nonatomic, copy) NSArray *comments;
 @property (nonatomic, copy) NSDictionary *dict;
 
 
-+ (NSURLSessionDataTask *)ReleaseWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block price:(NSString *)price imgStr:(NSString *)imgStr;
-+ (NSURLSessionDataTask *)GetListWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block start:(int)start;
++ (NSURLSessionDataTask *)ReleaseWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block price:(NSString *)price imgStr:(NSString *)imgStr log:(NSString *)log lat:(NSString *)lat;
+
++ (NSURLSessionDataTask *)GetListWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block start:(int)start log:(NSString *)log lat:(NSString *)lat;
 
 + (NSURLSessionDataTask *)GetMyListWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid;
 @end

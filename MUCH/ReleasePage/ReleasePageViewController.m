@@ -11,6 +11,7 @@
 #import "ReleaseEvent.h"
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
 @interface ReleasePageViewController ()
 
 @end
@@ -32,7 +33,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view setBackgroundColor:RGBCOLOR(217, 217, 217)];
-    
+    [[AppDelegate instance].locationManager startUpdatingLocation];
     //LeftButton设置属性
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectMake(0, 0, 12.5, 21.5)];
@@ -106,6 +107,7 @@
 }
 
 -(void)rightBtnClick{
+    self.navigationItem.rightBarButtonItem.enabled = NO;
     if (![ConnectionAvailable isConnectionAvailable]) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.removeFromSuperViewOnHide =YES;
@@ -124,10 +126,12 @@
                     /*if([delegate respondsToSelector:@selector(reloadList)]){
                      [delegate reloadList];
                      }*/
+                    
+                    self.navigationItem.rightBarButtonItem.enabled = YES;
                 }
                 [self.navigationController popViewControllerAnimated:YES];
             }
-        }price:_priceTextField.text imgStr:encoded];
+        }price:_priceTextField.text imgStr:encoded log:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.longitude] lat:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.latitude]];
     }
 }
 @end

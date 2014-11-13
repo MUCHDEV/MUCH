@@ -81,11 +81,11 @@
         //[headView addSubview:lineImage];
     }
     
-    headimage = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"04_20.png"]];
-    headimage.frame = CGRectMake(20, 16, 52/2, 51/2);
-    headimage.layer.cornerRadius = 3;
-    headimage.layer.masksToBounds = YES;
-    [self.contentView addSubview:headimage];
+//    headimage = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"04_20.png"]];
+//    headimage.frame = CGRectMake(20, 16, 52/2, 51/2);
+//    headimage.layer.cornerRadius = 3;
+//    headimage.layer.masksToBounds = YES;
+//    [self.contentView addSubview:headimage];
     
     content =  [[UILabel alloc] initWithFrame:CGRectMake(60,8,240,40)];
     [content setNumberOfLines:2];

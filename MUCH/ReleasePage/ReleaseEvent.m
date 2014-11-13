@@ -8,6 +8,7 @@
 
 #import "ReleaseEvent.h"
 #import "AFAppDotNetAPIClient.h"
+#import "LoginSqlite.h"
 @implementation ReleaseEvent
 - (void)setDict:(NSDictionary *)dict{
     _dict = dict;
@@ -19,15 +20,20 @@
     self.created = dict[@"created"];
     self.createdby = dict[@"createdby"];
     self.comments = dict[@"comments"];
+    self.distance = dict[@"distance"];
 }
 
 
-+(NSURLSessionDataTask *)ReleaseWithBlock:(void (^)(NSMutableArray *, NSError *))block price:(NSString *)price imgStr:(NSString *)imgStr{
++(NSURLSessionDataTask *)ReleaseWithBlock:(void (^)(NSMutableArray *, NSError *))block price:(NSString *)price imgStr:(NSString *)imgStr log:(NSString *)log lat:(NSString *)lat{
+    NSLog(@"=====>%@",[NSString stringWithFormat:@"%@",[LoginSqlite getdata:@"userId"]]);
+    
     NSString *urlStr = [NSString stringWithFormat:@"/post"];
     NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     price,@"title",
                                     imgStr,@"content",
-                                    [[NSUserDefaults standardUserDefaults]objectForKey:@"id"],@"createdby",
+                                    lat,@"latitude",
+                                    log,@"longitude",
+                                    [LoginSqlite getdata:@"userId"],@"createdby",
                                     nil];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setValue:parametersdata forKey:@"post"];
@@ -48,8 +54,9 @@
 }
 
 
-+ (NSURLSessionDataTask *)GetListWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block start:(int)start{
-    NSString *urlStr = [NSString stringWithFormat:@"/post?offset=%d&size=5&userid=%@",start,[[NSUserDefaults standardUserDefaults]objectForKey:@"id"]];
++ (NSURLSessionDataTask *)GetListWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block start:(int)start log:(NSString *)log lat:(NSString *)lat{
+    NSString *urlStr = [NSString stringWithFormat:@"/post?offset=%d&size=5&userid=%@&longitude=%@&latitude=%@",start,[LoginSqlite getdata:@"userId"],log,lat];
+    NSLog(@"%@",urlStr);
     return [[AFAppDotNetAPIClient sharedClient] GET:urlStr parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
         //NSLog(@"JSON===>%@",JSON);
         if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){

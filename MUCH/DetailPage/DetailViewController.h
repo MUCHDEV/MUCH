@@ -25,6 +25,7 @@
     NSString *headurl;
     NSString *nickName;
     NSString *youlikeit;
+    NSString *distance;
     LoginViewController *loginview;
     NSMutableArray *arr;
     RegisterEvent *regModel;

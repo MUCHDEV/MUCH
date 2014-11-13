@@ -52,10 +52,11 @@
     priceLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
     [self.contentView addSubview:priceLabel];
     
-    distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(240, 0, 140, 20)];
+    distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(175, 0, 140, 20)];
     distanceLabel.text = @"距您120m";
     distanceLabel.textColor = RGBCOLOR(159, 159, 159);
     distanceLabel.font = [UIFont fontWithName:@"GurmukhiMN" size:14];
+    distanceLabel.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:distanceLabel];
 }
 
@@ -69,5 +70,9 @@
 
 -(void)setName:(NSString *)name{
     nameLabel.text = name;
+}
+
+-(void)setDistance:(NSString *)distance{
+    distanceLabel.text = [NSString stringWithFormat:@"距您%@",distance];
 }
 @end

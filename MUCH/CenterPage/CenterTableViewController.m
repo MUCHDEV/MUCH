@@ -11,6 +11,7 @@
 #import "ReleaseEvent.h"
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
+#import "LoginSqlite.h"
 @interface CenterTableViewController ()
 
 @end
@@ -82,7 +83,7 @@
                 }
                 [self.tableView reloadData];
             }
-        } aid:[[NSUserDefaults standardUserDefaults]objectForKey:@"id"]];
+        } aid:[LoginSqlite getdata:@"userId"]];
     }
 }
 

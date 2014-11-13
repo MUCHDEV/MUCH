@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol ToolViewDelegate<NSObject>
 - (void)addMessageWithContent:(NSString *)content;
+- (void)gotoLoginView;
 @end
 @interface ToolView : UIView<UITextFieldDelegate>{
     UIView *theSuperView;

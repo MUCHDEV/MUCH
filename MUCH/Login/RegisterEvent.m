@@ -9,6 +9,7 @@
 #import "RegisterEvent.h"
 #import "AFAppDotNetAPIClient.h"
 #import "JSONKit.h"
+#import "LoginSqlite.h"
 @implementation RegisterEvent
 - (void)setDict:(NSDictionary *)dict{
     
@@ -84,7 +85,7 @@
     NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     model.nickname,@"nickname",
                                     model.gender,@"gender",
-                                    [[NSUserDefaults standardUserDefaults]objectForKey:@"id"],@"_id",
+                                    [LoginSqlite getdata:@"userId"],@"_id",
                                     nil];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject:parametersdata forKey:@"user"];
@@ -108,7 +109,7 @@
     NSString *urlStr = [NSString stringWithFormat:@"user/"];
     NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     imaStr,@"avatar",
-                                    [[NSUserDefaults standardUserDefaults]objectForKey:@"id"],@"_id",
+                                    [LoginSqlite getdata:@"userId"],@"_id",
                                     nil];
     //NSLog(@"parametersdata ===> %@",parametersdata);
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -134,7 +135,7 @@
 }
 
 + (NSURLSessionDataTask *)GetUserWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block{
-    NSString *urlStr = [NSString stringWithFormat:@"user/%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"id"]];
+    NSString *urlStr = [NSString stringWithFormat:@"user/%@",[LoginSqlite getdata:@"userId"]];
     return [[AFAppDotNetAPIClient sharedClient] GET:urlStr parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
         //NSLog(@"JSON===>%@",JSON);
         if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){

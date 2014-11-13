@@ -11,6 +11,7 @@
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
 #import "Message.h"
+#import "LoginSqlite.h"
 @implementation DetailHeadTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier imgUrl:(NSString *)imgUrl aid:(NSString *)aid like:(NSString *)like
@@ -73,7 +74,7 @@
     k.keyTimes = @[@(0.0),@(0.5),@(0.8),@(1.0)];
     k.calculationMode = kCAAnimationLinear;
     [button.layer addAnimation:k forKey:@"SHOW"];
-    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
+    if([[LoginSqlite getdata:@"userId"] isEqualToString:@""]){
         if([self.delegate respondsToSelector:@selector(showLoginView)]){
             [self.delegate showLoginView];
         }

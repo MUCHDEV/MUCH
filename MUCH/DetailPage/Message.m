@@ -10,6 +10,7 @@
 #import "AFAppDotNetAPIClient.h"
 #import "PrintObject.h"
 #import "RegisterEvent.h"
+#import "LoginSqlite.h"
 @implementation Message
 - (void)setDict:(NSDictionary *)dict{
     
@@ -25,7 +26,7 @@
 + (NSURLSessionDataTask *)CommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block arr:(NSMutableArray *)arr{
     NSString *urlStr = [NSString stringWithFormat:@"/comment"];
     Message *model = arr[0];
-    NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults]objectForKey:@"id"],@"userid",model.content,@"content",model.aid,@"postid",nil];
+    NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:model.content,@"content",model.aid,@"postid",[LoginSqlite getdata:@"userId"],@"userid",nil];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject:parametersdata forKey:@"comment"];
     NSLog(@"==>%@",parameters);
@@ -44,8 +45,8 @@
     }];
 }
 
-+ (NSURLSessionDataTask *)GetCommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid{
-    NSString *urlStr = [NSString stringWithFormat:@"/post/%@?userid=%@",aid,[[NSUserDefaults standardUserDefaults]objectForKey:@"id"]];
++ (NSURLSessionDataTask *)GetCommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid log:(NSString *)log lat:(NSString *)lat{
+    NSString *urlStr = [NSString stringWithFormat:@"/post/%@?userid=%@&longitude=%@&latitude=%@",aid,[LoginSqlite getdata:@"userId"],log,lat];
     return [[AFAppDotNetAPIClient sharedClient] GET:urlStr parameters:nil success:^(NSURLSessionDataTask * __unused task, id JSON) {
         NSLog(@"JSON===>%@",JSON);
         if([[NSString stringWithFormat:@"%@",JSON[@"status"][@"code"]]isEqualToString:@"200"]){
@@ -68,7 +69,7 @@
 
 + (NSURLSessionDataTask *)LikeWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid{
     NSString *urlStr = [NSString stringWithFormat:@"/like"];
-    NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:[[NSUserDefaults standardUserDefaults]objectForKey:@"id"],@"userid",aid,@"postid",nil];
+    NSDictionary *parametersdata = [[NSDictionary alloc] initWithObjectsAndKeys:aid,@"postid",[LoginSqlite getdata:@"userId"],@"userid",nil];
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
     [parameters setObject:parametersdata forKey:@"like"];
     NSLog(@"==>%@",parameters);

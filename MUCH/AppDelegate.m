@@ -10,6 +10,7 @@
 #import "HomePageViewController.h"
 #import "LoginViewController.h"
 #import "ScrollViewController.h"
+#import "LoginSqlite.h"
 @interface WBBaseRequest ()
 - (void)debugPrint;
 @end
@@ -31,6 +32,19 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    // 要使用百度地图，请先启动BaiduMapManager
+    _mapManager = [[BMKMapManager alloc]init];
+    BOOL ret = [_mapManager start:@"G6468a6AM46tY5G70D32xFlS" generalDelegate:self];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }else{
+        NSLog(@"baiduOK");
+    }
+    
+    _locService = [[BMKLocationService alloc]init];
+    _locService.delegate = self;
+    [_locService startUserLocationService];
+    
     
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:kAppKey];
@@ -38,22 +52,24 @@
     //向微信注册
     [WXApi registerApp:@"wx2fe5e9a05cc63f07"];
     [self initLoginView];
-    
+    [LoginSqlite opensql];
     self.window.backgroundColor = [UIColor whiteColor];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]){
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
+            NSLog(@"第一次启动");
+            ScrollViewController *scrollview = [[ScrollViewController alloc] init];
+            [self.window setRootViewController:scrollview];
+            [self.window makeKeyAndVisible];
+        }else{
+            NSLog(@"已经不是第一次启动了");
+            HomePageViewController *homepage = [[HomePageViewController alloc] init];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homepage];
+            self.window.rootViewController = nav;
+            [self.window makeKeyAndVisible];
+        }
+    });
     
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]){
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
-        NSLog(@"第一次启动");
-        ScrollViewController *scrollview = [[ScrollViewController alloc] init];
-        [self.window setRootViewController:scrollview];
-        [self.window makeKeyAndVisible];
-    }else{
-        NSLog(@"已经不是第一次启动了");
-        HomePageViewController *homepage = [[HomePageViewController alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homepage];
-        self.window.rootViewController = nav;
-        [self.window makeKeyAndVisible];
-    }
     
     
     return YES;
@@ -104,5 +120,11 @@
     }
 }
 
-
+- (void)didUpdateUserLocation:(BMKUserLocation *)userLocation{
+    NSLog(@"定位跟新");
+    NSLog(@"当前的坐标  维度:%f,经度:%f",userLocation.location.coordinate.latitude,userLocation.location.coordinate.longitude);
+    self.coor = userLocation.location.coordinate;
+    [_locService stopUserLocationService];
+    
+}
 @end

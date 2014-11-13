@@ -65,9 +65,9 @@
     namelabel.textColor = RGBCOLOR(50, 118, 243);
     [self.contentView addSubview:namelabel];
     
-    distancelabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 72, 100, 30)];
+    distancelabel = [[UILabel alloc] initWithFrame:CGRectMake(22, 72, 40, 30)];
     distancelabel.text = @"";
-    distancelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:12];
+    distancelabel.font = [UIFont fontWithName:@"GurmukhiMN" size:9];
     distancelabel.textColor = RGBCOLOR(159, 159, 159);
     [self.contentView addSubview:distancelabel];
     
@@ -147,6 +147,7 @@
     pricelabel.text = [NSString stringWithFormat:@"￥ %@",releaseEvent.price];
     bigImage.imageURL = [NSURL URLWithString:releaseEvent.content];
     goodlabel.text = releaseEvent.likes;
+    distancelabel.text = releaseEvent.distance;
     if([releaseEvent.likes intValue] >0){
         [goodImage setImage:[UIImage imageNamed:@"04_07"]];
     }

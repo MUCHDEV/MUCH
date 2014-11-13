@@ -13,11 +13,10 @@
 #import "ReleasePageViewController.h"
 #import "HomePageTableViewCell.h"
 #import "HomePageDefaultTableViewCell.h"
-#import <CoreLocation/CoreLocation.h>
 #import "DetailViewController.h"
 #import "CenterTableViewController.h"
 #import "LoginViewController.h"
-@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate,CLLocationManagerDelegate,ReleasePageViewDelegate>{
+@interface HomePageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,homePageTopDelegate,homePageTopContentDelegate,UIActionSheetDelegate,CameraDelegate,homePageDefaultDelegate,ReleasePageViewDelegate>{
     HomePageTopView *topview;
     HomePageTopContentView *topcontentview;
     UITableView *_tableView;
@@ -26,9 +25,6 @@
     UIActionSheet *_myActionSheet;
     Camera *camera;
     ReleasePageViewController *releasepageview;
-    CLLocationManager *locationManager;
-    float latitude;
-    float longitude;
     DetailViewController *detailview;
     CenterTableViewController *centerview;
     int startIndex;

@@ -23,7 +23,7 @@ typedef enum {
 
 + (NSURLSessionDataTask *)CommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block arr:(NSMutableArray *)arr;
 
-+ (NSURLSessionDataTask *)GetCommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid;
++ (NSURLSessionDataTask *)GetCommentsWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid log:(NSString *)log lat:(NSString *)lat;
 
 + (NSURLSessionDataTask *)LikeWithBlock:(void (^)(NSMutableArray *posts, NSError *error))block aid:(NSString *)aid;
 @end

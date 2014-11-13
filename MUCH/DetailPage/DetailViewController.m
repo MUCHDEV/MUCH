@@ -14,6 +14,7 @@
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
+#import "LoginSqlite.h"
 @interface DetailViewController ()
 
 @end
@@ -33,7 +34,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [[AppDelegate instance].locationManager startUpdatingLocation];
     //LeftButton设置属性
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectMake(0, 0, 12.5, 21.5)];
@@ -71,6 +72,7 @@
         hud.minSize = CGSizeMake(132.f, 108.0f);
         [hud hide:YES afterDelay:1];
     }else{
+        NSLog(@"%f...%f",[AppDelegate instance].coor.latitude,[AppDelegate instance].coor.longitude);
         [Message GetCommentsWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
                 _allMessages = [NSMutableArray array];
@@ -90,7 +92,7 @@
                 }
                 [_tableView reloadData];
             }
-        } aid:aid];
+        } aid:aid log:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.longitude] lat:[NSString stringWithFormat:@"%f",[AppDelegate instance].coor.latitude]];
     }
 }
 
@@ -120,7 +122,7 @@
 
 #pragma mark 给数据源增加内容
 - (void)addMessageWithContent:(NSString *)content{
-    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
+    if([[LoginSqlite getdata:@"userId"] isEqualToString:@""]){
         AppDelegate *app = [AppDelegate instance];
         [app initLoginView];
         [self presentViewController:app.loginView animated:YES completion:nil];
@@ -128,17 +130,13 @@
         Message *msg = [[Message alloc] init];
         msg.content = content;
         msg.type = MessageTypeMe;
-        if([[NSUserDefaults standardUserDefaults]objectForKey:@"nickname"]){
-            if(![[[NSUserDefaults standardUserDefaults]objectForKey:@"nickname"] isEqualToString:@""]){
-                msg.name =[[NSUserDefaults standardUserDefaults]objectForKey:@"nickname"];
-            }else{
-                msg.name = @"匿名";
-            }
-        }else{
+        if([[LoginSqlite getdata:@"nickname"] isEqualToString:@""]){
             msg.name = @"匿名";
+        }else{
+            msg.name =[LoginSqlite getdata:@"nickname"];
         }
-        NSLog(@"====>%@",[[NSUserDefaults standardUserDefaults]objectForKey:@"avatar"]);
-        msg.iconURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults]objectForKey:@"avatar"] ];
+        NSLog(@"====>%@",[LoginSqlite getdata:@"avatar"]);
+        msg.iconURL = [NSURL URLWithString:[LoginSqlite getdata:@"avatar"]];
         msg.aid = aid;
         [_allMessages insertObject:msg atIndex:0];
         [_tableView reloadData];
@@ -183,6 +181,7 @@
         cell.price = price;
         cell.headurl = headurl;
         cell.name = nickName;
+        cell.distance = distance;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }else{
@@ -228,6 +227,7 @@
     aid = releaseEvent.aid;
     price = releaseEvent.price;
     youlikeit = releaseEvent.youlikeit;
+    distance = releaseEvent.distance;
     if(![[NSString stringWithFormat:@"%@",releaseEvent.createdby] isEqualToString:@"<null>"]){
         headurl = releaseEvent.createdby[@"avatar"];
         nickName = releaseEvent.createdby[@"nickname"];
@@ -251,6 +251,10 @@
     AppDelegate *app = [AppDelegate instance];
     [app initLoginView];
     [self presentViewController:app.loginView animated:YES completion:nil];
+}
+
+-(void)gotoLoginView{
+    [self showLoginView];
 }
 
 -(void)showAnimation{
@@ -301,4 +305,5 @@
     [animationView2 removeFromSuperview];
     animationView2 = nil;
 }
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "ToolView.h"
-
+#import "LoginSqlite.h"
 @implementation ToolView
 @synthesize delegate;
 - (id)initWithFrame:(CGRect)frame superView:(UIView *)superView
@@ -81,6 +81,14 @@
     }
     [_textfield resignFirstResponder];
     return YES;
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField{
+    if([[LoginSqlite getdata:@"userId"] isEqualToString:@""]){
+        if([delegate respondsToSelector:@selector(gotoLoginView)]){
+            [delegate gotoLoginView];
+        }
+    }
 }
 
 -(void)sendClick{

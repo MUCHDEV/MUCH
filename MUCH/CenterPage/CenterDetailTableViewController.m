@@ -13,6 +13,7 @@
 #import "ConnectionAvailable.h"
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
+#import "LoginSqlite.h"
 @interface CenterDetailTableViewController ()
 
 @end
@@ -231,7 +232,7 @@
     [nick resignFirstResponder];
     [singlepickerview removeFromSuperview];
     singlepickerview = nil;
-    if(![[NSUserDefaults standardUserDefaults]objectForKey:@"id"]){
+    if([[LoginSqlite getdata:@"userId"] isEqualToString:@""]){
         AppDelegate* app=[AppDelegate instance];
         [app initLoginView];
         [self presentViewController:app.loginView animated:YES completion:nil];
@@ -273,10 +274,11 @@
 
 -(void)logoutClick{
     NSLog(@"logoutClick");
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"id"];
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"avatar"];
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"nickname"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"id"];
+//    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"avatar"];
+//    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"nickname"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
+    [LoginSqlite deleteAll];
     UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"提示" message:@"退出成功！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertview show];
 }
@@ -340,7 +342,8 @@
         if(!error){
             NSLog(@"posts ===>%@",posts);
             model.avatar = posts[0];
-            [[NSUserDefaults standardUserDefaults] setObject:posts[0] forKey:@"avatar"];
+            //[[NSUserDefaults standardUserDefaults] setObject:posts[0] forKey:@"avatar"];
+            [LoginSqlite insertData:posts[0] datakey:@"avatar"];
             [self.tableView reloadData];
         }
     } imaStr:encoded];
@@ -356,7 +359,8 @@
         model.nickname = textField.text;
         [RegisterEvent UpdataWithBlock:^(NSMutableArray *posts, NSError *error) {
             if(!error){
-                [[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"nickname"];
+                //[[NSUserDefaults standardUserDefaults] setObject:textField.text forKey:@"nickname"];
+                [LoginSqlite insertData:textField.text datakey:@"nickname"];
             }
         } model:model];
     }
